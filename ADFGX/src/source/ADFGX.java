@@ -75,7 +75,7 @@ public class ADFGX {
 	/************************************************************************
 	 * Basic delete function
 	 * 
-	 * Deletes all unnecessary files - TODO Create a boolean to delete or not
+	 * Deletes all unnecessary files
 	 * 
 	 */
 	public static void deleteAllFiles()

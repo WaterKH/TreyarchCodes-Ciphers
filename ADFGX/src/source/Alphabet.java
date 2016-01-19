@@ -6,7 +6,6 @@
  */
 package source;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,13 +101,13 @@ public class Alphabet {
 	{
 		this.sortMap(ADFGX.freqTracker);
 		
-		final int frequencyDelim = 3;
+		/*final int frequencyDelim = 3;
 		
 		int fSize = 0;
 		int ifSize = 0;
 		ArrayList<String> letterPairs = new ArrayList<String>();
 		
-		/*for(int i = 0; i < ADFGX.listForFreqAna.size(); ++i)
+		for(int i = 0; i < ADFGX.listForFreqAna.size(); ++i)
 		{
 			int[] alphaIndex = ADFGX.getAlphabetIndexFromListIndex(i);
 			int frequencyInt = ADFGX.freqTracker.get(ADFGX.listForFreqAna.get(i));
@@ -154,7 +153,7 @@ public class Alphabet {
 	 */
 	public void constructListsOfFrequencies()
 	{
-		boolean found = false;
+		//boolean found = false;
 		
 		for(int i = 0; i < alphabet.length; ++i)
 		{
@@ -238,22 +237,22 @@ public class Alphabet {
 		
 		System.out.println("** PERMUTATIONS COMPLETED **");
 
-		Resources.startTimer();
+		//Resources.startTimer();
 		
-		BufferedReader fReader = Resources.openFile_Reader("Freq");
+		/*BufferedReader fReader = Resources.openFile_Reader("Freq");
 		BufferedReader ifReader = Resources.openFile_Reader("Infreq");
-		final int FInteger = 0;
-		final int IFInteger = 1;
-		String freqLine = "";
-		String infreqLine = "";
+		//final int FInteger = 0;
+		//final int IFInteger = 1;
+		//String freqLine = "";
+		//String infreqLine = "";
 		
 		while((freqLine = fReader.readLine()) != null)
 		{
 			while((infreqLine = ifReader.readLine()) != null)
 			{
-				String[] line = {freqLine, infreqLine};
-				ArrayList<String> alphabetF = new ArrayList<String>();
-				ArrayList<String> alphabetIF = new ArrayList<String>();
+				//String[] line = {freqLine, infreqLine};
+				//ArrayList<String> alphabetF = new ArrayList<String>();
+				//ArrayList<String> alphabetIF = new ArrayList<String>();
 				
 				//rearrangeAlphabet(alphabetF, line, FInteger, frequentLetters);
 				
@@ -267,9 +266,9 @@ public class Alphabet {
 		//displayAlphabet();
 		
 		Resources.closeFile(ifReader, "Infreq");
-		Resources.closeFile(fReader, "Freq");
+		Resources.closeFile(fReader, "Freq");*/
 		
-		Resources.endTimer();
+		//Resources.endTimer();
 		
 	} /** public static void permutateLists(BufferedWriter constructWriter, String choice) throws IOException **/
 
