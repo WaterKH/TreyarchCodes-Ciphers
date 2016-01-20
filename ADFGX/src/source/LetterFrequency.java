@@ -21,6 +21,7 @@ public class LetterFrequency {
 	//public static final String MOST_INFREQ_LETTERS = "JXQZ";
 	static int counter = 0;
 	static Map<String, String> charsBasedOnFrequency = new HashMap<String, String>();
+	static ArrayList<String> freqPairs = new ArrayList<String>();
 	
 	public static final String[] frequencyStrings = {MOST_FREQ_LETTER, VERY_FREQ_LETTERS, FREQ_LETTERS, 
 													 INFREQ_LETTERS, VERY_INFREQ_LETTERS};//, MOST_INFREQ_LETTERS};
@@ -78,6 +79,7 @@ public class LetterFrequency {
 					
 				} // for(int nextPair = 0; nextPair < arrFreqA.length; ++nextPair)
 				ADFGX.freqTracker.put(arrFreqA[currPair], freqCounter[currPair]);
+				freqPairs.add(arrFreqA[currPair]);
 				alreadyUsed.add(arrFreqA[currPair]);
 			} // if(findNextPair == true)
 				
@@ -100,16 +102,16 @@ public class LetterFrequency {
 		//Move frequency numbers to front (ie - [6,5,4,3,2,2])
 		for(int i = 0; i < maxIntHolder.length; ++i)
 		{
-			for(int j = 0; j < ADFGX.listForFreqAna.size(); ++j)
+			for(int j = 0; j < freqPairs.size(); ++j)
 			{
-				if(paramMap.get(ADFGX.listForFreqAna.get(j)) != null)
+				if(paramMap.get(freqPairs.get(j)) != null)
 				{
-					if(maxIntHolder[i] < paramMap.get(ADFGX.listForFreqAna.get(j)) && !containedStrings.contains(ADFGX.listForFreqAna.get(j)))
+					if(maxIntHolder[i] < paramMap.get(freqPairs.get(j)) && !containedStrings.contains(freqPairs.get(j)))
 					{
-						maxIntHolder[i] = paramMap.get(ADFGX.listForFreqAna.get(j));
-						stringHolder[i] = ADFGX.listForFreqAna.get(j);
-						System.out.println("FINAL: " + paramMap.get(ADFGX.listForFreqAna.get(j)) + " " + maxIntHolder[i]);
-						containedStrings.add(ADFGX.listForFreqAna.get(j));
+						maxIntHolder[i] = paramMap.get(freqPairs.get(j));
+						stringHolder[i] = freqPairs.get(j);
+						//System.out.println("FINAL: " + paramMap.get(freqPairs.get(j)) + " " + maxIntHolder[i]);
+						containedStrings.add(freqPairs.get(j));
 						break;
 					}
 				}
@@ -134,7 +136,7 @@ public class LetterFrequency {
 			}
 		}
 		
-		Map<Integer, String> distributedAlphabet = assignLettersToFrequencyNumbers(maxIntHolder);
+		Map<String, ArrayList<Integer>> distributedAlphabet = assignLettersToFrequencyNumbers(maxIntHolder, stringHolder);
 		
 		int tempInt = 0;
 		int stringTracker = 0;
@@ -218,46 +220,101 @@ public class LetterFrequency {
 	    } // else
 	} /** public static void permuteString(String beginningString, String endingString, BufferedWriter writer) throws IOException  **/
 	
-	public static Map<Integer, String> assignLettersToFrequencyNumbers(int[] maxIntHolder)
+	public static Map<String, ArrayList<Integer>> assignLettersToFrequencyNumbers(int[] frequencyNumbers, String[] letterPairs)
 	{
+
 		System.out.println("ENTERING ASSIGN METHOD");
 		int lastFreqNumber = 0;
 		int lastIndex = 0;
-		Map<Integer, String> distributedAlphabet = new HashMap<Integer, String>();
+		Map<String, ArrayList<Integer>> distributedAlphabet = new HashMap<String, ArrayList<Integer>>();
 		int stringIndex = 0;
+		int counter = 0;
 		
-		for(int i = 0; i < maxIntHolder.length; ++i)
+		//TODO Write a recursive method for finding each letter of the alphabet
+		for(int i = 0; i < letterPairs.length; ++i)
 		{
-			System.out.println(maxIntHolder[i]);
-		}
-		
-		for(int i = 0; i < maxIntHolder.length; ++i)
-		{
-			int tempFreqNumber = maxIntHolder[i];
-			int substringIndex = 0;
-			if(distributedAlphabet.size() > 0)
-				substringIndex = distributedAlphabet.get(lastIndex).length() / 2;
-			if((tempFreqNumber + 1) >= lastFreqNumber && lastFreqNumber != 0 && substringIndex >= 1)
+			ArrayList<Integer> counterHolder = new ArrayList<Integer>();
+			
+			for(int j = 0; j < frequencyNumbers.length; ++j)
 			{
-				
-				String firstHalfOfAlpha = distributedAlphabet.get(lastIndex).substring(0, substringIndex);
-				String lastHalfOfAlpha = distributedAlphabet.get(lastIndex).substring(substringIndex, distributedAlphabet.get(lastIndex).length());
-				distributedAlphabet.put(lastIndex, firstHalfOfAlpha);
-				distributedAlphabet.put(i, lastHalfOfAlpha);
-				System.out.println(distributedAlphabet);
+				if(ADFGX.freqTracker.get(letterPairs[i]) == frequencyNumbers[j] || 
+				   ADFGX.freqTracker.get(letterPairs[i]) == frequencyNumbers[j] + 1 || 
+				   ADFGX.freqTracker.get(letterPairs[i]) == frequencyNumbers[j] - 1)
+				{
+					if(!counterHolder.contains(frequencyNumbers[j]))
+						counterHolder.add(frequencyNumbers[j]);
+					distributedAlphabet.put(letterPairs[i], counterHolder);
+				}
 			}
-			else
-			{
-				distributedAlphabet.put(i, frequencyStrings[stringIndex]);
-				++stringIndex;
-				lastFreqNumber = tempFreqNumber;
-				System.out.println(distributedAlphabet);
-			}
-			lastIndex = i;
+			System.out.println(distributedAlphabet);
 		}
-		
-		System.out.println(distributedAlphabet);
+		permutateOverLetters(distributedAlphabet, letterPairs);
 		System.out.println("LEAVING ASSIGN METHOD");
 		return distributedAlphabet;
+	}
+	
+	public static void permutateOverLetters(Map<String, ArrayList<Integer>> availableLetters, String[] letterPairs)
+	{
+		
+		int[] perms = new int[availableLetters.size()];
+		int[] radices = new int[availableLetters.size()];
+		
+		System.out.println(perms.length + " " + radices.length);
+		System.out.println();
+		System.out.println(availableLetters.size());
+		System.out.println();
+		
+		for(int i = 0; i < availableLetters.size(); ++i)
+		{		
+			radices[i] = availableLetters.get(letterPairs[i]).size();		
+			System.out.print(radices[i] + " ");
+		}
+		System.out.println();
+		//int limitOfPermutations = frequencyStrings.length;
+		
+		boolean finished = false;
+		while(!finished)
+		{
+			for(int i = 0; i < perms.length; ++i)
+			{
+				//Stringperms[i];
+					//System.out.println(j);
+					
+					for(int k = 0 ; k < availableLetters.size(); ++k)
+					{
+						
+					}
+				//}
+			}
+			
+			perms[0] += 1;
+			for(int i = 0; i < perms.length; ++i)
+	        	System.out.print(perms[i] + " ");
+	        System.out.println();
+		    if (perms[0] == radices[0])
+		    {
+		      int radixsub = 0;
+		      while (perms[radixsub] == radices[radixsub])
+		      {
+		        perms[radixsub] = 0;
+		        radixsub += 1;
+		        if (radixsub >= radices.length)
+		        {
+		        	System.out.println("FINISHED");
+		        	finished = true;
+		            break;
+		        } // if (radixsub >= perms.size())
+		        perms[radixsub] += 1;
+		      } // while (perms.at(radixsub) == limitOfPermutations)
+		      for(int i = 0; i < perms.length; ++i)
+		        	System.out.print(perms[i] + " ");
+		        System.out.println();
+		    } // if (perms.at(0) == limitOfPermutations)
+		}
+	}
+	
+	public void permutateOverLetters()
+	{
+		
 	}
 }
