@@ -257,7 +257,7 @@ public class LetterFrequency {
 	{
 		
  		int[] perms = new int[availableLetters.size()];
-		int[] radices = new int[availableLetters.size()];
+		int[][] radices = new int[availableLetters.size()][];
 		
 		System.out.println(perms.length + " " + radices.length);
 		System.out.println();
@@ -266,64 +266,36 @@ public class LetterFrequency {
 		System.out.println("RADIXES");
 		for(int i = 0; i < availableLetters.size(); ++i)
 		{		
-			radices[i] = availableLetters.get(letterPairs[i]).size(); // Use a for loop to access(?)
+			radices[i].length = availableLetters.get(letterPairs[i]).size();	
+			for(int j = 0)
 			System.out.print(radices[i] + " ");
 		}
 		System.out.println();
 		//int limitOfPermutations = frequencyStrings.length;
 		
 		boolean finished = false;
-		//Permutates over which alphabet to use
 		while(!finished)
-		{	
-			int[] permsInner = new int[availableLetters.size()];
-			int[] radicesInner = new int[availableLetters.size()];
-			boolean done = false;
-			for(int i = 0; i < frequencyStrings.length; ++i)
+		{
+			for(int i = 0; i < perms.length; ++i)
 			{
-				radicesInner[i] = frequencyStrings[i].length();
-			}
-			
-			//Permutates over the letters of the alphabet
-			while(!done)
-			{	
-				System.out.println("CURR LETTERS");
-				for(int i = 0; i < radicesInner.length; ++i)
-				{
-					if(frequencyStrings[perms[i]].length() > permsInner[i])
-						System.out.print(frequencyStrings[perms[i]].charAt(permsInner[i]) + " " + permsInner[i] + " ");
-					else
+				//Stringperms[i];
+					//System.out.println(j);
+					
+					for(int k = 0 ; k < availableLetters.size(); ++k)
 					{
-						System.out.print("N/A ");
-						done = true; 
+						
 					}
-				}
-				System.out.println();
-				
-				permsInner[0] += 1;
-			    if (permsInner[0] == radicesInner[0])
-			    {
-			      int radixsub = 0;
-			      while (radicesInner[radixsub] == permsInner[radixsub])
-			      {
-			    	permsInner[radixsub] = 0;
-			        radixsub += 1;
-			        if (radixsub >= radicesInner.length)
-			        {
-			        	System.out.println("FINISHED");
-			        	done = true;
-			            break;
-			        } // if (radixsub >= perms.size())
-			        permsInner[radixsub] += 1;
-			      } // while (perms.at(radixsub) == limitOfPermutations)
-			    } // if (perms.at(0) == limitOfPermutations)
+				//}
 			}
 			
 			perms[0] += 1;
+			for(int i = 0; i < perms.length; ++i)
+	        	System.out.print(perms[i] + " ");
+	        System.out.println();
 		    if (perms[0] == radices[0])
 		    {
 		      int radixsub = 0;
-		      while (radices[radixsub] == perms[radixsub])
+		      while (perms[radixsub] == radices[radixsub])
 		      {
 		        perms[radixsub] = 0;
 		        radixsub += 1;
@@ -335,6 +307,9 @@ public class LetterFrequency {
 		        } // if (radixsub >= perms.size())
 		        perms[radixsub] += 1;
 		      } // while (perms.at(radixsub) == limitOfPermutations)
+		     for(int i = 0; i < perms.length; ++i)
+		        	System.out.print(perms[i] + " ");
+		        System.out.println();
 		    } // if (perms.at(0) == limitOfPermutations)
 		}
 	}

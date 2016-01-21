@@ -273,7 +273,6 @@ public class LetterFrequency {
 		//int limitOfPermutations = frequencyStrings.length;
 		
 		boolean finished = false;
-		//Permutates over which alphabet to use
 		while(!finished)
 		{	
 			int[] permsInner = new int[availableLetters.size()];
@@ -284,14 +283,13 @@ public class LetterFrequency {
 				radicesInner[i] = frequencyStrings[i].length();
 			}
 			
-			//Permutates over the letters of the alphabet
 			while(!done)
 			{	
 				System.out.println("CURR LETTERS");
 				for(int i = 0; i < radicesInner.length; ++i)
 				{
 					if(frequencyStrings[perms[i]].length() > permsInner[i])
-						System.out.print(frequencyStrings[perms[i]].charAt(permsInner[i]) + " " + permsInner[i] + " ");
+						System.out.print(frequencyStrings[perms[i]].charAt(permsInner[i]) + " " + perms[i] + " ");
 					else
 					{
 						System.out.print("N/A ");

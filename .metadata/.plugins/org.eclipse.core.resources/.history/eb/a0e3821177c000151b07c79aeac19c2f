@@ -266,55 +266,36 @@ public class LetterFrequency {
 		System.out.println("RADIXES");
 		for(int i = 0; i < availableLetters.size(); ++i)
 		{		
-			radices[i] = availableLetters.get(letterPairs[i]).size(); // Use a for loop to access(?)
+			radices[i] = availableLetters.get(letterPairs[i]).size();
 			System.out.print(radices[i] + " ");
 		}
 		System.out.println();
 		//int limitOfPermutations = frequencyStrings.length;
 		
 		boolean finished = false;
-		//Permutates over which alphabet to use
 		while(!finished)
 		{	
 			int[] permsInner = new int[availableLetters.size()];
 			int[] radicesInner = new int[availableLetters.size()];
-			boolean done = false;
-			for(int i = 0; i < frequencyStrings.length; ++i)
-			{
-				radicesInner[i] = frequencyStrings[i].length();
-			}
-			
-			//Permutates over the letters of the alphabet
-			while(!done)
+			while(!finished)
 			{	
-				System.out.println("CURR LETTERS");
-				for(int i = 0; i < radicesInner.length; ++i)
-				{
-					if(frequencyStrings[perms[i]].length() > permsInner[i])
-						System.out.print(frequencyStrings[perms[i]].charAt(permsInner[i]) + " " + permsInner[i] + " ");
-					else
-					{
-						System.out.print("N/A ");
-						done = true; 
-					}
-				}
-				System.out.println();
 				
-				permsInner[0] += 1;
-			    if (permsInner[0] == radicesInner[0])
+				
+				perms[0] += 1;
+			    if (perms[0] == radices[0])
 			    {
 			      int radixsub = 0;
-			      while (radicesInner[radixsub] == permsInner[radixsub])
+			      while (radices[radixsub] == perms[radixsub])
 			      {
-			    	permsInner[radixsub] = 0;
+			        perms[radixsub] = 0;
 			        radixsub += 1;
-			        if (radixsub >= radicesInner.length)
+			        if (radixsub >= radices.length)
 			        {
 			        	System.out.println("FINISHED");
-			        	done = true;
+			        	finished = true;
 			            break;
 			        } // if (radixsub >= perms.size())
-			        permsInner[radixsub] += 1;
+			        perms[radixsub] += 1;
 			      } // while (perms.at(radixsub) == limitOfPermutations)
 			    } // if (perms.at(0) == limitOfPermutations)
 			}
