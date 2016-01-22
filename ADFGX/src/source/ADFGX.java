@@ -69,7 +69,7 @@ public class ADFGX {
 		freqTracker.clear();
 		listForFreqAna.clear();
 		
-		Alphabet.clear();
+		//Alphabet.clear();
 	} /** public static void clear() **/
 	
 	/************************************************************************
@@ -153,7 +153,7 @@ public class ADFGX {
 		char[] individualChars = inputKey.toCharArray();
 		Arrays.sort(individualChars);
 		String columnDelim = new String(individualChars);
-		System.out.println("*SORTED ALPHABETICALLY: " + columnDelim + " ROW LENGTH: " + individualChars.length + "*");
+		//System.out.println("*SORTED ALPHABETICALLY: " + columnDelim + " ROW LENGTH: " + individualChars.length + "*");
 		
 		int rowLength = getLengthOfColumns(columnDelim);
 	
@@ -167,7 +167,7 @@ public class ADFGX {
 		int col = 0;
 		int row = 0;
 		
-		System.out.println("*ORIGINAL INPUT CIPHERTEXT*:");
+		//System.out.println("*ORIGINAL INPUT CIPHERTEXT*:");
 		
 		BufferedReader readerMapped = Resources.openFile_Reader("adfgxMapped");
 		String lineMapped = "";
@@ -177,10 +177,10 @@ public class ADFGX {
 			for(String part : lineMapped.split("\\s+"))
 			{	
 				holderForText.get(col).add(part);
-				System.out.print(holderForText.get(col).get(row));
+				//System.out.print(holderForText.get(col).get(row));
 				++col;
 			} // for(String part : line)
-			System.out.println();
+			//System.out.println();
 			col = 0;
 			++row;
 		} // for(String line : Files.readAllLines)
@@ -190,7 +190,7 @@ public class ADFGX {
 			columnMap.put(columnDelim.charAt(tempCol), holderForText.get(tempCol));
 		} // for(int tempCol = 0; tempCol < colDelim.length(); ++tempCol)
 		
-		System.out.println();
+		//System.out.println();
 		addToListFreqAna(inputKey);
 	} /** public static void sortBasedOnKeyword(String inputKey) throws IOException **/
 	
@@ -256,7 +256,7 @@ public class ADFGX {
 		BufferedWriter writer = Resources.openFile_Writer("adfgxSolved");
 		String str = "";
 		
-		System.out.println("*SORTING BASED ON KEY...*");
+		//System.out.println("*SORTING BASED ON KEY...*");
 		for(int j = 0; j < columnMap.get(inputKey.charAt(0)).size(); ++j)
 		{
 			for(int i = 0; i < columnMap.size(); ++i)
@@ -269,18 +269,18 @@ public class ADFGX {
 				if(str.length() == 2)
 				{
 					listForFreqAna.add(str);
-					System.out.print(str + " ");
+					//System.out.print(str + " ");
 					str = "";
 				} // if(str.length() == 2)
 				
 			} // for(int i = 0; i < columnMap.size(); ++i)
 			writer.newLine();
-			System.out.println();
+			//System.out.println();
 		} // for(int j = 0; j < columnMap.get(inputKey.charAt(0)).length; ++j)
 		
 		Resources.closeFile(writer, "adfgxSolved");
 		
-		System.out.println("*SORTING COMPLETE.*");
+		//System.out.println("*SORTING COMPLETE.*");
 	} /** private static void addToListFreqAna(String inputKey) throws FileNotFoundException **/
 	
 	
@@ -315,7 +315,7 @@ public class ADFGX {
 	private static void constructAlphabet() throws IOException
 	{
 		alphaClass.constructAlphabet();
-		Alphabet.displayAlphabet();
+		//Alphabet.displayAlphabet();
 	} /** private static void constructAlphabet() **/
 	
 	/************************************************************************
@@ -335,6 +335,15 @@ public class ADFGX {
 	 * 		or column first respectively
 	 * @throws IOException 
 	 */
+	//static int counter = 0;
+	public static void constructPhrase(String[][] mixedAlphabet, BufferedWriter writer) throws IOException
+	{
+		//BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations");
+		constructPhrase(mixedAlphabet, writer, "row");
+		//Resources.closeFile(writer, "adfgxPermutations");
+		//++counter;
+	}
+	
 	public static void constructPhrase(String[][] mixedAlphabet, BufferedWriter writer, String rowOrColumnFirst) throws IOException
 	{
 		String holderForText = "";
@@ -362,12 +371,12 @@ public class ADFGX {
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
 		
 		//System.out.println((holderForText.toLowerCase().contains("the")));
-		//if(holderForText.toLowerCase().contains("the"))
-		//{
+		if(holderForText.toLowerCase().contains("the"))
+		{
 			//System.out.println(holderForText);
 			writer.write(holderForText);
 			writer.newLine();
-		//}
+		}
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
 	
 	/************************************************************************

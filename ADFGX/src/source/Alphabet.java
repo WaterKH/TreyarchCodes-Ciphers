@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class Alphabet {
 
-	public static String[][] alphabet;
+	public String[][] alphabet;
 	//final static String frequentLetters = "ETAOINSH";
 	//final static String infrequentLetters = "RDLCUMWFGYPBVKJXQZ";
 	//public static ArrayList<String> freqLettArr = new ArrayList<String>();
@@ -52,6 +52,20 @@ public class Alphabet {
 	public Alphabet(String[][] tempAlpha)
 	{
 		alphabet = tempAlpha;
+		/*for(int i = 0; i < tempAlpha.length; ++i)
+		{
+			for(int j = 0; j < tempAlpha[i].length; ++j)
+			{
+				if()
+				{
+					alphabet[i][j] = tempAlpha[i][j];
+				}
+				else
+				{
+					alphabet[i][j] = "-";
+				}
+			}
+		}*/
 	} /** public Alphabet(String[][] tempAlpha) **/
 	
 	/************************************************************************
@@ -60,7 +74,7 @@ public class Alphabet {
 	 * Clears freqLettArr, infreqLettArr, and alreadyUsed
 	 * 
 	 */
-	public static void clear()
+	public void clear()
 	{
 		//freqLettArr.clear();
 		//infreqLettArr.clear();
@@ -235,7 +249,7 @@ public class Alphabet {
 		Resources.closeFile(IFwriter, "Infreq");
 		Resources.endTimer();
 		
-		System.out.println("** PERMUTATIONS COMPLETED **");
+		//System.out.println("** PERMUTATIONS COMPLETED **");
 
 		//Resources.startTimer();
 		
@@ -288,7 +302,7 @@ public class Alphabet {
 	 * 
 	 * @param ArrayList<String> alphabetPos, String[] line, int index, String letters
 	 */
-	public static void rearrangeAlphabet(ArrayList<String> alphabetPos, String[] line, int index, String letters)
+	public void rearrangeAlphabet(ArrayList<String> alphabetPos, String[] line, int index, String letters)
 	{
 		for(int i = 0; i < alphabet.length; ++i)
 		{
@@ -377,7 +391,7 @@ public class Alphabet {
 		} // for(String character : stringToUse)
 		
 		permuteString("", tempString, writer);
-		System.out.println(counter);
+		//System.out.println(counter);
 		counter = 0;
 	} /** public static void permuteString(ArrayList<String> stringToUse, BufferedWriter writer) throws IOException **/
 	
@@ -440,7 +454,7 @@ public class Alphabet {
 			tempStringArr.add(str);
 		} // for(String str : tempStringSet)
 		
-		System.out.println("*SORTING...*");
+		//System.out.println("*SORTING...*");
 		for(int i = 0; i < tempStringArr.size(); ++i)
 		{
 			for(int j = 0; j < tempStringArr.size(); ++j)
@@ -466,13 +480,13 @@ public class Alphabet {
 			//System.out.println(tempStringArr.get(i) + " " + tempIntArr.get(i));
 			if(!(tempIntArr.get(i) < 2))
 			{
-				//System.out.println(tempStringArr.get(i) + " " + tempIntArr.get(i));
+				////System.out.println(tempStringArr.get(i) + " " + tempIntArr.get(i));
 				paramMap.put(tempStringArr.get(i), tempIntArr.get(i));
 			}
 		} // for(int i = tempStringArr.size() - 1; i >= 0; --i)	
-		System.out.println(paramMap);
+		//System.out.println(paramMap);
 		LetterFrequency.distributeLetters(paramMap);
-		System.out.println("*SORT SUCCESFUL*");
+		//System.out.println("*SORT SUCCESFUL*");
 	} /** public void sortMap(Map<String, Integer> tempMap) **/
 	
 	/************************************************************************
@@ -480,7 +494,7 @@ public class Alphabet {
 	 * Simple toString - Just named differently
 	 * 
 	 */
-	public static void displayAlphabet()
+	public void displayAlphabet()
 	{	
 		System.out.println();
 		System.out.println("*ADFGX ALPHABET POLYBIUS SQUARE*:");
