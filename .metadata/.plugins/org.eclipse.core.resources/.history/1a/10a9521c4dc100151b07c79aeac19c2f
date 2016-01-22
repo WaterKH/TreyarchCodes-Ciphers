@@ -327,12 +327,12 @@ public class LetterFrequency {
 		//Permutates over which alphabet to use
 		while(!finished)
 		{	
-			//for(int i = 0; i < perms.length; ++i)
-			//{
-				//System.out.print(perms[i] + " ");
+			for(int i = 0; i < perms.length; ++i)
+			{
+				System.out.print(perms[i] + " ");
 				
-			//}
-			//System.out.println();
+			}
+			System.out.println();
 			// First number sequence that will register a hit
 			//if(perms[6] == 3 && perms[5] == 3 && perms[4] == 2 && perms[3] == 2)
 			//{
@@ -372,11 +372,11 @@ public class LetterFrequency {
 			//Permutates over the letters of the alphabet
 			while(!done)
 			{	
-				for(int i = 0; i < permsInner.length; ++i)
-				{
-					System.out.print(permsInner[i] + " ");
-				}
-				System.out.println();
+				//for(int i = 0; i < permsInner.length; ++i)
+				//{
+					//System.out.print(permsInner[i] + " ");
+				//}
+				//System.out.println();
 				//System.out.println("CURR LETTERS");
 				ArrayList<String> contained = new ArrayList<String>();
 				boolean passed = true;

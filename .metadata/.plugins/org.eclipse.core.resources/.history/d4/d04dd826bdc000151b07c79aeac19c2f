@@ -18,8 +18,7 @@ public class LetterFrequency {
 	public static final String VERY_FREQ_LETTERS = "TAOI"; // Mix this in if there are multiple top letters - otherwise this will be second
 	public static final String FREQ_LETTERS = "NSHR"; // Used for Mid range 3s
 	public static final String INFREQ_LETTERS = "DL"; // Used for 2s
-	public static final String VERY_INFREQ_LETTERS = "CUMWFG"; // 2s as well?
-	//public static final String VERY_VERY_INFREQ_LETTERS = "YPBVK";
+	public static final String VERY_INFREQ_LETTERS = "CUMWFGYPBVK"; // Used for 2s
 	//public static final String MOST_INFREQ_LETTERS = "JXQZ";
 	static int counter = 0;
 	static Map<String, String> charsBasedOnFrequency = new HashMap<String, String>();
@@ -300,8 +299,6 @@ public class LetterFrequency {
 		for(int i = 0; i < indexes.size(); ++i)
 		{
 			radices[i] = indexes.get(i).get(indexes.get(i).size() - 1) + 1;
-			while(radices[i] > 5)
-				radices[i] = radices[i] - 1;
 			//System.out.println(radices[i] + " ");
 		}
 		
@@ -327,12 +324,13 @@ public class LetterFrequency {
 		//Permutates over which alphabet to use
 		while(!finished)
 		{	
-			//for(int i = 0; i < perms.length; ++i)
-			//{
-				//System.out.print(perms[i] + " ");
-				
-			//}
-			//System.out.println();
+			for(int i = 0; i < perms.length; ++i)
+			{
+				System.out.print(perms[i] + " ");
+				//if(i == perms.length - 1)
+			//		System.out.println();
+			}
+System.out.println()l
 			// First number sequence that will register a hit
 			//if(perms[6] == 3 && perms[5] == 3 && perms[4] == 2 && perms[3] == 2)
 			//{
@@ -372,11 +370,11 @@ public class LetterFrequency {
 			//Permutates over the letters of the alphabet
 			while(!done)
 			{	
-				for(int i = 0; i < permsInner.length; ++i)
-				{
-					System.out.print(permsInner[i] + " ");
-				}
-				System.out.println();
+				//for(int i = 0; i < permsInner.length; ++i)
+				//{
+					//System.out.print(permsInner[i] + " ");
+				//}
+				//System.out.println();
 				//System.out.println("CURR LETTERS");
 				ArrayList<String> contained = new ArrayList<String>();
 				boolean passed = true;

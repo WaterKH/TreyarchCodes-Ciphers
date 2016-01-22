@@ -298,9 +298,9 @@ public class ADFGX {
 	public static void createPermutations(String choiceRorC) throws IOException
 	{
 		constructAlphabet();
-		//BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations");
-		//Alphabet.permutateLists(writer, choiceRorC);
-		//Resources.closeFile(writer, "adfgxPermutations");
+		BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations");
+		Alphabet.permutateLists(writer, choiceRorC);
+		Resources.closeFile(writer, "adfgxPermutations");
 	} /** public static void createPermutations(int size) throws FileNotFoundException **/
 	
 	/************************************************************************

@@ -235,18 +235,18 @@ public class Alphabet {
 	{
 		Resources.startTimer();
 		
-		//BufferedWriter Fwriter = Resources.openFile_Writer("Freq");
+		BufferedWriter Fwriter = Resources.openFile_Writer("Freq");
 		//permuteString(freqLettArr, Fwriter);
 		
-		//Resources.closeFile(Fwriter, "Freq");
+		Resources.closeFile(Fwriter, "Freq");
 		Resources.endTimer();
 		
 		Resources.startTimer();
 		
-		//BufferedWriter IFwriter = Resources.openFile_Writer("Infreq");
+		BufferedWriter IFwriter = Resources.openFile_Writer("Infreq");
 		//permuteString(infreqLettArr, IFwriter);
 		
-		//Resources.closeFile(IFwriter, "Infreq");
+		Resources.closeFile(IFwriter, "Infreq");
 		Resources.endTimer();
 		
 		//System.out.println("** PERMUTATIONS COMPLETED **");
