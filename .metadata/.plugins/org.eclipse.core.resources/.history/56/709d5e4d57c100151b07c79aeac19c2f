@@ -51,8 +51,8 @@ public class ADFGX {
 			
 			//System.out.print("Row or Column Index first?");
 			String choiceRorC = "row";
-			Alphabet.sortMap(ADFGX.freqTracker);
-			//createPermutations(choiceRorC);
+			
+			createPermutations(choiceRorC);
 			
 			clear();
 			//Resources.deleteFile("Infreq" + line);

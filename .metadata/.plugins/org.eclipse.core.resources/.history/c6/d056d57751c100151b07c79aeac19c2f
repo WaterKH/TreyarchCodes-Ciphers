@@ -139,9 +139,9 @@ public class LetterFrequency {
 			}
 		}
 		
-		assignLettersToFrequencyNumbers(maxIntHolder, stringHolder);
+		Map<String, ArrayList<Integer>> distributedAlphabet = assignLettersToFrequencyNumbers(maxIntHolder, stringHolder);
 		
-		/*int tempInt = 0;
+		int tempInt = 0;
 		int stringTracker = 0;
 		int[] index = new int[frequencyStrings.length];
 		
@@ -163,7 +163,7 @@ public class LetterFrequency {
 			tempInt = maxIntHolder[i];
 		}
 		
-		//System.out.println("CHARS: " + charsBasedOnFrequency);*/
+		//System.out.println("CHARS: " + charsBasedOnFrequency);
 		
 	}
 	
@@ -181,7 +181,7 @@ public class LetterFrequency {
 	{
 		//System.out.println("ENTERING PERMUTATIONS");
 		//System.out.println(counter);
-		//permuteString("", stringToUse, stringTracker, indexOfStringTracker, currIndex, stringHolder);
+		permuteString("", stringToUse, stringTracker, indexOfStringTracker, currIndex, stringHolder);
 		counter = 0;
 	} /** public static void permuteString(ArrayList<String> stringToUse, BufferedWriter writer) throws IOException **/
 	
@@ -372,11 +372,11 @@ public class LetterFrequency {
 			//Permutates over the letters of the alphabet
 			while(!done)
 			{	
-				//for(int i = 0; i < permsInner.length; ++i)
-				//{
-					//System.out.print(permsInner[i] + " ");
-				//}
-				//System.out.println();
+				for(int i = 0; i < permsInner.length; ++i)
+				{
+					System.out.print(permsInner[i] + " ");
+				}
+				System.out.println();
 				//System.out.println("CURR LETTERS");
 				ArrayList<String> contained = new ArrayList<String>();
 				boolean passed = true;
@@ -464,4 +464,6 @@ public class LetterFrequency {
 		}
 		Resources.closeFile(writer, "adfgxPermutations");
 	}
+	
+
 }

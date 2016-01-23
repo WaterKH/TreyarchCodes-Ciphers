@@ -433,7 +433,7 @@ public class Alphabet {
 	 * @param Map<String, Integer> tempMap
 	 * @throws IOException 
 	 */
-	public static void sortMap(Map<String, Integer> tempMap) throws IOException
+	public void sortMap(Map<String, Integer> tempMap) throws IOException
 	{
 		Set<String> tempStringSet = tempMap.keySet();
 		

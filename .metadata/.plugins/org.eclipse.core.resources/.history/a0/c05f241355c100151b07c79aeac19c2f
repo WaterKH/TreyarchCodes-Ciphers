@@ -18,7 +18,7 @@ public class LetterFrequency {
 	public static final String VERY_FREQ_LETTERS = "TAOI"; // Mix this in if there are multiple top letters - otherwise this will be second
 	public static final String FREQ_LETTERS = "NSHR"; // Used for Mid range 3s
 	public static final String INFREQ_LETTERS = "DL"; // Used for 2s
-	public static final String VERY_INFREQ_LETTERS = "CUMWFG"; // 2s as well?
+	//public static final String VERY_INFREQ_LETTERS = "CUMWFG"; // 2s as well?
 	//public static final String VERY_VERY_INFREQ_LETTERS = "YPBVK";
 	//public static final String MOST_INFREQ_LETTERS = "JXQZ";
 	static int counter = 0;
@@ -26,7 +26,7 @@ public class LetterFrequency {
 	static ArrayList<String> freqPairs = new ArrayList<String>();
 	
 	public static final String[] frequencyStrings = {MOST_FREQ_LETTER, VERY_FREQ_LETTERS, FREQ_LETTERS, 
-													 INFREQ_LETTERS, VERY_INFREQ_LETTERS};//, MOST_INFREQ_LETTERS};
+													 INFREQ_LETTERS}; //VERY_INFREQ_LETTERS};//, MOST_INFREQ_LETTERS};
 	public static ArrayList<String> alphabetContained = new ArrayList<String>();
 	
 	/************************************************************************
@@ -139,9 +139,9 @@ public class LetterFrequency {
 			}
 		}
 		
-		assignLettersToFrequencyNumbers(maxIntHolder, stringHolder);
+		Map<String, ArrayList<Integer>> distributedAlphabet = assignLettersToFrequencyNumbers(maxIntHolder, stringHolder);
 		
-		/*int tempInt = 0;
+		int tempInt = 0;
 		int stringTracker = 0;
 		int[] index = new int[frequencyStrings.length];
 		
@@ -163,7 +163,7 @@ public class LetterFrequency {
 			tempInt = maxIntHolder[i];
 		}
 		
-		//System.out.println("CHARS: " + charsBasedOnFrequency);*/
+		//System.out.println("CHARS: " + charsBasedOnFrequency);
 		
 	}
 	
@@ -181,7 +181,7 @@ public class LetterFrequency {
 	{
 		//System.out.println("ENTERING PERMUTATIONS");
 		//System.out.println(counter);
-		//permuteString("", stringToUse, stringTracker, indexOfStringTracker, currIndex, stringHolder);
+		permuteString("", stringToUse, stringTracker, indexOfStringTracker, currIndex, stringHolder);
 		counter = 0;
 	} /** public static void permuteString(ArrayList<String> stringToUse, BufferedWriter writer) throws IOException **/
 	
@@ -464,4 +464,6 @@ public class LetterFrequency {
 		}
 		Resources.closeFile(writer, "adfgxPermutations");
 	}
+	
+
 }

@@ -51,8 +51,8 @@ public class ADFGX {
 			
 			//System.out.print("Row or Column Index first?");
 			String choiceRorC = "row";
-			Alphabet.sortMap(ADFGX.freqTracker);
-			//createPermutations(choiceRorC);
+			
+			createPermutations(choiceRorC);
 			
 			clear();
 			//Resources.deleteFile("Infreq" + line);
@@ -376,12 +376,12 @@ public class ADFGX {
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
 		
 		//System.out.println((holderForText.toLowerCase().contains("the")));
-		if(holderForText.toLowerCase().contains("the"))
-		{
+		//if(holderForText.toLowerCase().contains("the"))
+		//{
 			//System.out.println(holderForText);
-			writer.write(holderForText);
-			writer.newLine();
-		}
+			//writer.write(holderForText);
+		//	writer.newLine();
+	//	}
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
 	
 	/************************************************************************

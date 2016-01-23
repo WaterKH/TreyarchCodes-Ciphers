@@ -36,8 +36,6 @@ public class ADFGX {
 		BufferedReader reader = Resources.openFile_Reader("CipherKeys");
 		//String line = "";
 		
-		Resources.startTimer();
-		
 		while((line = reader.readLine()) != null)
 		{
 			System.out.println("****" + line.toUpperCase() + "****");
@@ -51,15 +49,12 @@ public class ADFGX {
 			
 			//System.out.print("Row or Column Index first?");
 			String choiceRorC = "row";
-			Alphabet.sortMap(ADFGX.freqTracker);
-			//createPermutations(choiceRorC);
+			
+			createPermutations(choiceRorC);
 			
 			clear();
 			//Resources.deleteFile("Infreq" + line);
 		}
-		
-		Resources.endTimer();
-		
 	} /** public static void main(String[] args) throws IOException **/
 	
 	/************************************************************************

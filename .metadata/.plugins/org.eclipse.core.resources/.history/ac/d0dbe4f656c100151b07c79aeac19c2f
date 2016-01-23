@@ -410,7 +410,7 @@ public class LetterFrequency {
 						
 						for(int i = 0; i < radicesInner.length; ++i)
 						{
-							//System.out.print("[" + letterPairs[i] + "] " + frequencyStrings[perms[i]].charAt(permsInner[i]) + " " + permsInner[i] + " ");
+							System.out.print("[" + letterPairs[i] + "] " + frequencyStrings[perms[i]].charAt(permsInner[i]) + " " + permsInner[i] + " ");
 							//System.out.print(permsInner[i] + " ");
 							int[] indexOfAlphabet = ADFGX.getAlphabetIndexFromCharacters(letterPairs[i]);
 							alphabet.alphabet[indexOfAlphabet[0]][indexOfAlphabet[1]] = Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i]));

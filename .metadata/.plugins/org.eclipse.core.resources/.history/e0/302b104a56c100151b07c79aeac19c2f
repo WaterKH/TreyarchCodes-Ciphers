@@ -88,12 +88,12 @@ public class Resources {
 	public static void startTimer()
 	{
 		start = System.currentTimeMillis();
-		System.out.println("--- Timer Started ---");
+		//System.out.println("--- Timer Started ---");
 	} /** public static void startTimer() **/
 	
 	public static void endTimer()
 	{
 		end = System.currentTimeMillis();
-		System.out.println("--- Time taken to write/read lines = "+ ((end-start)/1000) + " seconds. ---");	
+		//System.out.println("--- Time taken to write/read lines = "+ ((end-start)/1000) + " seconds. ---");	
 	} /** public static void endTimer() **/
 }

@@ -148,7 +148,7 @@ public class Alphabet {
 			
 		} // for(int i = 0; i < ADFGX.listForFreqAna.size(); ++i)*/
 		
-		//this.constructListsOfFrequencies();
+		this.constructListsOfFrequencies();
 	} /** public void constructAlphabet() **/
 	
 	/************************************************************************
@@ -226,21 +226,21 @@ public class Alphabet {
 	 */
 	public static void permutateLists(BufferedWriter constructWriter, String choice) throws IOException
 	{
-		//Resources.startTimer();
+		Resources.startTimer();
 		
 		//BufferedWriter Fwriter = Resources.openFile_Writer("Freq");
 		//permuteString(freqLettArr, Fwriter);
 		
 		//Resources.closeFile(Fwriter, "Freq");
-		//Resources.endTimer();
+		Resources.endTimer();
 		
-		//Resources.startTimer();
+		Resources.startTimer();
 		
 		//BufferedWriter IFwriter = Resources.openFile_Writer("Infreq");
 		//permuteString(infreqLettArr, IFwriter);
 		
 		//Resources.closeFile(IFwriter, "Infreq");
-		//Resources.endTimer();
+		Resources.endTimer();
 		
 		//System.out.println("** PERMUTATIONS COMPLETED **");
 
@@ -297,7 +297,7 @@ public class Alphabet {
 	 */
 	public void rearrangeAlphabet(ArrayList<String> alphabetPos, String[] line, int index, String letters)
 	{
-		/*for(int i = 0; i < alphabet.length; ++i)
+		for(int i = 0; i < alphabet.length; ++i)
 		{
 			for(int j = 0; j < alphabet[i].length; ++j)
 			{
@@ -361,7 +361,7 @@ public class Alphabet {
 				
 			} // for(int j = 0; j < alphabet[i].length; ++j)
 			
-		} // for(int i = 0; i < alphabet.length; ++i)*/
+		} // for(int i = 0; i < alphabet.length; ++i)
 	} /** public static void rearrangeAlphabet(ArrayList<String> alphabetPos, String[] line, int index, String letters) **/
 	
 	/************************************************************************
@@ -383,7 +383,7 @@ public class Alphabet {
 			tempString += character;
 		} // for(String character : stringToUse)
 		
-	//	permuteString("", tempString, writer);
+		permuteString("", tempString, writer);
 		//System.out.println(counter);
 		counter = 0;
 	} /** public static void permuteString(ArrayList<String> stringToUse, BufferedWriter writer) throws IOException **/
@@ -433,7 +433,7 @@ public class Alphabet {
 	 * @param Map<String, Integer> tempMap
 	 * @throws IOException 
 	 */
-	public static void sortMap(Map<String, Integer> tempMap) throws IOException
+	public void sortMap(Map<String, Integer> tempMap) throws IOException
 	{
 		Set<String> tempStringSet = tempMap.keySet();
 		

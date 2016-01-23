@@ -464,4 +464,6 @@ public class LetterFrequency {
 		}
 		Resources.closeFile(writer, "adfgxPermutations");
 	}
+	
+
 }
