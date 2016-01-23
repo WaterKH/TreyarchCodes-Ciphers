@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ADFGX {
 
@@ -20,8 +21,9 @@ public class ADFGX {
 	static Map<Character, ArrayList<String>> columnMap = new HashMap<Character, ArrayList<String>>();
 	static Map<String, Integer> freqTracker = new HashMap<String, Integer>();
 	static ArrayList<String> listForFreqAna = new ArrayList<String>();
-	static final String wordDelimiter = "the";
 	public static String line = "";
+	static int finalRowCount = 0;
+	static String wordToSearchFor = "";
 	
 	/************************************************************************
 	 * 
@@ -33,10 +35,14 @@ public class ADFGX {
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		BufferedReader reader = Resources.openFile_Reader("CipherKeys");
-		//String line = "";
-		
 		Resources.startTimer();
+		
+		BufferedReader reader = Resources.openFile_Reader("CipherKeys");
+		
+		finalRowCount = getLengthOfColumns("abcdef");
+		System.out.print("What word would you like to look for? ");
+		Scanner keyboard = new Scanner(System.in);
+		wordToSearchFor = keyboard.nextLine();
 		
 		while((line = reader.readLine()) != null)
 		{
@@ -46,16 +52,10 @@ public class ADFGX {
 				
 			sortBasedOnKeyword(inputKeyword.toUpperCase());
 			LetterFrequency.frequencyAnalysis(listForFreqAna);
-			
-			//LetterFrequency.distributeLetters();
-			
-			//System.out.print("Row or Column Index first?");
-			String choiceRorC = "row";
+		
 			Alphabet.sortMap(ADFGX.freqTracker);
-			//createPermutations(choiceRorC);
 			
 			clear();
-			//Resources.deleteFile("Infreq" + line);
 		}
 		
 		Resources.endTimer();
@@ -73,8 +73,6 @@ public class ADFGX {
 		columnMap.clear();
 		freqTracker.clear();
 		listForFreqAna.clear();
-		
-		//Alphabet.clear();
 	} /** public static void clear() **/
 	
 	/************************************************************************
@@ -160,7 +158,7 @@ public class ADFGX {
 		String columnDelim = new String(individualChars);
 		//System.out.println("*SORTED ALPHABETICALLY: " + columnDelim + " ROW LENGTH: " + individualChars.length + "*");
 		
-		int rowLength = getLengthOfColumns(columnDelim);
+		int rowLength = finalRowCount;
 	
 		ArrayList<ArrayList<String>> holderForText = new ArrayList<ArrayList<String>>();
 		
@@ -288,41 +286,6 @@ public class ADFGX {
 		//System.out.println("*SORTING COMPLETE.*");
 	} /** private static void addToListFreqAna(String inputKey) throws FileNotFoundException **/
 	
-	
-	/************************************************************************
-	 * 
-	 * We first create an array of the size we pass into the method, then we
-	 *  add 0 - size to our array at 0 - size indexes respectively. We then
-	 *  create "adfgxPermutations" to keep track of our permutations and
-	 *  pass it in as a parameter to "generatePermutations"
-	 *  
-	 * 
-	 * @param String choiceRorC
-	 * @throws IOException 
-	 */
-	public static void createPermutations(String choiceRorC) throws IOException
-	{
-		//constructAlphabet();
-		//BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations");
-		//Alphabet.permutateLists(writer, choiceRorC);
-		//Resources.closeFile(writer, "adfgxPermutations");
-	} /** public static void createPermutations(int size) throws FileNotFoundException **/
-	
-	/************************************************************************
-	 * 
-	 * We initially create a 5x5 matrix and a temporary adder. We then run 
-	 *  a double for loop to access each index of the matrix. At each index
-	 *  we assign a letter of the alphabet, dependent upon j and the tempAdder.
-	 *  The temporary adder will shift the correct amount to account for the loop.
-	 * @throws IOException 
-	 *  
-	 */
-	private static void constructAlphabet() throws IOException
-	{
-		//alphaClass.constructAlphabet();
-		//Alphabet.displayAlphabet();
-	} /** private static void constructAlphabet() **/
-	
 	/************************************************************************
 	 * 
 	 * !!NOTE!! This method has you decide if it does row or column first
@@ -340,16 +303,7 @@ public class ADFGX {
 	 * 		or column first respectively
 	 * @throws IOException 
 	 */
-	//static int counter = 0;
-	public static void constructPhrase(String[][] mixedAlphabet, BufferedWriter writer) throws IOException
-	{
-		//BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations");
-		constructPhrase(mixedAlphabet, writer, "row");
-		//Resources.closeFile(writer, "adfgxPermutations");
-		//++counter;
-	}
-	
-	public static void constructPhrase(String[][] mixedAlphabet, BufferedWriter writer, String rowOrColumnFirst) throws IOException
+	public static void constructPhrase(String[][] mixedAlphabet, BufferedWriter writer, String alphabetIndexes, String letterIndexes) throws IOException
 	{
 		String holderForText = "";
 		for(int i = 0; i < listForFreqAna.size(); ++i)
@@ -357,29 +311,21 @@ public class ADFGX {
 			if(!listForFreqAna.get(i).contains("-"))
 			{
 				int[] tempHolder = getAlphabetIndexFromListIndex(i);
-				
-				switch(rowOrColumnFirst.toLowerCase())
+				if(!mixedAlphabet[tempHolder[0]][tempHolder[1]].equals("-"))
 				{
-				case "column":
-					holderForText += mixedAlphabet[tempHolder[1]][tempHolder[0]];
-					break;
-				case "row":
 					holderForText += mixedAlphabet[tempHolder[0]][tempHolder[1]];
-					break;
-				default:
-					holderForText += mixedAlphabet[tempHolder[0]][tempHolder[1]];
-					break;
-				} // switch(rowOrColumnFirst)
-				
+				}
+				else
+				{
+					holderForText += "[" + ADFGX_FROM_INDEX(tempHolder) + "]";
+				}				
 			} // if(!listForFreqAna.get(i).contains("-"))
 			
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
-		
-		//System.out.println((holderForText.toLowerCase().contains("the")));
-		if(holderForText.toLowerCase().contains("the"))
+
+		if(holderForText.toLowerCase().contains(wordToSearchFor))
 		{
-			//System.out.println(holderForText);
-			writer.write(holderForText);
+			writer.write(holderForText + "  -  " + alphabetIndexes + "  -  " + letterIndexes);
 			writer.newLine();
 		}
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
@@ -418,6 +364,36 @@ public class ADFGX {
 			break;
 		} // switch(value)
 		return tempVal;
+	} /** private static int ADFGX_Subs(char value) **/
+	
+	public static String ADFGX_FROM_INDEX(int[] index)
+	{
+		String tempStringVal = "";
+		for(int i = 0; i < index.length; ++i)
+		{
+			switch(index[i])
+			{
+			case 0:
+				tempStringVal += "A";
+				break;
+			case 1:
+				tempStringVal += "D";
+				break;
+			case 2:
+				tempStringVal += "F";
+				break;
+			case 3:
+				tempStringVal += "G";
+				break;
+			case 4:
+				tempStringVal += "X";
+				break;
+			default:
+				tempStringVal += "P";
+				break;
+			} // switch(value)
+		}
+		return tempStringVal;
 	} /** private static int ADFGX_Subs(char value) **/
 	
 }

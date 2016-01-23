@@ -24,7 +24,7 @@ public class Resources {
 		
 		//System.out.println("/// Opening /// " + fileName + " ...");
 		File file = new File("Null");
-		if(fileName.equals("CipherKeys"))
+		if(fileName.equals("CipherKeys") || fileName.equals("adfgxMapped"))
 			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ".txt");
 		else
 			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ADFGX.line + ".txt");
@@ -42,7 +42,7 @@ public class Resources {
 		
 		//System.out.println("/// Opening /// " + fileName + " ...");
 		File file = new File("Null");
-		if(fileName.equals("adfgxCipherText"))
+		if(fileName.equals("adfgxCipherText") || fileName.equals("adfgxMapped"))
 			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ".txt");
 		else
 			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ADFGX.line + ".txt");
