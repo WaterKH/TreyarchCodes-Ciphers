@@ -38,7 +38,7 @@ public class ADFGX {
 		Resources.startTimer();
 		
 		BufferedReader reader = Resources.openFile_Reader("CipherKeys");
-		int counter = 1;
+		int counter = 0;
 		
 		finalRowCount = getLengthOfColumns("abcdef");
 		System.out.print("What word would you like to look for? ");
@@ -47,7 +47,7 @@ public class ADFGX {
 		
 		while((line = reader.readLine()) != null)
 		{
-			System.out.println("****" + line.toUpperCase() + "****  -   " + counter);
+			System.out.println("****" + line.toUpperCase() + "****");
 			
 			String inputKeyword = line;
 				
@@ -55,7 +55,7 @@ public class ADFGX {
 			LetterFrequency.frequencyAnalysis(listForFreqAna);
 		
 			Alphabet.sortMap(ADFGX.freqTracker);
-			++counter;
+			
 			clear();
 		}
 		

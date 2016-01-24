@@ -55,7 +55,7 @@ public class ADFGX {
 			LetterFrequency.frequencyAnalysis(listForFreqAna);
 		
 			Alphabet.sortMap(ADFGX.freqTracker);
-			++counter;
+			
 			clear();
 		}
 		

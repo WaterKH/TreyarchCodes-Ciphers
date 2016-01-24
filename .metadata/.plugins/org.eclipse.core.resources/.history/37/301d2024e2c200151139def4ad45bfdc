@@ -47,7 +47,7 @@ public class ADFGX {
 		
 		while((line = reader.readLine()) != null)
 		{
-			System.out.println("****" + line.toUpperCase() + "****  -   " + counter);
+			System.out.println("****" + line.toUpperCase() + "****");
 			
 			String inputKeyword = line;
 				
@@ -55,7 +55,7 @@ public class ADFGX {
 			LetterFrequency.frequencyAnalysis(listForFreqAna);
 		
 			Alphabet.sortMap(ADFGX.freqTracker);
-			++counter;
+			
 			clear();
 		}
 		
