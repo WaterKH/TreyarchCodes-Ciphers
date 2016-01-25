@@ -27,7 +27,7 @@ public class LetterFrequency {
 	
 	public static final String[] frequencyStrings = {MOST_FREQ_LETTER, VERY_FREQ_LETTERS, FREQ_LETTERS, 
 													 INFREQ_LETTERS, VERY_INFREQ_LETTERS};//, MOST_INFREQ_LETTERS};
-	public static ArrayList<String> alphabetContained = new ArrayList<String>();
+	public static Map<Integer, String> alphabetContained = new HashMap<Integer, String>();
 	
 	/************************************************************************
 	 * 
@@ -171,7 +171,7 @@ public class LetterFrequency {
 	
 	public static void permutateOverLetters(Map<String, ArrayList<Integer>> availableLetters, String[] letterPairs, int[] frequencyNumbers) throws IOException
 	{
-		BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations");
+		BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations", "JUST TO ACCESS ANOTHER METHOD");
 		ArrayList<ArrayList<Integer>> tempIndexes = new ArrayList<ArrayList<Integer>>();
 		ArrayList<ArrayList<Integer>> indexes = new ArrayList<ArrayList<Integer>>();
 		
@@ -210,7 +210,7 @@ public class LetterFrequency {
 		for(int i = 0; i < indexes.size(); ++i)
 		{
 			radices[i] = indexes.get(i).get(indexes.get(i).size() - 1) + 1;
-			while(radices[i] > 5)
+			while(radices[i] > 4)
 				radices[i] = radices[i] - 1;
 		}
 		
@@ -241,15 +241,45 @@ public class LetterFrequency {
 			
 			for(int i = 0; i < indexes.size(); ++i)
 			{
-				if(perms[i] <= maxNumber[i] && perms[i] >= minNumber[i])
+				if(!(perms[i] <= maxNumber[i]))// && perms[i] >= minNumber[i])
 				{
-					//EMPTY ON PURPOSE
+					if(i - 1 > 0)
+					{
+						++perms[i - 1];
+						System.out.print(i + " - ");
+						//for(int j = 0; j < indexes.size(); ++j)
+							//System.out.print(perms[j] + " ");
+						//System.out.println();
+						for(int j = i; j < indexes.size(); ++j)
+						{
+							perms[j] = 0;
+						}
+						//for(int j = 0; j < indexes.size(); ++j)
+							//System.out.print(perms[j] + " ");
+						//System.out.println();
+						
+					}
+					i = 0;
 				}
-				else
+				if(!(perms[i] >= minNumber[i]))
+				{
+					
+					++perms[i];
+					//for(int j = 0; j < indexes.size(); ++j)
+						//System.out.print(perms[j] + " ");
+					//System.out.println();
+					
+					i = 0;
+					//for(int j = 0; j < indexes.size(); ++j)
+						//System.out.print(perms[j] + " ");
+					//System.out.println();
+				
+				}
+				/*else
 				{
 					done = true;
 					break;
-				}
+				}*/
 			}
 			int[] permsInner = new int[perms.length];
 			int[] radicesInner = new int[radices.length];
@@ -258,6 +288,10 @@ public class LetterFrequency {
 			{
 				for(int i = 0; i < perms.length; ++i)
 				{
+					if(perms[i] >= 5)
+					{
+						perms[i] = 4;
+					}
 					radicesInner[i] = frequencyStrings[perms[i]].length();
 				}
 			}
@@ -265,21 +299,21 @@ public class LetterFrequency {
 			//Permutates over the letters of the alphabet
 			while(!done)
 			{	
-				ArrayList<String> contained = new ArrayList<String>();
+				Map<Integer, String> contained = new HashMap<Integer, String>();
 				boolean passed = true;
 				
 				for(int i = 0; i < radicesInner.length; ++i)
 				{
-					if(frequencyStrings[perms[i]].length() > permsInner[i] && !contained.contains(Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i]))))
+					if(frequencyStrings[perms[i]].length() > permsInner[i] && !contained.containsValue(Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i]))))
 					{
-						//EMPTY ON PURPOSE
+						//EMPTY - TODO FIND A WAY TO SPEED UP PERMUTATION TIME
 					}
 					else
 					{
 						passed = false;
 						break;
 					}
-					contained.add(Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i])));
+					contained.put(i, Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i])));
 				}
 				
 				if(passed == true)
@@ -290,7 +324,7 @@ public class LetterFrequency {
 						tempStr += contained.get(i);
 					}
 					
-					if(!alphabetContained.contains(tempStr))
+					if(!alphabetContained.containsValue(tempStr))
 					{
 						Alphabet alphabet = new Alphabet();
 						String tempStringLetters = "L -> ";
@@ -298,6 +332,7 @@ public class LetterFrequency {
 						for(int i = 0; i < permsInner.length; ++i)
 						{
 							tempStringLetters += permsInner[i] + "-";
+							
 							int[] indexOfAlphabet = ADFGX.getAlphabetIndexFromCharacters(letterPairs[i]);
 							alphabet.alphabet[indexOfAlphabet[0]][indexOfAlphabet[1]] = Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i]));
 						}
@@ -310,7 +345,8 @@ public class LetterFrequency {
 						
 						ADFGX.constructPhrase(alphabet.alphabet, writer, tempStringAlphabet, tempStringLetters);
 						
-						alphabetContained.add(tempStr);
+						alphabetContained.put(counter, tempStr);
+						++counter;
 					}
 				}
 				

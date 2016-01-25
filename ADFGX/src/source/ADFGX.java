@@ -8,6 +8,7 @@ package source;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +24,8 @@ public class ADFGX {
 	static ArrayList<String> listForFreqAna = new ArrayList<String>();
 	public static String line = "";
 	static int finalRowCount = 0;
-	static String wordToSearchFor = "";
+	public static String wordToSearchFor = "";
+	public static File currentFile;
 	
 	/************************************************************************
 	 * 
@@ -55,6 +57,13 @@ public class ADFGX {
 			LetterFrequency.frequencyAnalysis(listForFreqAna);
 		
 			Alphabet.sortMap(ADFGX.freqTracker);
+			
+			if(currentFile.length() == 0)
+			{
+				System.out.println("EMPTY - DELETING");
+				currentFile.delete();
+			}
+			
 			++counter;
 			clear();
 		}
@@ -328,7 +337,7 @@ public class ADFGX {
 		{
 			writer.write(holderForText + "  -  " + alphabetIndexes + "  -  " + letterIndexes);
 			writer.newLine();
-		}
+		}	
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
 	
 	/************************************************************************

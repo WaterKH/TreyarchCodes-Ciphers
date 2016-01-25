@@ -34,7 +34,17 @@ public class Resources {
 		//System.out.println();
 		
 		return writer;
-	} /** public static BufferedWriter openFile_Writer(String fileName) throws IOException **/
+	} /** public static BufferedWriter openFile_Writer(String fileName) throws IOException 
+	 * @throws IOException **/
+	
+	public static BufferedWriter openFile_Writer(String fileName, String placeHolder) throws IOException {
+		
+		File file = new File("/Volumes/Jacob Clark/_PhrasesCOD/[" + ADFGX.wordToSearchFor.toUpperCase() + "]" + fileName + ADFGX.line + ".txt");
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		ADFGX.currentFile = file;
+		
+		return writer;
+	}
 	
 	public static BufferedReader openFile_Reader(String fileName) throws IOException
 	{
