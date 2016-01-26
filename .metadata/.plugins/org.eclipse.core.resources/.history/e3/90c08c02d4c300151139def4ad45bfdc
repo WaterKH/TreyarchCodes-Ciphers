@@ -89,7 +89,7 @@ public class LetterFrequency {
 		} // for(int currPair = 0; currPair < arrFreqA.length; ++currPair)
 		
 		//System.out.println();
-		//System.out.println(ADFGX.freqTracker);
+		System.out.println(ADFGX.freqTracker);
 		//System.out.println();
 	} /** private static void frequencyAnalysis(ArrayList<String> freqAnalysisList) **/
 	

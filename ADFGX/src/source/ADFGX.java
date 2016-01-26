@@ -333,7 +333,7 @@ public class ADFGX {
 			
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
 
-		if(holderForText.toLowerCase().contains(wordToSearchFor.toLowerCase()))
+		if(holderForText.toLowerCase().contains(wordToSearchFor))
 		{
 			writer.write(holderForText + "  -  " + alphabetIndexes + "  -  " + letterIndexes);
 			writer.newLine();

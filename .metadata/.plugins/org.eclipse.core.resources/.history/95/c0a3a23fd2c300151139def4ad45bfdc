@@ -304,6 +304,7 @@ public class LetterFrequency {
 				
 				for(int i = 0; i < radicesInner.length; ++i)
 				{
+					System.out.print(perms[i]);
 					if(/*frequencyStrings[perms[i]].length() > permsInner[i] && */!contained.containsValue(Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i]))))
 					{
 						//EMPTY - TODO FIND A WAY TO SPEED UP PERMUTATION TIME
@@ -315,6 +316,7 @@ public class LetterFrequency {
 					}
 					contained.put(i, Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i])));
 				}
+				System.out.println();
 				
 				if(passed == true)
 				{
