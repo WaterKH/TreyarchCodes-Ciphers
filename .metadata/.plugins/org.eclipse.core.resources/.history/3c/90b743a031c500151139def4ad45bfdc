@@ -18,15 +18,15 @@ public class LetterFrequency {
 	public static final String VERY_FREQ_LETTERS = "TAOI"; // Mix this in if there are multiple top letters - otherwise this will be second
 	public static final String FREQ_LETTERS = "NSHR"; // Used for Mid range 3s
 	public static final String INFREQ_LETTERS = "DL"; // Used for 2s
-	public static final String VERY_INFREQ_LETTERS = "CUMWF"; // 2s as well?
-	//public static final String VERY_VERY_INFREQ_LETTERS = "GYPBVK";
+	public static final String VERY_INFREQ_LETTERS = "CUMW"; // 2s as well?
+	//public static final String VERY_VERY_INFREQ_LETTERS = "FGYPBVK";
 	//public static final String MOST_INFREQ_LETTERS = "JXQZ";
 	static int counter = 0;
 	static Map<String, String> charsBasedOnFrequency = new HashMap<String, String>();
 	static ArrayList<String> freqPairs = new ArrayList<String>();
 	
 	public static final String[] frequencyStrings = {MOST_FREQ_LETTER, VERY_FREQ_LETTERS, FREQ_LETTERS, 
-													 INFREQ_LETTERS, VERY_INFREQ_LETTERS};//,VERY_VERY_INFREQ_LETTERS, MOST_INFREQ_LETTERS};
+													 INFREQ_LETTERS, VERY_INFREQ_LETTERS};//, MOST_INFREQ_LETTERS};
 	public static Map<Integer, String> alphabetContained = new HashMap<Integer, String>();
 	
 	/************************************************************************
@@ -305,7 +305,7 @@ public class LetterFrequency {
 				{
 					if(/*frequencyStrings[perms[i]].length() > permsInner[i] && */!contained.containsValue(Character.toString(frequencyStrings[perms[i]].charAt(permsInner[i]))))
 					{
-						//EMPTY - TODO FIND A WAY TO SPEED UP PERMUTATION TIME -- THOUGH THIS MAY BE THE FASTEST IT GETS....
+						//EMPTY - TODO FIND A WAY TO SPEED UP PERMUTATION TIME
 					}
 					else
 					{

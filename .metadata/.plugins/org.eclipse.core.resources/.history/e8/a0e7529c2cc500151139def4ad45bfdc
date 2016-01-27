@@ -179,6 +179,7 @@ public class ADFGX {
 	    } // for(int i = 0; i < individualRow; i++)  
 		
 		int col = 0;
+		int row = 0;
 		
 		//System.out.println("*ORIGINAL INPUT CIPHERTEXT*:");
 		
@@ -190,10 +191,12 @@ public class ADFGX {
 			for(String part : lineMapped.split("\\s+"))
 			{	
 				holderForText.get(col).add(part);
+				//System.out.print(holderForText.get(col).get(row));
 				++col;
 			} // for(String part : line)
-
+			//System.out.println();
 			col = 0;
+			++row;
 		} // for(String line : Files.readAllLines)
 		
 		for(int tempCol = 0; tempCol < columnDelim.length(); ++tempCol)

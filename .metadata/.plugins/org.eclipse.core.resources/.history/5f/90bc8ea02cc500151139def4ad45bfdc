@@ -190,10 +190,12 @@ public class ADFGX {
 			for(String part : lineMapped.split("\\s+"))
 			{	
 				holderForText.get(col).add(part);
+				//System.out.print(holderForText.get(col).get(row));
 				++col;
 			} // for(String part : line)
-
+			//System.out.println();
 			col = 0;
+			++row;
 		} // for(String line : Files.readAllLines)
 		
 		for(int tempCol = 0; tempCol < columnDelim.length(); ++tempCol)
