@@ -2,8 +2,9 @@ package source;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Test {
 
@@ -12,19 +13,85 @@ public class Test {
 	
 	public static void main(String[] args) throws IOException 
 	{	
-		//Scanner keyboard = new Scanner(System.in);
+		System.out.print("Select Alphabet you which to use: ");
+		Scanner keyboard = new Scanner(System.in);
+		String alphabetToUse = keyboard.nextLine();
+		
+		System.out.print("Key: ");
+		String key = keyboard.nextLine();
+		int lengthOfKey = key.length();
 		//System.out.println("Please input an alphabet: ");
-		BufferedReader reader = Resources.openFile_Reader("alphabet");
-		//String line = "";
-		//String alphabet = "";		
-		//while((line = reader.readLine()) != null)
-		//{
-		String alphabet = reader.readLine();
-		//}
+		BufferedReader reader = Resources.openFile_Reader(alphabetToUse);
+		String line = "";
 		
-		Resources.closeFile(reader, "alphabet");
+		String lettersFromCipherText = "";		
+		while((line = reader.readLine()) != null)
+		{
+			lettersFromCipherText += line;
+			//System.out.println(lettersFromCipherText);
+		}
 		
-		String[][] alphabetArr = new String[alphabet.length()][alphabet.length()];
+		int row = 0;
+		int counter = 0;
+		
+		for(int i = 0; i < lettersFromCipherText.length(); ++i)
+		{
+			++counter;
+			if(counter == lengthOfKey)
+			{
+				counter = 0;
+				++row;
+			}
+		}
+		
+		Resources.closeFile(reader, alphabetToUse);
+		
+		String[][] cipherTextArr = new String[row][lengthOfKey];
+		int delim = 0;
+		
+		for(int i = 0; i < cipherTextArr.length; ++i)
+		{
+			for(int j = 0; j < cipherTextArr[i].length; ++j)
+			{
+				cipherTextArr[i][j] = Character.toString(lettersFromCipherText.charAt(delim + j));
+			}
+			delim += cipherTextArr[i].length;
+		}
+		
+		for(int i = 0; i < cipherTextArr.length; ++i)
+		{
+			for(int j = 0; j < cipherTextArr[i].length; ++j)
+			{
+				System.out.print(cipherTextArr[i][j] + " ");
+			}
+			System.out.println();
+		}
+	
+		Map<String, Integer> freqCounter = new HashMap<String, Integer>();
+		for(int j = 0; j < cipherTextArr[0].length; ++j)
+		{
+			for(int i = 0; i < cipherTextArr.length; ++i)
+			{
+				int freq = 0;
+				for(int k = 0; k < cipherTextArr.length; ++k)
+				{
+					int checkIndex = i;
+					
+					if(cipherTextArr[checkIndex][j].equals(cipherTextArr[k][j]))
+					{
+						++freq;
+					}
+				}
+				System.out.print(cipherTextArr[i][j] + " " + i + " = " + freq + "; ");
+				freq = 0;
+				//freqCounter.put(cipherTextArr[i][j] + " " + i, freq);
+			}
+			System.out.println();
+		}
+		
+		System.out.println(freqCounter);
+		
+		/*String[][] alphabetArr = new String[alphabet.length()][alphabet.length()];
 		Queue<String> tempString = new LinkedList<String>();
 		
 		for(int i = 0; i < alphabet.length(); ++i)
@@ -53,7 +120,7 @@ public class Test {
 			}
 			delim = 0;
 		}
-		displayAlphabet(alphabet, alphabetArr);
+		//displayAlphabet(alphabet, alphabetArr);*/
 	}
 	
 	public static void displayAlphabet(String alphabet, String[][] alphabetArr)

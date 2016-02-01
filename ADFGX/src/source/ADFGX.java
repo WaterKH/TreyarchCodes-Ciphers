@@ -316,18 +316,17 @@ public class ADFGX {
 		String holderForText = "";
 		for(int i = 0; i < listForFreqAna.size(); ++i)
 		{
-			if(!listForFreqAna.get(i).contains("-"))
+			
+			int[] tempHolder = getAlphabetIndexFromListIndex(i);
+			if(!mixedAlphabet[tempHolder[0]][tempHolder[1]].equals("-"))
 			{
-				int[] tempHolder = getAlphabetIndexFromListIndex(i);
-				if(!mixedAlphabet[tempHolder[0]][tempHolder[1]].equals("-"))
-				{
-					holderForText += mixedAlphabet[tempHolder[0]][tempHolder[1]];
-				}
-				else
-				{
-					holderForText += "[" + ADFGX_FROM_INDEX(tempHolder) + "]";
-				}				
-			} // if(!listForFreqAna.get(i).contains("-"))
+				holderForText += mixedAlphabet[tempHolder[0]][tempHolder[1]];
+			}
+			else
+			{
+				holderForText += "[" + ADFGX_FROM_INDEX(tempHolder) + "]";
+			}				
+
 			
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
 

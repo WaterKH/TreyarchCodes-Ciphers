@@ -16,11 +16,6 @@ import java.util.Set;
 public class Alphabet {
 
 	public String[][] alphabet;
-	//final static String frequentLetters = "ETAOINSH";
-	//final static String infrequentLetters = "RDLCUMWFGYPBVKJXQZ";
-	//public static ArrayList<String> freqLettArr = new ArrayList<String>();
-	//public static ArrayList<String> infreqLettArr = new ArrayList<String>();
-	//public static ArrayList<String> alreadyUsed = new ArrayList<String>();
 	public static int counter = 0;
 	
 	/************************************************************************
@@ -51,20 +46,6 @@ public class Alphabet {
 	public Alphabet(String[][] tempAlpha)
 	{
 		alphabet = tempAlpha;
-		/*for(int i = 0; i < tempAlpha.length; ++i)
-		{
-			for(int j = 0; j < tempAlpha[i].length; ++j)
-			{
-				if()
-				{
-					alphabet[i][j] = tempAlpha[i][j];
-				}
-				else
-				{
-					alphabet[i][j] = "-";
-				}
-			}
-		}*/
 	} /** public Alphabet(String[][] tempAlpha) **/
 	
 	/************************************************************************

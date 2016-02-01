@@ -100,7 +100,8 @@ public class LetterFrequency {
 		
 		int[] maxIntHolder = new int[paramMap.size()];
 		String[] stringHolder = new String[paramMap.size()];
-		ArrayList<String> containedStrings = new ArrayList<String>();
+		//ArrayList<String> containedStrings = new ArrayList<String>();
+		Map<String, Integer> containedStrings = new HashMap<String, Integer>();
 		
 		//Move frequency numbers to front (ie - [6,5,4,3,2,2])
 		for(int i = 0; i < maxIntHolder.length; ++i)
@@ -109,12 +110,12 @@ public class LetterFrequency {
 			{
 				if(paramMap.get(freqPairs.get(j)) != null)
 				{
-					if(maxIntHolder[i] < paramMap.get(freqPairs.get(j)) && !containedStrings.contains(freqPairs.get(j)))
+					if(maxIntHolder[i] < paramMap.get(freqPairs.get(j)) && !containedStrings.containsKey(freqPairs.get(j)))
 					{
 						maxIntHolder[i] = paramMap.get(freqPairs.get(j));
 						stringHolder[i] = freqPairs.get(j);
 						//System.out.println("FINAL: " + paramMap.get(freqPairs.get(j)) + " " + maxIntHolder[i]);
-						containedStrings.add(freqPairs.get(j));
+						containedStrings.put(freqPairs.get(j), i);
 						break;
 					}
 				}
@@ -169,6 +170,15 @@ public class LetterFrequency {
 		//System.out.println("LEAVING ASSIGN METHOD");
 	}
 	
+	/**
+	 * 
+	 * Radix Counter Created By: Duncan A. Buell. Used and Modified By: Jacob Clark
+	 * 
+	 * @param availableLetters
+	 * @param letterPairs
+	 * @param frequencyNumbers
+	 * @throws IOException
+	 */
 	public static void permutateOverLetters(Map<String, ArrayList<Integer>> availableLetters, String[] letterPairs, int[] frequencyNumbers) throws IOException
 	{
 		BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations", "JUST TO ACCESS ANOTHER METHOD");
@@ -231,32 +241,31 @@ public class LetterFrequency {
 		}
 	
 		boolean finished = false;
+		boolean run = false;
 		//Permutates over which alphabet to use
 		while(!finished)
 		{	
 			// First number sequence that will register a hit
-			//(perms[6] == 3 && perms[5] == 3 && perms[4] == 2 && perms[3] == 2)
+			//if(perms[6] == 3 && perms[5] == 3 && perms[4] == 2 && perms[3] == 2 && perms[2] == 1 && perms[1] == 1 && perms[0] == 0)
+			//{
+				//run = true;
+				//System.out.println();
+			//}
 			boolean done = false;
 			
 			for(int i = 0; i < indexes.size(); ++i)
 			{
-				if(!(perms[i] <= maxNumber[i]))// && perms[i] >= minNumber[i])
+				if(!(perms[i] <= maxNumber[i]))
 				{
 					if(i - 1 > 0)
 					{
 						++perms[i - 1];
 						System.out.print(i + " - ");
-						//for(int j = 0; j < indexes.size(); ++j)
-							//System.out.print(perms[j] + " ");
-						//System.out.println();
+						
 						for(int j = i; j < indexes.size(); ++j)
 						{
 							perms[j] = 0;
 						}
-						//for(int j = 0; j < indexes.size(); ++j)
-							//System.out.print(perms[j] + " ");
-						//System.out.println();
-						
 					}
 					i = 0;
 				}
@@ -264,15 +273,7 @@ public class LetterFrequency {
 				{
 					
 					++perms[i];
-					//for(int j = 0; j < indexes.size(); ++j)
-						//System.out.print(perms[j] + " ");
-					//System.out.println();
-					
 					i = 0;
-					//for(int j = 0; j < indexes.size(); ++j)
-						//System.out.print(perms[j] + " ");
-					//System.out.println();
-				
 				}
 				/*else
 				{
@@ -322,6 +323,7 @@ public class LetterFrequency {
 					{
 						tempStr += contained.get(i);
 					}
+					//System.out.println(tempStr);
 					
 					if(!alphabetContained.containsValue(tempStr))
 					{
@@ -338,12 +340,16 @@ public class LetterFrequency {
 							actualLettersUsed += alphabet.alphabet[indexOfAlphabet[0]][indexOfAlphabet[1]];
 						}
 						
+						//System.out.println(tempStringLetters);
+						//System.exit(0);
+						
 						String tempStringAlphabet = "A -> "; 
 						for(int i = 0; i < perms.length; ++i)
 						{
 							tempStringAlphabet += perms[i] + "-";
 						}
-						
+						//System.out.println(tempStringAlphabet);
+						//System.exit(0);
 						ADFGX.constructPhrase(alphabet.alphabet, writer, tempStringAlphabet, tempStringLetters, actualLettersUsed);
 						
 						alphabetContained.put(counter, tempStr);
