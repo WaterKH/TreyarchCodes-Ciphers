@@ -77,7 +77,7 @@ public class Alphabet {
 	 */
 	public static void sortMap(Map<String, Integer> tempMap) throws IOException
 	{
-		System.out.println(tempMap);
+		//System.out.println(tempMap);
 		Set<String> tempStringSet = tempMap.keySet();
 		
 		Collection<Integer> tempIntCol = tempMap.values();

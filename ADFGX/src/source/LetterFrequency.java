@@ -46,7 +46,7 @@ public class LetterFrequency {
 	 */
 	public static void frequencyAnalysis(ArrayList<String> freqAnalysisList)
 	{
-		System.out.println(freqAnalysisList);
+		//System.out.println(freqAnalysisList);
 		//System.out.println("*** FREQUENCY ANALYSIS ***");
 		// Create an array for faster access
 		String[] arrFreqA = new String[freqAnalysisList.size()];
@@ -201,28 +201,38 @@ public class LetterFrequency {
 			{
 				tempIndexes.get(i).add(availableLetters.get(letterPairs[i]).get(j)); 
 				
+				//System.out.println(availableLetters.get(letterPairs[i]).get(j));
 				if(maxNumb < tempIndexes.get(i).get(j))
 				{
 					maxNumb = tempIndexes.get(i).get(j);
+					//System.out.println(maxNumb);
 				}
 			}
+			//System.out.println();
 		}
+		
+		//System.out.println();
 		
 		for(int i = 0; i < frequencyNumbers.length; ++i)
 		{
 			for(int j = 0; j < availableLetters.get(letterPairs[i]).size(); ++j)
 			{
+				//System.out.println(maxNumb - tempIndexes.get(i).get(j) + " " + tempIndexes.get(i).get(j));
 				indexes.get(i).add(maxNumb - tempIndexes.get(i).get(j));
 			}
+			//System.out.println();
 		}
-	
+		
 		int[] perms = new int[indexes.size()];
 		int[] radices = new int[indexes.size()];
 		for(int i = 0; i < indexes.size(); ++i)
 		{
 			radices[i] = indexes.get(i).get(indexes.get(i).size() - 1) + 1;
+			//System.out.println(radices[i] + " " + indexes.get(i).get(indexes.get(i).size() - 1) + " " + (indexes.get(i).get(indexes.get(i).size() - 1) + 1));
 			while(radices[i] > 4)
+			{
 				radices[i] = radices[i] - 1;
+			}
 		}
 		
 		int[] maxNumber = new int[perms.length];
@@ -240,7 +250,7 @@ public class LetterFrequency {
 				
 			}
 		}
-	
+		//System.out.println();
 		boolean finished = false;
 		boolean run = false;
 		//Permutates over which alphabet to use
@@ -261,7 +271,7 @@ public class LetterFrequency {
 					if(i - 1 > 0)
 					{
 						++perms[i - 1];
-						System.out.print(i + " - ");
+						//System.out.print(i + " - ");
 						
 						for(int j = i; j < indexes.size(); ++j)
 						{

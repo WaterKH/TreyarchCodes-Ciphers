@@ -37,40 +37,65 @@ public class ADFGX {
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		Resources.startTimer();
-		
-		BufferedReader reader = Resources.openFile_Reader("CipherKeys");
-		int counter = 1;
-		
 		finalRowCount = getLengthOfColumns("abcdef");
-		System.out.print("What word would you like to look for? ");
-		@SuppressWarnings("resource")
-		Scanner keyboard = new Scanner(System.in);
-		wordToSearchFor = keyboard.nextLine();
+		boolean finished = false;
 		
-		while((line = reader.readLine()) != null)
+		while(!finished)
 		{
-			System.out.println("****" + line.toUpperCase() + "****  -   " + counter);
+			Resources.startTimer();
 			
-			String inputKeyword = line;
-				
-			sortBasedOnKeyword(inputKeyword.toUpperCase());
-			System.out.println("LIST " + listForFreqAna);
-			LetterFrequency.frequencyAnalysis(listForFreqAna);
-			System.out.println("FREQ TRACK: " + freqTracker);
-			Alphabet.sortMap(freqTracker);
+			BufferedReader reader = Resources.openFile_Reader("CipherKeys");
+			System.out.print("What word would you like to look for? ");
+			@SuppressWarnings("resource")
+			Scanner keyboard = new Scanner(System.in);
+			wordToSearchFor = keyboard.nextLine();
+			int filesKept = 0;
+			int counter = 1;
 			
-			if(currentFile.length() == 0)
+			while((line = reader.readLine()) != null)
 			{
-				System.out.println("EMPTY - DELETING");
-				currentFile.delete();
+				System.out.println("****" + line.toUpperCase() + "****  -   " + counter);
+				
+				String inputKeyword = line;
+					
+				sortBasedOnKeyword(inputKeyword.toUpperCase());
+				System.out.println("LIST " + listForFreqAna);
+				LetterFrequency.frequencyAnalysis(listForFreqAna);
+				System.out.println("FREQ TRACK: " + freqTracker);
+				Alphabet.sortMap(freqTracker);
+				
+				if(currentFile.length() == 0)
+				{
+					System.out.println("EMPTY - DELETING");
+					currentFile.delete();
+				}
+				else
+				{
+					++filesKept;
+				}
+				
+				++counter;
+				clear();
 			}
 			
-			++counter;
-			clear();
+			reader.close();
+			Resources.endTimer();
+			System.out.println();
+			System.out.println("Number of file(s) kept: " + filesKept); 
+			System.out.println("Y - Another One; N - Stop");
+			String decision = keyboard.nextLine();
+			switch(decision.toLowerCase())
+			{
+			case "y":
+				break;
+			case "n":
+				finished = true;
+				break;
+			default:
+				finished = true;
+				break;
+			}
 		}
-		
-		Resources.endTimer();
 		
 	} /** public static void main(String[] args) throws IOException **/
 	
@@ -275,7 +300,7 @@ public class ADFGX {
 					
 					tempString += mappedArray[j][i];
 					mappedADFGX.put(j, tempString);
-					System.out.println(mappedADFGX);
+					//System.out.println(mappedADFGX);
 				}
 			}
 		}
@@ -371,7 +396,7 @@ public class ADFGX {
 					} // if(str.length() == 2)
 				}
 			} // for(int i = 0; i < columnMap.size(); ++i)
-			System.out.println("FREQ " + listForFreqAna);
+			//System.out.println("FREQ " + listForFreqAna);
 			writer.newLine();
 			//System.out.println();
 		} // for(int j = 0; j < columnMap.get(inputKey.charAt(0)).length; ++j)
@@ -416,7 +441,7 @@ public class ADFGX {
 
 			
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
-
+		//System.out.println(holderForText);
 		if(holderForText.toLowerCase().contains(wordToSearchFor))
 		{
 			writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);

@@ -52,7 +52,7 @@ public class Resources {
 		
 		//System.out.println("/// Opening /// " + fileName + " ...");
 		File file = new File("Null");
-		if(fileName.equals("adfgxCipherText") || fileName.equals("adfgxMapped"))
+		if(fileName.equals("adfgxCipherText") || fileName.equals("adfgxMapped") || fileName.equals("CipherKeys"))
 			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ".txt");
 		else
 			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ADFGX.line + ".txt");
