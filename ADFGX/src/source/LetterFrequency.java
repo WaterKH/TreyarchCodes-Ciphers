@@ -46,6 +46,7 @@ public class LetterFrequency {
 	 */
 	public static void frequencyAnalysis(ArrayList<String> freqAnalysisList)
 	{
+		System.out.println(freqAnalysisList);
 		//System.out.println("*** FREQUENCY ANALYSIS ***");
 		// Create an array for faster access
 		String[] arrFreqA = new String[freqAnalysisList.size()];
@@ -97,7 +98,7 @@ public class LetterFrequency {
 	{
 
 		//System.out.println("Entering distributeLetters...");
-		
+		System.out.println(paramMap);
 		int[] maxIntHolder = new int[paramMap.size()];
 		String[] stringHolder = new String[paramMap.size()];
 		//ArrayList<String> containedStrings = new ArrayList<String>();

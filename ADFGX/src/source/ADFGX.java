@@ -55,9 +55,10 @@ public class ADFGX {
 			String inputKeyword = line;
 				
 			sortBasedOnKeyword(inputKeyword.toUpperCase());
+			System.out.println("LIST " + listForFreqAna);
 			LetterFrequency.frequencyAnalysis(listForFreqAna);
-		
-			Alphabet.sortMap(ADFGX.freqTracker);
+			System.out.println("FREQ TRACK: " + freqTracker);
+			Alphabet.sortMap(freqTracker);
 			
 			if(currentFile.length() == 0)
 			{
@@ -95,10 +96,7 @@ public class ADFGX {
 	public static void deleteAllFiles()
 	{
 		Resources.deleteFile("adfgxMapped");
-		Resources.deleteFile("adfgxSolved");
-		Resources.deleteFile("adfgxPermutations");
-		Resources.deleteFile("Freq");
-		Resources.deleteFile("Infreq");
+		//Resources.deleteFile("adfgxSolved");
 	} /** public static void deleteAllFiles() **/
 	
 	/************************************************************************
@@ -169,11 +167,11 @@ public class ADFGX {
 		String columnDelim = new String(individualChars);
 		//System.out.println("*SORTED ALPHABETICALLY: " + columnDelim + " ROW LENGTH: " + individualChars.length + "*");
 		
-		int rowLength = finalRowCount;
+		//int rowLength = finalRowCount;
 	
 		ArrayList<ArrayList<String>> holderForText = new ArrayList<ArrayList<String>>();
 		
-		for(int i = 0; i < rowLength; i++)  
+		for(int i = 0; i < finalRowCount; i++)  
 		{
 	        holderForText.add(new ArrayList<String>());
 	    } // for(int i = 0; i < individualRow; i++)  
@@ -181,18 +179,19 @@ public class ADFGX {
 		int col = 0;
 		
 		//System.out.println("*ORIGINAL INPUT CIPHERTEXT*:");
-		
 		BufferedReader readerMapped = Resources.openFile_Reader("adfgxMapped");
 		String lineMapped = "";
-		
+
 		while((lineMapped = readerMapped.readLine()) != null)
 		{
+			//System.out.println(lineMapped);
 			for(String part : lineMapped.split("\\s+"))
 			{	
 				holderForText.get(col).add(part);
+				//System.out.print(holderForText.get(col));
 				++col;
 			} // for(String part : line)
-
+			//System.out.println();
 			col = 0;
 		} // for(String line : Files.readAllLines)
 		
@@ -201,6 +200,7 @@ public class ADFGX {
 			columnMap.put(columnDelim.charAt(tempCol), holderForText.get(tempCol));
 		} // for(int tempCol = 0; tempCol < colDelim.length(); ++tempCol)
 		
+		//System.out.println("MAP: " + columnMap);
 		//System.out.println();
 		addToListFreqAna(inputKey);
 	} /** public static void sortBasedOnKeyword(String inputKey) throws IOException **/
@@ -221,32 +221,112 @@ public class ADFGX {
 		BufferedReader readerCipherText = Resources.openFile_Reader("adfgxCipherText");
 		BufferedWriter writer = Resources.openFile_Writer("adfgxMapped");
 		String lineCipherText = "";
+		Map<Integer, String> mappedADFGX = new HashMap<Integer, String>();
+		String[][] tempStringInt = new String[6][12];
 		
+		for(int i = 0; i < tempStringInt.length; ++i)
+		{
+			for(int j = 0; j < tempStringInt[i].length; ++j)
+			{
+				tempStringInt[i][j] = "-";
+			}
+		}
+		
+		// Gets Rows
 		while((lineCipherText = readerCipherText.readLine()) != null)
 		{
 			for(String part : lineCipherText.split("\\s+"))
 			{
 				for(int i = 0; i < part.length(); ++i)
 				{
-					writer.write(part.charAt(i) + " ");
+					tempStringInt[trackOfRows][individualRow] = Character.toString(part.charAt(i));//writer.write(part.charAt(i) + " ");
 					++trackOfRows;
 					if(trackOfRows == columnDelim.length())
 					{
-						writer.newLine();
+						//writer.newLine();
 						
 						++individualRow;
 						trackOfRows = 0;
 					} // if(trackOfRows == colDelim.length())
 					
 				} // for(int i = 0; i < part.length(); ++i)
-				
+
 			} // for(String part : line)
 			
 		} // for(String line : Files.readAllLines)
 		
+		String[][] mappedArray = new String[individualRow][columnDelim.length()];
+		
+		for(int i = 0; i < individualRow; ++i)
+		{
+			for(int j = 0; j < mappedArray.length; ++j)
+			{	
+				if(i < tempStringInt.length)
+				{
+					mappedArray[j][i] = tempStringInt[i][j];
+					
+					//System.out.print(mappedArray[j][i]);
+					String tempString = "";
+					if(mappedADFGX.containsKey(j))
+					{
+						tempString += mappedADFGX.get(j);
+					}
+					
+					
+					tempString += mappedArray[j][i];
+					mappedADFGX.put(j, tempString);
+					System.out.println(mappedADFGX);
+				}
+			}
+		}
+		
+		String[][] solvedMappedADFGX = new String[individualRow][columnDelim.length()];
+		
+		for(int i = 0; i < solvedMappedADFGX.length; ++i)
+		{
+			for(int j = 0; j < solvedMappedADFGX[i].length; ++j)
+			{
+				solvedMappedADFGX[i][j] = "-";
+			}
+		}
+		
+		int col = 0;
+		int row = 0;
+		
+		for(int j = 0; j < mappedArray[0].length; ++j)
+		{
+			for(int i = 0; i < mappedArray.length; ++i)
+			{
+				if(mappedArray[i][j].equals("-"))
+				{
+					continue;
+				}
+				
+				solvedMappedADFGX[row][col] = mappedArray[i][j];
+				//System.out.print(solvedMappedADFGX[row][col] + " ");
+				++col;
+				if(col == solvedMappedADFGX[0].length)
+				{
+					col = 0;
+					++row;
+					//System.out.println();
+				}
+			}
+		}
+		
+		for(int i = 0; i < solvedMappedADFGX.length; ++i)
+		{
+			for(int j = 0; j < solvedMappedADFGX[i].length; ++j)
+			{
+				writer.write(solvedMappedADFGX[i][j] + " ");
+				System.out.print(solvedMappedADFGX[i][j] + " ");
+			}
+			writer.newLine();
+			System.out.println();
+		}
+			
 		Resources.closeFile(writer, "adfgxMapped");
 		Resources.closeFile(readerCipherText, "adfgxCipherText");
-		
 		return individualRow;
 	}
 	
@@ -268,23 +348,30 @@ public class ADFGX {
 		String str = "";
 		
 		//System.out.println("*SORTING BASED ON KEY...*");
+		//System.out.println(columnMap);
+		//System.out.println(inputKey.charAt(0));
 		for(int j = 0; j < columnMap.get(inputKey.charAt(0)).size(); ++j)
 		{
 			for(int i = 0; i < columnMap.size(); ++i)
 			{
-				writer.write(columnMap.get(inputKey.charAt(i)).get(j) + " ");
-				if(!columnMap.get(inputKey.charAt(i)).get(j).equals("-"))
+				if(columnMap.containsKey(inputKey.charAt(i)))
 				{
-					str += columnMap.get(inputKey.charAt(i)).get(j);
-				} // if(!columnMap.get(inputKey.charAt(i))[j].equals("-"))
-				if(str.length() == 2)
-				{
-					listForFreqAna.add(str);
-					//System.out.print(str + " ");
-					str = "";
-				} // if(str.length() == 2)
-				
+					//System.out.println(columnMap.get(inputKey.charAt(i)).get(j) + "  " + i + "  " + j);
+					writer.write(columnMap.get(inputKey.charAt(i)).get(j) + " ");
+					if(!columnMap.get(inputKey.charAt(i)).get(j).equals("-"))
+					{
+						str += columnMap.get(inputKey.charAt(i)).get(j);
+						//System.out.println(str);
+					} // if(!columnMap.get(inputKey.charAt(i))[j].equals("-"))
+					if(str.length() == 2)
+					{
+						listForFreqAna.add(str);
+						//System.out.print(str + " ");
+						str = "";
+					} // if(str.length() == 2)
+				}
 			} // for(int i = 0; i < columnMap.size(); ++i)
+			System.out.println("FREQ " + listForFreqAna);
 			writer.newLine();
 			//System.out.println();
 		} // for(int j = 0; j < columnMap.get(inputKey.charAt(0)).length; ++j)

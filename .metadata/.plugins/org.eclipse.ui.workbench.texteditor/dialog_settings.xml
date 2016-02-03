@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="row" key="selection"/>
+		<item value="finalRowCount" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="true" key="wholeword"/>
 		<list key="findhistory">
-			<item value="row"/>
-			<item value="permutations"/>
-			<item value="arrFreqA"/>
-			<item value="freqAnalysisList"/>
-			<item value="listForFreqAna"/>
-			<item value="arrayList"/>
-			<item value="alphabetContained"/>
-			<item value="counter"/>
+			<item value="finalRowCount"/>
+			<item value="mappedADFGX"/>
+			<item value="columnMap"/>
+			<item value="column"/>
+			<item value="getLength"/>
+			<item value="getLengths"/>
+			<item value="addToListFreqAna"/>
+			<item value="sortBasedOnKeyword"/>
 		</list>
 		<list key="replacehistory">
 			<item value="//System"/>
