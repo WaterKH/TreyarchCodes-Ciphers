@@ -48,7 +48,7 @@ public class ADFGX {
 			System.out.print("What word would you like to look for? ");
 			@SuppressWarnings("resource")
 			Scanner keyboard = new Scanner(System.in);
-			wordToSearchFor = keyboard.nextLine();
+			//wordToSearchFor = keyboard.nextLine();
 			int filesKept = 0;
 			int counter = 1;
 			
@@ -79,6 +79,7 @@ public class ADFGX {
 			}
 			
 			reader.close();
+			
 			Resources.endTimer();
 			System.out.println();
 			System.out.println("Number of file(s) kept: " + filesKept); 
@@ -428,7 +429,6 @@ public class ADFGX {
 		String holderForText = "";
 		for(int i = 0; i < listForFreqAna.size(); ++i)
 		{
-			
 			int[] tempHolder = getAlphabetIndexFromListIndex(i);
 			if(!mixedAlphabet[tempHolder[0]][tempHolder[1]].equals("-"))
 			{
@@ -442,11 +442,11 @@ public class ADFGX {
 			
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
 		//System.out.println(holderForText);
-		if(holderForText.toLowerCase().contains(wordToSearchFor))
-		{
+		//if(holderForText.toLowerCase().contains(wordToSearchFor))
+		//{
 			writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
 			writer.newLine();
-		}	
+		//}	
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
 	
 	/************************************************************************

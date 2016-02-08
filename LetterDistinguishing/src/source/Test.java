@@ -3,13 +3,15 @@ package source;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Test {
 
-	//static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/";
-	//static String[][] alphabetArr = new String[alphabet.length()][alphabet.length()];
+	static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/";
+	static String[][] alphabetArr = new String[alphabet.length()][alphabet.length()];
 	
 	public static void main(String[] args) throws IOException 
 	{	
@@ -82,7 +84,10 @@ public class Test {
 						++freq;
 					}
 				}
+				
+				
 				System.out.print(cipherTextArr[i][j] + " " + i + " = " + freq + "; ");
+				
 				freq = 0;
 				//freqCounter.put(cipherTextArr[i][j] + " " + i, freq);
 			}
@@ -91,7 +96,7 @@ public class Test {
 		
 		System.out.println(freqCounter);
 		
-		/*String[][] alphabetArr = new String[alphabet.length()][alphabet.length()];
+		String[][] alphabetArr = new String[alphabet.length()][alphabet.length()];
 		Queue<String> tempString = new LinkedList<String>();
 		
 		for(int i = 0; i < alphabet.length(); ++i)
@@ -99,28 +104,30 @@ public class Test {
 			tempString.add(Character.toString(alphabet.charAt(i)));
 		}
 		
-		int delim = 0;
+		int delim1 = 0;
 		
-		for(int i = 0; i < alphabetArr.length; ++i)
+
+		
+		for(int i = 1; i < alphabetArr.length; ++i)
 		{
 			for(int j = 0; j < alphabetArr[i].length; ++j)
 			{	
 				alphabetArr[i][j] = tempString.poll();
 				
-				++delim;
-				for(int k = delim; k < alphabet.length(); ++k)
+				++delim1;
+				for(int k = delim1; k < alphabet.length(); ++k)
 				{
 					tempString.add(Character.toString(alphabet.charAt(k)));
 				}
-				for(int k = 0; k < delim; ++k)
+				for(int k = 0; k < delim1; ++k)
 				{
 					if(k < 63)
 						tempString.add(Character.toString(alphabet.charAt(k)));
 				}	
 			}
-			delim = 0;
+			delim1 = 0;
 		}
-		//displayAlphabet(alphabet, alphabetArr);*/
+		displayAlphabet(alphabet, alphabetArr);
 	}
 	
 	public static void displayAlphabet(String alphabet, String[][] alphabetArr)
@@ -149,9 +156,10 @@ public class Test {
 		}
 		
 		System.out.println();
-		
+		boolean firstPass = true;
 		for(int i = 0; i < alphabetArr.length; ++i)
 		{
+			
 			System.out.print(alphabet.charAt(i) + " " + i % 10 + "> ");
 			for(int j = 0; j < alphabetArr[i].length; ++j)
 			{
