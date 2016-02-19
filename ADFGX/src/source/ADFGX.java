@@ -48,7 +48,7 @@ public class ADFGX {
 			System.out.print("What word would you like to look for? ");
 			@SuppressWarnings("resource")
 			Scanner keyboard = new Scanner(System.in);
-			//wordToSearchFor = keyboard.nextLine();
+			wordToSearchFor = keyboard.nextLine();
 			int filesKept = 0;
 			int counter = 1;
 			
@@ -122,7 +122,6 @@ public class ADFGX {
 	public static void deleteAllFiles()
 	{
 		Resources.deleteFile("adfgxMapped");
-		//Resources.deleteFile("adfgxSolved");
 	} /** public static void deleteAllFiles() **/
 	
 	/************************************************************************
@@ -191,9 +190,6 @@ public class ADFGX {
 		char[] individualChars = inputKey.toCharArray();
 		Arrays.sort(individualChars);
 		String columnDelim = new String(individualChars);
-		//System.out.println("*SORTED ALPHABETICALLY: " + columnDelim + " ROW LENGTH: " + individualChars.length + "*");
-		
-		//int rowLength = finalRowCount;
 	
 		ArrayList<ArrayList<String>> holderForText = new ArrayList<ArrayList<String>>();
 		
@@ -204,20 +200,16 @@ public class ADFGX {
 		
 		int col = 0;
 		
-		//System.out.println("*ORIGINAL INPUT CIPHERTEXT*:");
 		BufferedReader readerMapped = Resources.openFile_Reader("adfgxMapped");
 		String lineMapped = "";
 
 		while((lineMapped = readerMapped.readLine()) != null)
 		{
-			//System.out.println(lineMapped);
 			for(String part : lineMapped.split("\\s+"))
 			{	
 				holderForText.get(col).add(part);
-				//System.out.print(holderForText.get(col));
 				++col;
 			} // for(String part : line)
-			//System.out.println();
 			col = 0;
 		} // for(String line : Files.readAllLines)
 		
@@ -226,8 +218,6 @@ public class ADFGX {
 			columnMap.put(columnDelim.charAt(tempCol), holderForText.get(tempCol));
 		} // for(int tempCol = 0; tempCol < colDelim.length(); ++tempCol)
 		
-		//System.out.println("MAP: " + columnMap);
-		//System.out.println();
 		addToListFreqAna(inputKey);
 	} /** public static void sortBasedOnKeyword(String inputKey) throws IOException **/
 	
@@ -265,12 +255,10 @@ public class ADFGX {
 			{
 				for(int i = 0; i < part.length(); ++i)
 				{
-					tempStringInt[trackOfRows][individualRow] = Character.toString(part.charAt(i));//writer.write(part.charAt(i) + " ");
+					tempStringInt[trackOfRows][individualRow] = Character.toString(part.charAt(i));
 					++trackOfRows;
 					if(trackOfRows == columnDelim.length())
 					{
-						//writer.newLine();
-						
 						++individualRow;
 						trackOfRows = 0;
 					} // if(trackOfRows == colDelim.length())
@@ -290,8 +278,6 @@ public class ADFGX {
 				if(i < tempStringInt.length)
 				{
 					mappedArray[j][i] = tempStringInt[i][j];
-					
-					//System.out.print(mappedArray[j][i]);
 					String tempString = "";
 					if(mappedADFGX.containsKey(j))
 					{
@@ -301,7 +287,6 @@ public class ADFGX {
 					
 					tempString += mappedArray[j][i];
 					mappedADFGX.put(j, tempString);
-					//System.out.println(mappedADFGX);
 				}
 			}
 		}
@@ -329,13 +314,11 @@ public class ADFGX {
 				}
 				
 				solvedMappedADFGX[row][col] = mappedArray[i][j];
-				//System.out.print(solvedMappedADFGX[row][col] + " ");
 				++col;
 				if(col == solvedMappedADFGX[0].length)
 				{
 					col = 0;
 					++row;
-					//System.out.println();
 				}
 			}
 		}
@@ -372,39 +355,29 @@ public class ADFGX {
 	{
 		BufferedWriter writer = Resources.openFile_Writer("adfgxSolved");
 		String str = "";
-		
-		//System.out.println("*SORTING BASED ON KEY...*");
-		//System.out.println(columnMap);
-		//System.out.println(inputKey.charAt(0));
+	
 		for(int j = 0; j < columnMap.get(inputKey.charAt(0)).size(); ++j)
 		{
 			for(int i = 0; i < columnMap.size(); ++i)
 			{
 				if(columnMap.containsKey(inputKey.charAt(i)))
 				{
-					//System.out.println(columnMap.get(inputKey.charAt(i)).get(j) + "  " + i + "  " + j);
 					writer.write(columnMap.get(inputKey.charAt(i)).get(j) + " ");
 					if(!columnMap.get(inputKey.charAt(i)).get(j).equals("-"))
 					{
 						str += columnMap.get(inputKey.charAt(i)).get(j);
-						//System.out.println(str);
 					} // if(!columnMap.get(inputKey.charAt(i))[j].equals("-"))
 					if(str.length() == 2)
 					{
 						listForFreqAna.add(str);
-						//System.out.print(str + " ");
 						str = "";
 					} // if(str.length() == 2)
 				}
 			} // for(int i = 0; i < columnMap.size(); ++i)
-			//System.out.println("FREQ " + listForFreqAna);
 			writer.newLine();
-			//System.out.println();
 		} // for(int j = 0; j < columnMap.get(inputKey.charAt(0)).length; ++j)
 		
 		Resources.closeFile(writer, "adfgxSolved");
-		
-		//System.out.println("*SORTING COMPLETE.*");
 	} /** private static void addToListFreqAna(String inputKey) throws FileNotFoundException **/
 	
 	/************************************************************************
@@ -442,11 +415,11 @@ public class ADFGX {
 			
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
 		//System.out.println(holderForText);
-		//if(holderForText.toLowerCase().contains(wordToSearchFor))
-		//{
+		if(holderForText.toLowerCase().contains(wordToSearchFor))
+		{
 			writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
 			writer.newLine();
-		//}	
+		}	
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
 	
 	/************************************************************************

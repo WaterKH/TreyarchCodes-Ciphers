@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Test {
 
-	static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/";
+	static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 	static String[][] alphabetArr = new String[alphabet.length()][alphabet.length()];
 	
 	public static void main(String[] args) throws IOException 
@@ -59,7 +59,7 @@ public class Test {
 			}
 			delim += cipherTextArr[i].length;
 		}
-		
+		//System.out.println()
 		for(int i = 0; i < cipherTextArr.length; ++i)
 		{
 			for(int j = 0; j < cipherTextArr[i].length; ++j)
@@ -88,8 +88,8 @@ public class Test {
 				
 				System.out.print(cipherTextArr[i][j] + " " + i + " = " + freq + "; ");
 				
+				freqCounter.put(cipherTextArr[i][j] + " " + i, freq);
 				freq = 0;
-				//freqCounter.put(cipherTextArr[i][j] + " " + i, freq);
 			}
 			System.out.println();
 		}
@@ -108,7 +108,7 @@ public class Test {
 		
 
 		
-		for(int i = 1; i < alphabetArr.length; ++i)
+		for(int i = 0; i < alphabetArr.length; ++i)
 		{
 			for(int j = 0; j < alphabetArr[i].length; ++j)
 			{	
@@ -156,7 +156,6 @@ public class Test {
 		}
 		
 		System.out.println();
-		boolean firstPass = true;
 		for(int i = 0; i < alphabetArr.length; ++i)
 		{
 			

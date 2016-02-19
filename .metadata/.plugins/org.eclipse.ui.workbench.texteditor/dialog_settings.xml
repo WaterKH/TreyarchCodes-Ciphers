@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="ADFGX_Subs" key="selection"/>
+		<item value="tempIndexes" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="true" key="wholeword"/>
 		<list key="findhistory">
+			<item value="tempIndexes"/>
 			<item value="ADFGX_Subs"/>
 			<item value="getAlphabetIndexFromListIndex"/>
 			<item value="availableLetters"/>
@@ -15,7 +16,6 @@
 			<item value="System"/>
 			<item value="CipherKeys"/>
 			<item value="counter"/>
-			<item value="indexes"/>
 		</list>
 		<list key="replacehistory">
 			<item value="//System"/>

@@ -15,9 +15,9 @@ import java.util.Map;
 public class LetterFrequency {
 
 	public static final String MOST_FREQ_LETTER = "E"; // Used for top letter
-	public static final String VERY_FREQ_LETTERS = "TAOI"; // Mix this in if there are multiple top letters - otherwise this will be second
-	public static final String FREQ_LETTERS = "NSHR"; // Used for Mid range 3s
-	public static final String INFREQ_LETTERS = "DL"; // Used for 2s
+	public static final String VERY_FREQ_LETTERS = "TAOIN"; // Mix this in if there are multiple top letters - otherwise this will be second
+	public static final String FREQ_LETTERS = "SHRDL"; // Used for Mid range 3s
+	public static final String INFREQ_LETTERS = "CUMWF"; // Used for 2s
 	public static final String VERY_INFREQ_LETTERS = "CUMWF"; // 2s as well?
 	//public static final String VERY_VERY_INFREQ_LETTERS = GYPBVK;
 	//public static final String MOST_INFREQ_LETTERS = "JXQZ";
@@ -46,14 +46,9 @@ public class LetterFrequency {
 	 */
 	public static void frequencyAnalysis(ArrayList<String> freqAnalysisList)
 	{
-		//System.out.println(freqAnalysisList);
-		//System.out.println("*** FREQUENCY ANALYSIS ***");
 		// Create an array for faster access
 		String[] arrFreqA = new String[freqAnalysisList.size()];
 		arrFreqA = freqAnalysisList.toArray(arrFreqA);
-		//for(int i = 0; i < arrFreqA.length; ++i)
-			//System.out.print(arrFreqA[i] + " ");
-		//System.out.println();
 		int[] freqCounter = new int[arrFreqA.length];
 		
 		ArrayList<String> alreadyUsed = new ArrayList<String>();
@@ -88,20 +83,20 @@ public class LetterFrequency {
 			} // if(findNextPair == true)
 				
 		} // for(int currPair = 0; currPair < arrFreqA.length; ++currPair)
-		
-		//System.out.println();
-		//System.out.println(ADFGX.freqTracker);
-		//System.out.println();
 	} /** private static void frequencyAnalysis(ArrayList<String> freqAnalysisList) **/
 	
+	
+	/***
+	 * 
+	 * 
+	 * @param paramMap
+	 * @throws IOException
+	 */
 	public static void distributeLetters(Map<String, Integer> paramMap) throws IOException
 	{
-
-		//System.out.println("Entering distributeLetters...");
 		System.out.println(paramMap);
 		int[] maxIntHolder = new int[paramMap.size()];
 		String[] stringHolder = new String[paramMap.size()];
-		//ArrayList<String> containedStrings = new ArrayList<String>();
 		Map<String, Integer> containedStrings = new HashMap<String, Integer>();
 		
 		//Move frequency numbers to front (ie - [6,5,4,3,2,2])
@@ -115,7 +110,6 @@ public class LetterFrequency {
 					{
 						maxIntHolder[i] = paramMap.get(freqPairs.get(j));
 						stringHolder[i] = freqPairs.get(j);
-						//System.out.println("FINAL: " + paramMap.get(freqPairs.get(j)) + " " + maxIntHolder[i]);
 						containedStrings.put(freqPairs.get(j), i);
 						break;
 					}
@@ -144,10 +138,14 @@ public class LetterFrequency {
 		assignLettersToFrequencyNumbers(maxIntHolder, stringHolder);		
 	}
 	
+	/**
+	 * 
+	 * @param frequencyNumbers
+	 * @param letterPairs
+	 * @throws IOException
+	 */
 	public static void assignLettersToFrequencyNumbers(int[] frequencyNumbers, String[] letterPairs) throws IOException
 	{
-
-		//System.out.println("ENTERING ASSIGN METHOD");
 		Map<String, ArrayList<Integer>> distributedAlphabet = new HashMap<String, ArrayList<Integer>>();
 		
 		for(int i = 0; i < letterPairs.length; ++i)
@@ -167,10 +165,8 @@ public class LetterFrequency {
 					distributedAlphabet.put(letterPairs[i], counterHolder);
 				}
 			}
-			//System.out.println(distributedAlphabet);
 		}
 		permutateOverLetters(distributedAlphabet, letterPairs, frequencyNumbers);
-		//System.out.println("LEAVING ASSIGN METHOD");
 	}
 	
 	/**
@@ -217,12 +213,21 @@ public class LetterFrequency {
 		//System.out.println(tempIndexes + " " + availableLetters);
 		System.out.println();
 		
+		Map<Integer, Integer> integers = new HashMap<Integer, Integer>();
+		int tempInt = 0;
+		
 		for(int i = 0; i < frequencyNumbers.length; ++i)
 		{
 			for(int j = 0; j < availableLetters.get(letterPairs[i]).size(); ++j)
 			{
-				System.out.println(maxNumb - tempIndexes.get(i).get(j) + " " + tempIndexes.get(i).get(j));
+				//System.out.println(maxNumb - tempIndexes.get(i).get(j) + " " + tempIndexes.get(i).get(j));
 				indexes.get(i).add(maxNumb - tempIndexes.get(i).get(j));
+				if(!integers.containsKey(tempIndexes.get(i).get(j)))
+				{
+					integers.put(tempIndexes.get(i).get(j), tempInt);
+					++tempInt;
+				}
+				System.out.println(integers.get(tempIndexes.get(i).get(j)) + " " + tempIndexes.get(i).get(j));
 			}
 			System.out.println();
 		}
@@ -260,6 +265,7 @@ public class LetterFrequency {
 		System.out.println();
 		boolean finished = false;
 		boolean run = false;
+		
 		//Permutates over which alphabet to use
 		while(!finished)
 		{	
@@ -283,7 +289,6 @@ public class LetterFrequency {
 					if(i - 1 > 0)
 					{
 						++perms[i - 1];
-						//System.out.print(i + " - ");
 						
 						for(int j = i; j < indexes.size(); ++j)
 						{
@@ -341,7 +346,6 @@ public class LetterFrequency {
 					{
 						tempStr += contained.get(i);
 					}
-					//System.out.println(tempStr);
 					
 					if(!alphabetContained.containsValue(tempStr))
 					{
@@ -358,16 +362,11 @@ public class LetterFrequency {
 							actualLettersUsed += alphabet.alphabet[indexOfAlphabet[0]][indexOfAlphabet[1]];
 						}
 						
-						//System.out.println(tempStringLetters);
-						//System.exit(0);
-						
 						String tempStringAlphabet = "A -> "; 
 						for(int i = 0; i < perms.length; ++i)
 						{
 							tempStringAlphabet += perms[i] + "-";
 						}
-						//System.out.println(tempStringAlphabet);
-						//System.exit(0);
 						ADFGX.constructPhrase(alphabet.alphabet, writer, tempStringAlphabet, tempStringLetters, actualLettersUsed);
 						
 						alphabetContained.put(counter, tempStr);
