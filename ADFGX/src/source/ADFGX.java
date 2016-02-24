@@ -213,9 +213,15 @@ public class ADFGX {
 			col = 0;
 		} // for(String line : Files.readAllLines)
 		
+		int tempInt = columnDelim.length() - 1;
+		
 		for(int tempCol = 0; tempCol < columnDelim.length(); ++tempCol)
 		{
-			columnMap.put(columnDelim.charAt(tempCol), holderForText.get(tempCol));
+			columnMap.put(columnDelim.charAt(tempInt), holderForText.get(tempCol));
+			if(tempInt > 0)
+			{
+				--tempInt;
+			}
 		} // for(int tempCol = 0; tempCol < colDelim.length(); ++tempCol)
 		
 		addToListFreqAna(inputKey);
@@ -362,6 +368,7 @@ public class ADFGX {
 			{
 				if(columnMap.containsKey(inputKey.charAt(i)))
 				{
+					System.out.print(columnMap.get(inputKey.charAt(i)).get(j) + " ");
 					writer.write(columnMap.get(inputKey.charAt(i)).get(j) + " ");
 					if(!columnMap.get(inputKey.charAt(i)).get(j).equals("-"))
 					{
@@ -374,6 +381,7 @@ public class ADFGX {
 					} // if(str.length() == 2)
 				}
 			} // for(int i = 0; i < columnMap.size(); ++i)
+			System.out.println();
 			writer.newLine();
 		} // for(int j = 0; j < columnMap.get(inputKey.charAt(0)).length; ++j)
 		
