@@ -192,7 +192,7 @@ public class ADFGX {
 		String columnDelim = new String(individualChars);
 	
 		ArrayList<ArrayList<String>> holderForText = new ArrayList<ArrayList<String>>();
-		
+		System.out.println(finalRowCount);
 		for(int i = 0; i < finalRowCount; i++)  
 		{
 	        holderForText.add(new ArrayList<String>());
@@ -205,23 +205,25 @@ public class ADFGX {
 
 		while((lineMapped = readerMapped.readLine()) != null)
 		{
+			//System.out.println(lineMapped);
 			for(String part : lineMapped.split("\\s+"))
 			{	
 				holderForText.get(col).add(part);
+				//System.out.println(part);
 				++col;
 			} // for(String part : line)
 			col = 0;
 		} // for(String line : Files.readAllLines)
 		
-		int tempInt = columnDelim.length() - 1;
+		//int tempInt = columnDelim.length() - 1;
 		
 		for(int tempCol = 0; tempCol < columnDelim.length(); ++tempCol)
 		{
-			columnMap.put(columnDelim.charAt(tempInt), holderForText.get(tempCol));
-			if(tempInt > 0)
-			{
-				--tempInt;
-			}
+			columnMap.put(columnDelim.charAt(tempCol), holderForText.get(tempCol));
+			//if(tempInt > 0)
+			//{
+			//	--tempInt;
+			//}
 		} // for(int tempCol = 0; tempCol < colDelim.length(); ++tempCol)
 		
 		addToListFreqAna(inputKey);
@@ -243,14 +245,13 @@ public class ADFGX {
 		BufferedReader readerCipherText = Resources.openFile_Reader("adfgxCipherText");
 		BufferedWriter writer = Resources.openFile_Writer("adfgxMapped");
 		String lineCipherText = "";
-		Map<Integer, String> mappedADFGX = new HashMap<Integer, String>();
-		String[][] tempStringInt = new String[6][12];
+		String[][] mappedADFGX = new String[12][6];
 		
-		for(int i = 0; i < tempStringInt.length; ++i)
+		for(int i = 0; i < mappedADFGX.length; ++i)
 		{
-			for(int j = 0; j < tempStringInt[i].length; ++j)
+			for(int j = 0; j < mappedADFGX[i].length; ++j)
 			{
-				tempStringInt[i][j] = "-";
+				mappedADFGX[i][j] = "-";
 			}
 		}
 		
@@ -261,12 +262,14 @@ public class ADFGX {
 			{
 				for(int i = 0; i < part.length(); ++i)
 				{
-					tempStringInt[trackOfRows][individualRow] = Character.toString(part.charAt(i));
-					++trackOfRows;
-					if(trackOfRows == columnDelim.length())
+					mappedADFGX[trackOfRows][individualRow] = Character.toString(part.charAt(i));
+					++individualRow;
+					if(individualRow == columnDelim.length())
 					{
-						++individualRow;
-						trackOfRows = 0;
+						++trackOfRows;
+						if(trackOfRows == 12)
+							break;
+						individualRow = 0;
 					} // if(trackOfRows == colDelim.length())
 					
 				} // for(int i = 0; i < part.length(); ++i)
@@ -275,66 +278,12 @@ public class ADFGX {
 			
 		} // for(String line : Files.readAllLines)
 		
-		String[][] mappedArray = new String[individualRow][columnDelim.length()];
-		
-		for(int i = 0; i < individualRow; ++i)
+		for(int i = 0; i < mappedADFGX.length; ++i)
 		{
-			for(int j = 0; j < mappedArray.length; ++j)
-			{	
-				if(i < tempStringInt.length)
-				{
-					mappedArray[j][i] = tempStringInt[i][j];
-					String tempString = "";
-					if(mappedADFGX.containsKey(j))
-					{
-						tempString += mappedADFGX.get(j);
-					}
-					
-					
-					tempString += mappedArray[j][i];
-					mappedADFGX.put(j, tempString);
-				}
-			}
-		}
-		
-		String[][] solvedMappedADFGX = new String[individualRow][columnDelim.length()];
-		
-		for(int i = 0; i < solvedMappedADFGX.length; ++i)
-		{
-			for(int j = 0; j < solvedMappedADFGX[i].length; ++j)
+			for(int j = 0; j < mappedADFGX[i].length; ++j)
 			{
-				solvedMappedADFGX[i][j] = "-";
-			}
-		}
-		
-		int col = 0;
-		int row = 0;
-		
-		for(int j = 0; j < mappedArray[0].length; ++j)
-		{
-			for(int i = 0; i < mappedArray.length; ++i)
-			{
-				if(mappedArray[i][j].equals("-"))
-				{
-					continue;
-				}
-				
-				solvedMappedADFGX[row][col] = mappedArray[i][j];
-				++col;
-				if(col == solvedMappedADFGX[0].length)
-				{
-					col = 0;
-					++row;
-				}
-			}
-		}
-		
-		for(int i = 0; i < solvedMappedADFGX.length; ++i)
-		{
-			for(int j = 0; j < solvedMappedADFGX[i].length; ++j)
-			{
-				writer.write(solvedMappedADFGX[i][j] + " ");
-				System.out.print(solvedMappedADFGX[i][j] + " ");
+				writer.write(mappedADFGX[i][j] + " ");
+				System.out.print(mappedADFGX[i][j] + " ");
 			}
 			writer.newLine();
 			System.out.println();

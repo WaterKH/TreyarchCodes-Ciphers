@@ -425,7 +425,7 @@ public class LetterFrequency {
 		      
 		    } // if (perms.at(0) == limitOfPermutations) 
 		    
-		    System.out.println(percentageCounter + " " + (int)(percentage * totalPermutations));
+		    //System.out.println(percentageCounter + " " + (int)(percentage * totalPermutations));
 			if(percentageCounter == (int)(percentage * totalPermutations))
 		    {
 		        int tempPercentage = (int)((percentage * 100) + 0.5);
