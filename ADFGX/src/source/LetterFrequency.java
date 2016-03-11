@@ -18,9 +18,9 @@ public class LetterFrequency {
 	public static final String VERY_FREQ_LETTERS = "TAOI"; // Mix this in if there are multiple top letters - otherwise this will be second
 	public static final String FREQ_LETTERS = "NSHR"; // Used for Mid range 3s
 	public static final String INFREQ_LETTERS = "DL"; // Used for 2s
-	public static final String VERY_INFREQ_LETTERS = "CUMWF"; // 2s as well?
-	//public static final String VERY_VERY_INFREQ_LETTERS = GYPBVK;
-	//public static final String MOST_INFREQ_LETTERS = "JXQZ";
+	public static final String VERY_INFREQ_LETTERS = "CMUWF"; // 2s as well?
+	public static final String VERY_VERY_INFREQ_LETTERS = "GYPBVK";
+	public static final String MOST_INFREQ_LETTERS = "JXQZ";
 	static int counter = 0;
 	static Map<String, String> charsBasedOnFrequency = new HashMap<String, String>();
 	static ArrayList<String> freqPairs = new ArrayList<String>();
@@ -94,7 +94,7 @@ public class LetterFrequency {
 	 */
 	public static void distributeLetters(Map<String, Integer> paramMap) throws IOException
 	{
-		System.out.println(paramMap);
+		System.out.println("MAP: " + paramMap);
 		int[] maxIntHolder = new int[paramMap.size()];
 		String[] stringHolder = new String[paramMap.size()];
 		Map<String, Integer> containedStrings = new HashMap<String, Integer>();
@@ -264,7 +264,7 @@ public class LetterFrequency {
 		
 		System.out.println();
 		boolean finished = false;
-		boolean run = false;
+		//boolean run = false;
 		
 		int totalPermutations = 1;
 		
@@ -281,11 +281,11 @@ public class LetterFrequency {
 		while(!finished)
 		{	
 			++counter;
-			//for(int i = 0; i < perms.length; ++i)
-			//{
-			//	System.out.print(perms[i] + " ");
-			//}
-			//System.out.println();
+			for(int i = 0; i < perms.length; ++i)
+			{
+				System.out.print(perms[i] + " ");
+			}
+			System.out.println();
 			// First number sequence that will register a hit
 			//if(perms[6] == 3 && perms[5] == 3 && perms[4] == 2 && perms[3] == 2 && perms[2] == 1 && perms[1] == 1 && perms[0] == 0)
 			//{
@@ -436,5 +436,6 @@ public class LetterFrequency {
 		}
 		
 		Resources.closeFile(writer, "adfgxPermutations");
+		System.exit(0);
 	}
 }

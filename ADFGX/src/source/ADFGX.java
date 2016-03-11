@@ -214,7 +214,7 @@ public class ADFGX {
 			} // for(String part : line)
 			col = 0;
 		} // for(String line : Files.readAllLines)
-		
+		//Hey
 		//int tempInt = columnDelim.length() - 1;
 		
 		for(int tempCol = 0; tempCol < columnDelim.length(); ++tempCol)

@@ -25,9 +25,9 @@ public class Resources {
 		//System.out.println("/// Opening /// " + fileName + " ...");
 		File file = new File("Null");
 		if(fileName.equals("CipherKeys") || fileName.equals("adfgxMapped"))
-			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ".txt");
+			file = new File(fileName + ".txt");
 		else
-			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ADFGX.line + ".txt");
+			file = new File(fileName + ADFGX.line + ".txt");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		////System.out.println(file.getName() + " /// Opened ///");
 		
@@ -39,7 +39,7 @@ public class Resources {
 	
 	public static BufferedWriter openFile_Writer(String fileName, String placeHolder) throws IOException {
 		
-		File file = new File("/Volumes/Jacob Clark/_PhrasesCOD/[" + ADFGX.wordToSearchFor.toUpperCase() + "]" + fileName + ADFGX.line + ".txt");
+		File file = new File("[" + ADFGX.wordToSearchFor.toUpperCase() + "]" + fileName + ADFGX.line + ".txt");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		ADFGX.currentFile = file;
 		
@@ -53,9 +53,9 @@ public class Resources {
 		//System.out.println("/// Opening /// " + fileName + " ...");
 		File file = new File("Null");
 		if(fileName.equals("adfgxCipherText") || fileName.equals("adfgxMapped") || fileName.equals("CipherKeys"))
-			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ".txt");
+			file = new File(fileName + ".txt");
 		else
-			file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ADFGX.line + ".txt");
+			file = new File(fileName + ADFGX.line + ".txt");
 		
 		BufferedReader reader = new BufferedReader(new FileReader(file));//"/Volumes/Jacob Clark/_PhraseCOD/" +fileName+ ".txt"));
 		//System.out.println(file.getName() + " /// Opened ///");
@@ -90,7 +90,7 @@ public class Resources {
 	
 	public static void deleteFile(String fileName)
 	{
-		File file = new File("/Volumes/Jacob Clark/_PhrasesCOD/" + fileName + ".txt");
+		File file = new File(fileName + ".txt");
 		file.delete();
 		//System.out.println("!!! " + fileName + " !!! Has Been Deleted!");
 	} /** public static void deleteFile(String fileName) **/

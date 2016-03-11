@@ -77,7 +77,7 @@ public class Alphabet {
 	 */
 	public static void sortMap(Map<String, Integer> tempMap) throws IOException
 	{
-		//System.out.println(tempMap);
+		System.out.println("SORT MAP: " + tempMap);
 		Set<String> tempStringSet = tempMap.keySet();
 		
 		Collection<Integer> tempIntCol = tempMap.values();
@@ -114,11 +114,11 @@ public class Alphabet {
 		for(int i = tempStringArr.size() - 1; i >= 0; --i)
 		{
 			//System.out.println(tempStringArr.get(i) + " " + tempIntArr.get(i));
-			if(!(tempIntArr.get(i) < 2))
-			{
+			//if(!(tempIntArr.get(i) < 2))
+			//{
 				////System.out.println(tempStringArr.get(i) + " " + tempIntArr.get(i));
 				paramMap.put(tempStringArr.get(i), tempIntArr.get(i));
-			}
+			//}
 		} // for(int i = tempStringArr.size() - 1; i >= 0; --i)	
 		//System.out.println(paramMap);
 		LetterFrequency.distributeLetters(paramMap);
