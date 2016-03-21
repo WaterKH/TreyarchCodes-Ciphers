@@ -1,0 +1,22 @@
+package source;
+
+public class Threads extends Thread {
+	
+	public int[] alphabetSomething;
+	
+	public Threads(int[] alphabet)
+	{
+		alphabetSomething = alphabet;
+		//for(int i = 0; i < alphabetSomething.length; ++i)
+			//System.out.print(alphabetSomething[i]+ " ");
+			// !Semaphores and mutexs - Look this up!
+	}
+	
+	public void run()
+	{
+		for(int i = 0; i < alphabetSomething.length; ++i)
+			System.out.print(alphabetSomething[i]+ " ");
+		//alphabetSomething
+		System.out.println();
+	}
+}

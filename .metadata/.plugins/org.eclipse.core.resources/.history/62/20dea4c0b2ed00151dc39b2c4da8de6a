@@ -1,0 +1,19 @@
+package source;
+
+public class Threads extends Thread {
+	
+	String[] alphabetSomething;
+	
+	public Threads(String[] alphabet)
+	{
+		alphabetSomething = alphabet;
+			// !Semaphores and mutexs - Look this up!
+	}
+	
+	public void run()
+	{
+		
+		//alphabetSomething
+	}
+
+}

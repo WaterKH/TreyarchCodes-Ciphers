@@ -25,6 +25,7 @@ public class ADFGX {
 	public static String line = "";
 	static int finalRowCount = 0;
 	public static String wordToSearchFor = "";
+	public static Map<Integer, String> words = new HashMap<Integer, String>();
 	public static File currentFile;
 	
 	/************************************************************************
@@ -45,10 +46,23 @@ public class ADFGX {
 			Resources.startTimer();
 			
 			BufferedReader reader = Resources.openFile_Reader("CipherKeys");
-			System.out.print("What word would you like to look for? ");
+			System.out.print("What words would you like to look for? ");
 			@SuppressWarnings("resource")
 			Scanner keyboard = new Scanner(System.in);
-			wordToSearchFor = keyboard.nextLine();
+			int tempCounter = 0;
+			while(true)
+			{
+				System.out.println("Type \'no\' to continue");
+				wordToSearchFor = keyboard.nextLine();
+				if(wordToSearchFor.toLowerCase().equals("no"))
+				{
+					break;
+				}
+				words.put(tempCounter, wordToSearchFor);
+				System.out.println(wordToSearchFor + " Added At Index " + tempCounter);
+				++tempCounter;
+			}
+			
 			int filesKept = 0;
 			int counter = 1;
 			
@@ -372,11 +386,24 @@ public class ADFGX {
 			
 		} // for(int i = 0; i < listForFreqAna.size(); ++i)
 		//System.out.println(holderForText);
-		if(holderForText.toLowerCase().contains(wordToSearchFor))
+		boolean containsAny = false;
+		
+		for(int i = 0; i < words.size(); ++i)
+		{
+			if(holderForText.toLowerCase().contains(words.get(i)))
+			{
+				containsAny = true;
+				//writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
+				//writer.newLine();
+				//break;
+			}	
+		}
+		
+		if(containsAny)
 		{
 			writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
 			writer.newLine();
-		}	
+		}
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
 	
 	/************************************************************************

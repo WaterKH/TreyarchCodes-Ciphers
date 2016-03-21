@@ -180,7 +180,9 @@ public class LetterFrequency {
 	 */
 	public static void permutateOverLetters(Map<String, ArrayList<Integer>> availableLetters, String[] letterPairs, int[] frequencyNumbers) throws IOException
 	{
+		
 		BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations", "JUST TO ACCESS ANOTHER METHOD");
+		
 		ArrayList<ArrayList<Integer>> tempIndexes = new ArrayList<ArrayList<Integer>>();
 		ArrayList<ArrayList<Integer>> indexes = new ArrayList<ArrayList<Integer>>();
 		
@@ -204,7 +206,7 @@ public class LetterFrequency {
 				if(maxNumb < tempIndexes.get(i).get(j))
 				{
 					maxNumb = tempIndexes.get(i).get(j);
-					//System.out.println(maxNumb);
+					//System.out.println("MAXNUMBER: " + maxNumb);
 				}
 			}
 			//System.out.println();
@@ -245,7 +247,7 @@ public class LetterFrequency {
 			}
 		}
 		
-		/*int[] maxNumber = new int[perms.length];
+		int[] maxNumber = new int[perms.length];
 		int[] minNumber = new int[perms.length];
 		
 		//Gets max and min numbers
@@ -260,11 +262,11 @@ public class LetterFrequency {
 				}
 				
 			}
-		}*/
+		}
 		
 		System.out.println();
 		boolean finished = false;
-		//boolean run = false;
+		boolean run = false;
 		
 		int totalPermutations = 1;
 		
@@ -272,20 +274,66 @@ public class LetterFrequency {
 		{
 			totalPermutations *= i;
 		}
-		System.out.println(totalPermutations);
+		//System.out.println(totalPermutations);
 		
 		int percentageCounter = 0;
 		double percentage = 0.0;
 		
+		Threads[] allThreads = new Threads[Runtime.getRuntime().availableProcessors()];
+		System.out.println(Runtime.getRuntime().availableProcessors());
+		
 		//Permutates over which alphabet to use
 		while(!finished)
 		{	
-			++counter;
 			for(int i = 0; i < perms.length; ++i)
 			{
 				System.out.print(perms[i] + " ");
 			}
 			System.out.println();
+			
+			for(int i = 0; i < allThreads.length; ++i)
+			{
+				if(allThreads[i] == null)
+				{
+					//System.out.println("COUNTER: " + counter + " " + i);
+					Threads thread = new Threads(perms, letterPairs, writer);
+					allThreads[i] = thread;
+					break;
+				}
+			}
+			//System.out.println();
+			
+			//System.out.println("COUNTER: " + counter);
+			/*if(allThreads[allThreads.length - 1] != null)
+			{
+				for(int i = 0; i < allThreads.length; ++i)
+				{
+					//System.out.println(i);
+					allThreads[i].start();
+				}
+				
+				for(int i = 0; i < allThreads.length; ++i)
+				{
+					try {
+						allThreads[i].join();
+					} catch (InterruptedException e) 
+					{
+						e.printStackTrace();
+					}
+				}
+				//System.exit(0);
+				for(int i = 0; i < allThreads.length; ++i)
+				{
+					//System.out.println(i);
+					allThreads[i] = null;
+				}
+			}
+			else
+			{
+				
+			}*/
+			
+			
 			// First number sequence that will register a hit
 			//if(perms[6] == 3 && perms[5] == 3 && perms[4] == 2 && perms[3] == 2 && perms[2] == 1 && perms[1] == 1 && perms[0] == 0)
 			//{
@@ -436,6 +484,6 @@ public class LetterFrequency {
 		}
 		
 		Resources.closeFile(writer, "adfgxPermutations");
-		System.exit(0);
+		//System.exit(0);
 	}
 }

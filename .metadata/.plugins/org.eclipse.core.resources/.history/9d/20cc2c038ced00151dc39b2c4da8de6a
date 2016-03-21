@@ -1,0 +1,15 @@
+package source;
+
+public class Threads extends Thread {
+	
+	public Threads()
+	{
+			
+	}
+	
+	public void run()
+	{
+		
+	}
+
+}

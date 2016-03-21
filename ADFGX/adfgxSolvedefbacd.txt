@@ -1,0 +1,12 @@
+G D F F G X 
+G F F G F A 
+G F G G D D 
+F F F F X X 
+F G D F G F 
+F G D F G F 
+F F D F G G 
+A A G F F G 
+D X X F F X 
+G F F X X D 
+F F A F G G 
+A F - - - - 
