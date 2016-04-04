@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class ADFGX {
@@ -27,6 +29,7 @@ public class ADFGX {
 	public static String wordToSearchFor = "";
 	public static Map<Integer, String> words = new HashMap<Integer, String>();
 	public static File currentFile;
+	public static Queue<String> writeToFileQueue = new LinkedList<String>();
 	
 	/************************************************************************
 	 * 
@@ -38,6 +41,8 @@ public class ADFGX {
 	 */
 	public static void main(String[] args) throws IOException
 	{
+		
+		//AbcAbc.checkAbcAbc("ring", "ing");
 		finalRowCount = getLengthOfColumns("abcdef");
 		boolean finished = false;
 		
@@ -73,7 +78,7 @@ public class ADFGX {
 				String inputKeyword = line;
 					
 				sortBasedOnKeyword(inputKeyword.toUpperCase());
-				System.out.println("LIST " + listForFreqAna);
+				/*System.out.println("LIST " + listForFreqAna);
 				LetterFrequency.frequencyAnalysis(listForFreqAna);
 				System.out.println("FREQ TRACK: " + freqTracker);
 				Alphabet.sortMap(freqTracker);
@@ -86,7 +91,7 @@ public class ADFGX {
 				else
 				{
 					++filesKept;
-				}
+				}*/
 				
 				++counter;
 				clear();
@@ -206,7 +211,7 @@ public class ADFGX {
 		String columnDelim = new String(individualChars);
 	
 		ArrayList<ArrayList<String>> holderForText = new ArrayList<ArrayList<String>>();
-		System.out.println(finalRowCount);
+		//System.out.println("FINAL " + finalRowCount);
 		for(int i = 0; i < finalRowCount; i++)  
 		{
 	        holderForText.add(new ArrayList<String>());
@@ -305,6 +310,7 @@ public class ADFGX {
 			
 		Resources.closeFile(writer, "adfgxMapped");
 		Resources.closeFile(readerCipherText, "adfgxCipherText");
+		//System.out.println(individualRow);
 		return individualRow;
 	}
 	
@@ -331,7 +337,7 @@ public class ADFGX {
 			{
 				if(columnMap.containsKey(inputKey.charAt(i)))
 				{
-					System.out.print(columnMap.get(inputKey.charAt(i)).get(j) + " ");
+					//System.out.print(columnMap.get(inputKey.charAt(i)).get(j) + " ");
 					writer.write(columnMap.get(inputKey.charAt(i)).get(j) + " ");
 					if(!columnMap.get(inputKey.charAt(i)).get(j).equals("-"))
 					{
@@ -344,7 +350,7 @@ public class ADFGX {
 					} // if(str.length() == 2)
 				}
 			} // for(int i = 0; i < columnMap.size(); ++i)
-			System.out.println();
+			//System.out.println();
 			writer.newLine();
 		} // for(int j = 0; j < columnMap.get(inputKey.charAt(0)).length; ++j)
 		
@@ -401,8 +407,10 @@ public class ADFGX {
 		
 		if(containsAny)
 		{
-			writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
-			writer.newLine();
+			//writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
+			//writer.newLine();
+			//System.out.println(holderForText);
+			writeToFileQueue.add(holderForText);
 		}
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
 	

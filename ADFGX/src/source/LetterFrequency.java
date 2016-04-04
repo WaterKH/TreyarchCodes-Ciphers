@@ -26,7 +26,7 @@ public class LetterFrequency {
 	static ArrayList<String> freqPairs = new ArrayList<String>();
 	
 	public static final String[] frequencyStrings = {MOST_FREQ_LETTER, VERY_FREQ_LETTERS, FREQ_LETTERS, 
-													 INFREQ_LETTERS, VERY_INFREQ_LETTERS};//,VERY_VERY_INFREQ_LETTERS, MOST_INFREQ_LETTERS};
+													 INFREQ_LETTERS, VERY_INFREQ_LETTERS, VERY_VERY_INFREQ_LETTERS, MOST_INFREQ_LETTERS};
 	public static Map<Integer, String> alphabetContained = new HashMap<Integer, String>();
 	
 	/************************************************************************
@@ -183,6 +183,9 @@ public class LetterFrequency {
 		
 		BufferedWriter writer = Resources.openFile_Writer("adfgxPermutations", "JUST TO ACCESS ANOTHER METHOD");
 		
+		FileWriterThread fileWriter = new FileWriterThread(ADFGX.currentFile);
+		fileWriter.start();
+		
 		ArrayList<ArrayList<Integer>> tempIndexes = new ArrayList<ArrayList<Integer>>();
 		ArrayList<ArrayList<Integer>> indexes = new ArrayList<ArrayList<Integer>>();
 		
@@ -239,15 +242,15 @@ public class LetterFrequency {
 		int[] radices = new int[indexes.size()];
 		for(int i = 0; i < indexes.size(); ++i)
 		{
-			radices[i] = indexes.get(i).get(indexes.get(i).size() - 1) + 1;
+			radices[i] = 7;//indexes.get(i).get(indexes.get(i).size() - 1) + 1;
 			//System.out.println(radices[i] + " " + indexes.get(i).get(indexes.get(i).size() - 1) + " " + (indexes.get(i).get(indexes.get(i).size() - 1) + 1));
-			while(radices[i] > 4)
-			{
-				radices[i] = radices[i] - 1;
-			}
+			//while(radices[i] > 4)
+			//{
+			//	radices[i] = radices[i] - 1;
+			//}
 		}
 		
-		int[] maxNumber = new int[perms.length];
+		/*int[] maxNumber = new int[perms.length];
 		int[] minNumber = new int[perms.length];
 		
 		//Gets max and min numbers
@@ -262,9 +265,9 @@ public class LetterFrequency {
 				}
 				
 			}
-		}
+		}*/
 		
-		System.out.println();
+		//System.out.println();
 		boolean finished = false;
 		boolean run = false;
 		
@@ -279,17 +282,17 @@ public class LetterFrequency {
 		int percentageCounter = 0;
 		double percentage = 0.0;
 		
-		Threads[] allThreads = new Threads[Runtime.getRuntime().availableProcessors()];
-		System.out.println(Runtime.getRuntime().availableProcessors());
+		Threads[] allThreads = new Threads[Runtime.getRuntime().availableProcessors() - 1];
+		//System.out.println(Runtime.getRuntime().availableProcessors());
 		
 		//Permutates over which alphabet to use
 		while(!finished)
 		{	
-			for(int i = 0; i < perms.length; ++i)
-			{
-				System.out.print(perms[i] + " ");
-			}
-			System.out.println();
+			//for(int i = 0; i < perms.length; ++i)
+			//{
+			//	System.out.print(perms[i] + " ");
+			//}
+			//System.out.println();
 			
 			for(int i = 0; i < allThreads.length; ++i)
 			{
@@ -304,7 +307,7 @@ public class LetterFrequency {
 			//System.out.println();
 			
 			//System.out.println("COUNTER: " + counter);
-			/*if(allThreads[allThreads.length - 1] != null)
+			if(allThreads[allThreads.length - 1] != null)
 			{
 				for(int i = 0; i < allThreads.length; ++i)
 				{
@@ -331,7 +334,7 @@ public class LetterFrequency {
 			else
 			{
 				
-			}*/
+			}
 			
 			
 			// First number sequence that will register a hit
@@ -340,7 +343,7 @@ public class LetterFrequency {
 				//run = true;
 				//System.out.println();
 			//}
-			boolean done = false;
+			//boolean done = false;
 			
 			/*for(int i = 0; i < indexes.size(); ++i)
 			{
@@ -364,17 +367,17 @@ public class LetterFrequency {
 					i = 0;
 				}
 			}*/
-			int[] permsInner = new int[perms.length];
+			/*int[] permsInner = new int[perms.length];
 			int[] radicesInner = new int[radices.length];
 			
 			if(!done)
 			{
 				for(int i = 0; i < perms.length; ++i)
 				{
-					if(perms[i] >= 5)
-					{
-						perms[i] = 4;
-					}
+					//if(perms[i] >= 5)
+					//{
+					//	perms[i] = 4;
+					//}
 					radicesInner[i] = frequencyStrings[perms[i]].length();
 				}
 			}
@@ -452,7 +455,7 @@ public class LetterFrequency {
 			      
 			    } // if (perms.at(0) == limitOfPermutations)
 			    
-			}
+			}*/
 			
 			perms[0] += 1;
 			
@@ -477,12 +480,17 @@ public class LetterFrequency {
 			if(percentageCounter == (int)(percentage * totalPermutations))
 		    {
 		        int tempPercentage = (int)((percentage * 100) + 0.5);
-		        System.out.println(tempPercentage + "% " + (int)((percentage * totalPermutations) + 0.5));
+		        //System.out.println(tempPercentage + "% " + (int)((percentage * totalPermutations) + 0.5));
 		        percentage += 0.10;
 		    }
 		    ++percentageCounter;
 		}
-		
+		try {
+			fileWriter.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Resources.closeFile(writer, "adfgxPermutations");
 		//System.exit(0);
 	}

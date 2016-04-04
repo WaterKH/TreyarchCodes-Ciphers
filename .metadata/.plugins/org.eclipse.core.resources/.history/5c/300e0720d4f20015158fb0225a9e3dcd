@@ -1,0 +1,18 @@
+package source;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileWriterThread {
+
+	public void run()
+	{
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(ADFGX.currentFile));
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+}

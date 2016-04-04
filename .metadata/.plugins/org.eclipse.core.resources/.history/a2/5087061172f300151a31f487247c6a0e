@@ -1,0 +1,127 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AbcAbc {
+	
+	public static void checkAbcAbc(String s1, String s2, BufferedWriter writer) {
+		
+		String checkStr = s1 + s2;
+		
+		for(int i = 0; i < checkStr.length(); ++i)
+		{
+			int index = i;
+			int counter = 0;
+			for(int j = index; j < checkStr.length(); ++j)
+			{
+				
+			}
+		}
+		
+		boolean stop = false;
+		
+		
+		String s = s1 + s2;
+		
+		int cutLength;
+		if(s2 != null){
+			cutLength = s2.length() + 2;
+			if(s2.length() < 3){
+				stop = true;
+			}
+		}else{
+			cutLength = 5;
+		}
+		  /* ---------------------------------------------------------------------------------------------------------------------------------------
+		  * We set a cutlength, we will stop checking this many letters before the end of the string, becuase otherwise it could also
+		  * just check the second string, but that is unnecessary becuase that will get checked later EG: s1 = hello / s2 = ringing / s = helloringing
+		  * Now the program detects the pattern, but later on, the word ringing will get detected anyway with s1 = ringing / s2 = null / s=ringing
+		  * Otherwise, it would result in ringing getting detected every single time for s1 = (every word) / s2 = ringing
+		  * But with the cutLength, we stop the check just at the end of the first string, so that it will never detect a pattern in the second string
+		  ------------------------------------------------------------------------------------------------------------------------------------------ */
+		
+		
+		//Check if length is larger than 6 and if stop is false
+		if(s.length() >= 6 && !stop){
+			/*BufferedWriter writer = null; //Had to add = null, otherwise I got some errors
+			
+			try{
+				writer = new BufferedWriter(new FileWriter("AbcAbc.txt"));
+			} catch(IOException e){
+				e.printStackTrace();
+			}*/
+			
+			//Main for loop
+			for(int i = 0; i < s.length() - cutLength; i++){
+				String index1 = s.substring(i, i+3);
+				String index2 = s.substring(i+3, i+6);
+				
+				//System.out.println(s+ " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2); //Debugging
+				
+				if(index1.equals(index2)){
+					try{
+						
+				        System.out.println("Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+				        //System.out.println(s);
+				        writer.write(s + "\n");
+				        writer.newLine();
+				        
+					}catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}//End of for-loop
+			
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}//End of checkAbcAbc
+	
+	 static BufferedWriter writer;
+	
+	public static void main(String[] args) {
+		
+		//Create dictionary
+		String[] dictionary = null;
+	    List<String> dictionaryList = new ArrayList<String>();
+
+	    try{ 
+	        FileInputStream fstream_school = new FileInputStream("enable1.txt"); 
+	        DataInputStream data_input = new DataInputStream(fstream_school); 
+	        BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input)); 
+	        writer = new BufferedWriter(new FileWriter("AbcAbc.txt"));
+	        String str_line; 
+
+	        while ((str_line = buffer.readLine()) != null) { 
+	            str_line = str_line.trim(); 
+	            if ((str_line.length()!=0)){ 
+	            	dictionaryList.add(str_line);
+	            } 
+	        }
+	       
+	        dictionary = (String[])dictionaryList.toArray(new String[dictionaryList.size()]);
+	        
+	        for(int i = 0;i < dictionary.length;i++){
+				for(int j =0; j<dictionary.length;j++){
+					checkAbcAbc(dictionary[i],dictionary[j], writer);
+				}
+			}
+	    }catch(IOException e){
+	    	e.printStackTrace();
+	    }
+		
+	}//End of main
+}

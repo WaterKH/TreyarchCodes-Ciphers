@@ -1,0 +1,389 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class AbcAbc_Copy {
+	
+	
+	public static String[] keys = {"fedcba","fedbac","fedabc","fedacb","fedcab","fecbda","fecbad","febdac",
+											"febcda","febcad","febadc","feadcb","feadbc","feabdc","feacbd","feacdb",
+											"efdbca","efdabc","efdacb","efcdba","efcdab","efcbda","efcbad","efcabd",
+											"efcadb","efbdca","efbcda","efbcad","efbacd","efadcb","efadbc","efabcd",
+											"fecdba","fecdab","fecabd","fecadb","efdcba","efdcab","efacbd","efacdb",
+											"fedbca","febdca","febacd","feabcd","efdbac","efbdac","efbadc","efabdc"};
+	
+	public static String[] keysAABAAB = {"fecdba","fecdab","fecabd","fecadb","efdcba","efdcab","efacbd","efacdb"};
+	
+	public static String[] keysABAABA = {"fedbca","febdca","febacd","feabcd","efdbac","efbdac","efbadc","efabdc"};
+	
+	public static int indexOfPattern = 12;
+	public static Map<String, Integer> patternHolder = new HashMap<String, Integer>();
+	public static String singlePattern = "";
+	
+	public static void checkAbcAbc(String s1, String s2, BufferedWriter writer) {
+		
+		boolean stop = false;
+		
+		//set startLength
+		int startLength;
+		if(s1.length() > 3){
+			startLength = s1.length() - 3;
+		}else{
+			startLength = 0;
+		}
+		
+		//Set cutLength
+		int cutLength;
+		if(s2 != null){
+			cutLength = s2.length() + 2;
+			if(s2.length() < 3){
+				stop = true;
+			}
+		}else{
+			cutLength = 5;
+			s2 = "";
+		}
+		
+		String s = s1 + s2;
+		
+		
+		  /* ---------------------------------------------------------------------------------------------------------------------------------------
+		  * We set a cutLength, we will stop checking this many letters before the end of the string, becuase otherwise it could also
+		  * just check the second string, but that is unnecessary becuase that will get checked later EG: s1 = hello / s2 = ringing / s = helloringing
+		  * Now the program detects the pattern, but later on, the word ringing will get detected anyway with s1 = ringing / s2 = null / s=ringing
+		  * Otherwise, it would result in ringing getting detected every single time for s1 = (every word) / s2 = ringing
+		  * But with the cutLength, we stop the check just at the end of the first string, so that it will never detect a pattern in the second string
+		  * 
+		  * We set a startLength so that the program doesn't add 'duplicates to the list'. For example assassinhello, assassinsnake... everytime we see
+		  * assassin as the first word, it adds it to the file, while we don't want that, since we already checked assassin as a single word.
+		  ------------------------------------------------------------------------------------------------------------------------------------------ */
+		
+		
+		//Check if length is larger than 6 and if stop is false
+		if(s.length() >= 6 && !stop){
+			
+			//Main for loop
+			for(int i = startLength; i < s.length() - cutLength; i++){
+				String index1 = s.substring(i, i+3);
+				String index2 = s.substring(i+3, i+6);
+				
+				//ABCABC
+				if(index1.equals(index2)){
+					try{
+						//AbcAbc
+						if(index1.charAt(0) != index1.charAt(1) && 
+						   index1.charAt(0) != index1.charAt(2)){
+							//System.out.println("ABCABC - Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+							writer.write(s + " ABCABC\n");
+						}
+						
+						//AabAab
+						else if(index1.charAt(0) == index1.charAt(1) &&
+								index1.charAt(0) != index1.charAt(2)){
+							//System.out.println("AABAAB - Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+							writer.write(s + " AABAAB\n");
+						}
+						
+						//AbaAba
+						else if(index1.charAt(0) == index1.charAt(2) &&
+								index1.charAt(0) != index1.charAt(1)){
+							//System.out.println("ABAABA - Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+							writer.write(s + " ABAABA\n");
+						}
+						
+				        writer.newLine();
+				        
+					}catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}//End of for-loop
+		}
+		
+		
+	}//End of checkAbcAbc
+
+	public static void checkAbcAbc(String s1, BufferedWriter writer) 
+	{		
+		String s = s1;
+		
+		//Check if length is larger than 6 and if stop is false
+		if(s.length() >= 6){
+			
+			//Main for loop
+			for(int i = 0; i < s.length(); i++)
+			{
+				if((i + 3) < s.length() && (i + 6) < s.length())
+				{
+					String index1 = s.substring(i, i+3);
+					String index2 = s.substring(i+3, i+6);
+				
+					//ABCABC
+					if(index1.equals(index2)){
+						try{
+							//AbcAbc
+							if(index1.charAt(0) != index1.charAt(1) && 
+							   index1.charAt(0) != index1.charAt(2)){
+								//System.out.println("ABCABC - Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+								writer.write(s + " ABCABC\n");
+							}
+							
+							//AabAab
+							else if(index1.charAt(0) == index1.charAt(1) &&
+									index1.charAt(0) != index1.charAt(2)){
+								//System.out.println("AABAAB - Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+								writer.write(s + " AABAAB\n");
+							}
+							
+							//AbaAba
+							else if(index1.charAt(0) == index1.charAt(2) &&
+									index1.charAt(0) != index1.charAt(1)){
+								//System.out.println("ABAABA - Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+								writer.write(s + " ABAABA\n");
+							}
+							
+					        writer.newLine();
+					        
+						}catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}//End of for-loop
+		}
+		
+		
+	}//End of checkAbcAbc
+	
+	public static int returnIndexOfSequenceStart(String word)
+	{
+		int returnInt = -1;
+		
+		String[] wordArr = new String[word.length()];
+		
+		for(int i = 0; i < word.length(); ++i)
+		{
+			wordArr[i] = Character.toString(word.charAt(i));
+		}
+		
+		int counter = 0;
+		
+		for(int i = 0; i < wordArr.length; ++i)
+		{
+			if(counter == 3)
+			{
+				returnInt = i - 3;
+				singlePattern = wordArr[i] + wordArr[i + 1] + wordArr[i + 2];
+				break;
+			}
+			
+			if(i + 3 < word.length())
+			{
+				String s1 = wordArr[i];
+				String s2 = wordArr[i + 3];
+				
+				if(s1.equals(s2))
+				{
+					++counter;
+				}
+				else
+				{
+					counter = 0;
+				}
+			}
+		}
+		
+		return returnInt;
+	}
+	
+	static BufferedWriter writer;
+	
+	public static void main(String[] args) {
+		
+		/*//Create dictionary
+		String[] dictionary = null;
+	    List<String> dictionaryList = new ArrayList<String>();
+
+	    try{ 
+	        FileInputStream fstream_school = new FileInputStream("dictionary.txt"); 
+	        DataInputStream data_input = new DataInputStream(fstream_school); 
+	        BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input)); 
+	        writer = new BufferedWriter(new FileWriter("AbcAbc_Single.txt"));
+	        String str_line; 
+
+	        while ((str_line = buffer.readLine()) != null) { 
+	            str_line = str_line.trim(); 
+	            if ((str_line.length()!=0)){ 
+	            	dictionaryList.add(str_line);
+	            } 
+	        }
+	       
+	        dictionary = (String[])dictionaryList.toArray(new String[dictionaryList.size()]);
+	        
+	    }catch(IOException e){
+	    	e.printStackTrace();
+	    }
+	    
+	    for(int i = 0;i < dictionary.length;i++){
+			//for(int j =0; j<dictionary.length;j++){
+				checkAbcAbc(dictionary[i],writer);//dictionary[j], writer);
+			//}
+		}
+	    
+	    try {
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		
+		for(int i = 0; i < keys.length; ++i)
+		{
+			File file = new File("adfgxSolved" + keys[i] + ".txt");
+			File fileToWrite = new File("adfgx_Single-" + keys[i] + ".txt");//"/Volumes/Jacob Clark/_PhrasesCOD/adfgx-" + keys[i] + ".txt");
+			try {
+				BufferedReader cipherText_reader = new BufferedReader(new FileReader(file));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(fileToWrite));
+				String cipherText_line = "";				
+				ArrayList<String> ADFGX_Letters = new ArrayList<String>();
+				
+
+				while((cipherText_line = cipherText_reader.readLine()) != null)
+				{
+					String letters = "";
+					
+					for(String part : cipherText_line.split(" "))
+					{
+						letters += part;
+						if(letters.length() == 2)
+						{
+							ADFGX_Letters.add(letters);
+							letters = "";
+						}
+					}
+				}
+				
+				cipherText_reader.close();
+				
+				File wordFile = new File("AbcAbc_Single.txt");
+				BufferedReader word_reader = new BufferedReader(new FileReader(wordFile));
+				String word_line = "";
+				
+				String[] ADFGX_Array = ADFGX_Letters.toArray(new String[ADFGX_Letters.size()]);
+				String aWord = ADFGX_Array[12] + " " + ADFGX_Array[13] + " " + ADFGX_Array[14] + " " + ADFGX_Array[15] + " " + ADFGX_Array[16] + " " + ADFGX_Array[17] + " " + ADFGX_Array[18]; 
+				String pattern = getPattern(ADFGX_Array[12], ADFGX_Array[13], ADFGX_Array[14], aWord, keys[i]);
+				
+				while((word_line = word_reader.readLine()) != null)
+				{
+					if(word_line.length() > 0)
+					{
+						String word = word_line.split(" ")[0];
+						String sequence = word_line.split(" ")[1];
+						
+						implementPatterns(word, sequence, ADFGX_Array, pattern, writer);
+					}
+				}
+				
+				word_reader.close();
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			patternHolder.clear();
+		}
+		
+	}//End of main
+	
+	//Get Pattern type
+	public static String getPattern(String letterPair_1, String letterPair_2, String letterPair_3, String word, String key)
+	{		
+		String pattern = "";
+		//AabAab
+		if((letterPair_1.equals(letterPair_2)) && !(letterPair_1.equals(letterPair_3)))
+		{
+			System.out.println(key + " AABAAB - " + word);
+			pattern = "AABAAB";
+		}
+		//AbaAba
+		else if((letterPair_1.equals(letterPair_3)) && !(letterPair_1.equals(letterPair_2)))
+		{
+			System.out.println(key + " ABAABA - " + word);
+			pattern = "ABAABA";
+		}
+		else if(!(letterPair_1.equals(letterPair_2)) && !(letterPair_1.equals(letterPair_3)))
+		{
+			System.out.println(key + " ABCABC - " + word);
+			pattern = "ABCABC";
+		}
+		else
+		{
+			System.out.println("It's Over...");
+			System.exit(0);
+		}
+				
+		return pattern;	
+	}
+	
+	//Use on the cipher
+	public static void implementPatterns(String word, String sequence, String[] adfgxArray, String pattern, BufferedWriter writer) throws IOException
+	{
+		//System.out.println(pattern + " " + sequence);
+		if(pattern.equals(sequence))
+		{
+			Map<String, String> matches = new HashMap<String, String>();
+			String[] testArray = new String[adfgxArray.length];
+			
+			for(int i = 0; i < adfgxArray.length; ++i)
+			{
+				testArray[i] = adfgxArray[i];
+			}
+			
+			int index = returnIndexOfSequenceStart(word);
+			
+			if(!patternHolder.containsKey(singlePattern))
+			{
+				patternHolder.put(singlePattern, 0);
+				//for(int i = indexOfPattern; i < indexOfPattern + 3; ++i)
+				for(int i = indexOfPattern - (index + 1); i < testArray.length; ++i)
+				{
+					if(matches.containsValue(Character.toString(word.charAt(index))))
+					{
+						if(matches.get(testArray[i]) != Character.toString(word.charAt(index)))
+						{
+							return; //Letter has another value
+						}
+					}
+					matches.put(testArray[i], Character.toString(word.charAt(index)));
+					++index;
+				}
+				
+				for(int i = 0; i < adfgxArray.length; ++i)
+				{
+					if(matches.containsKey(adfgxArray[i]))
+					{
+						testArray[i] = matches.get(testArray[i]);
+						writer.write(testArray[i] + " ");
+					}
+					else
+					{
+						writer.write(adfgxArray[i] + " ");
+					}
+				}
+				writer.write("- " + word);
+				writer.newLine();
+			}
+		}
+	}
+}

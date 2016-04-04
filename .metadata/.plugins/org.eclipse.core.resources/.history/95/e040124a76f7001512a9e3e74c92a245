@@ -1,0 +1,329 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class AbcAbc {
+	
+	
+	public static String[] keysABCABC = {"fedcba","fedbac","fedabc","fedacb","fedcab","fecbda","fecbad","febdac",
+											"febcda","febcad","febadc","feadcb","feadbc","feabdc","feacbd","feacdb",
+											"efdbca","efdabc","efdacb","efcdba","efcdab","efcbda","efcbad","efcabd",
+											"efcadb","efbdca","efbcda","efbcad","efbacd","efadcb","efadbc","efabcd"};
+	
+	public static String[] keysAABAAB = {"fecdba","fecdab","fecabd","fecadb","efdcba","efdcab","efacbd","efacdb"};
+	
+	public static String[] keysABAABA = {"fedbca","febdca","febacd","feabcd","efdbac","efbdac","efbadc","efabdc"};
+	
+	public static int indexOfPattern = 12;
+
+	
+	
+	
+	static BufferedWriter writer;
+	
+	public static void main(String[] args) {
+		
+		//TODO: get pattern from the file and based on that run different for loops
+		//for-loop ABCABC
+		for(int i = 0; i < keysABCABC.length; i++){
+			
+			File file = new File("adfgxSolved" + keysABCABC[i] + ".txt");
+			
+			try {
+				BufferedReader cipherText_reader = new BufferedReader(new FileReader(file));
+				String cipherText_line = "";				
+				ArrayList<String> ADFGX_Letters = new ArrayList<String>();
+
+				while((cipherText_line = cipherText_reader.readLine()) != null)
+				{
+					String letters = "";
+					
+					for(String part : cipherText_line.split(" "))
+					{
+						letters += part;
+						if(letters.length() == 2)
+						{
+							ADFGX_Letters.add(letters);
+							letters = "";
+						}
+					}
+				}
+				
+				cipherText_reader.close();
+				
+				String[] ADFGX_Array = ADFGX_Letters.toArray(new String[ADFGX_Letters.size()]);
+				
+				//Right now, we're using a temporary word for testing
+				String tempWord = "sinsin";
+				if(!getPattern(tempWord).equals("-")){
+					//Do shiz
+					System.out.println("--------------------------------------------------");
+					System.out.println("Using cipher: " + Arrays.toString(ADFGX_Array));
+					System.out.println("Using key '" + keysABCABC[i] + "'");
+					System.out.println("Using word '" + tempWord + "'");
+					
+					implementPatterns(tempWord, ADFGX_Array);
+					
+				}else{
+					System.out.println("This is not one of our 3 needed patterns, move on to the next one.");
+				}
+				
+				
+				
+				/*
+				File wordFile = new File("AbcAbc_30k-60k.txt");
+				BufferedReader word_reader = new BufferedReader(new FileReader(wordFile));
+				String word_line = "";
+				
+				String[] ADFGX_Array = ADFGX_Letters.toArray(new String[ADFGX_Letters.size()]);
+				
+				for(int j = 0; j < ADFGX_Array.length; ++j){
+					System.out.print(ADFGX_Array[j] + " ");
+				}
+				
+				System.out.println();
+				
+				while((word_line = word_reader.readLine()) != null)
+				{
+					if(word_line.length() > 0)
+					{
+						String word = word_line.split(" ")[0];
+						String sequence = word_line.split(" ")[1];
+						implementPatterns(word, ADFGX_Array);
+					}
+				}
+				
+				word_reader.close();
+				*/
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}//End of main
+	
+	
+	
+	
+	public static int returnIndexOfSequenceStart(String word)
+	{
+		int returnInt = -1;
+		
+		String[] wordArr = new String[word.length()];
+		
+		for(int i = 0; i < word.length(); ++i)
+		{
+			wordArr[i] = Character.toString(word.charAt(i));
+		}
+		
+		int counter = 0;
+		
+		for(int i = 0; i < wordArr.length; ++i)
+		{
+			if(counter == 3)
+			{
+				returnInt = i - 3;
+				break;
+			}
+			
+			if(i + 3 < word.length())
+			{
+				String s1 = wordArr[i];
+				String s2 = wordArr[i + 3];
+				
+				if(s1.equals(s2))
+				{
+					++counter;
+				}
+				else
+				{
+					counter = 0;
+				}
+			}
+		}
+		
+		return returnInt;
+	}
+	
+	
+	
+	
+	
+	public static void implementPatterns(String word, String[] adfgxArray){
+		
+		Map<Character, String> miniAlphabet = new HashMap<Character, String>();
+		int startIndex = returnIndexOfSequenceStart(word);
+		System.out.println("Starting implementPatterns");
+		System.out.println("startIndex = " + startIndex + "\n");
+		
+		//Create miniAlphabet
+		for(int i = 0; i < word.length(); i++){
+			
+			if(miniAlphabet.containsKey(word.charAt(i))){
+				
+				if(!miniAlphabet.get(word.charAt(i)).equals(adfgxArray[indexOfPattern - startIndex + i])){
+					System.out.println("Duplicate key found at word's index "+ (indexOfPattern - startIndex + i - word.length() + 1) + ". Returned."); //We already have a letter with another ADFGX 2-letter value
+					return; //Letter has another value
+				}
+				
+			}else{
+				//Check if value is already in the mini alphabet with another key
+				if(!miniAlphabet.containsValue(adfgxArray[indexOfPattern - startIndex + i])){
+					miniAlphabet.put(word.charAt(i), adfgxArray[indexOfPattern - startIndex + i]);
+					System.out.println(word.charAt(i) + " = " + adfgxArray[indexOfPattern - startIndex + i]);
+				}else{
+					System.out.println("Duplicate value found at word's index " + (indexOfPattern - startIndex + i - word.length() + 1) + ". Returned.");
+					return;
+				}
+			}
+			
+		}
+		
+		
+		//If all went well, write to file
+		System.out.println("MATCH");
+		
+		
+		
+		/* THIS WAS THE OLD PROGRAM, WAY TOO LONG :P
+		//Check if any of our 3 known letters also appear elsewhere in our word
+		//Check if there are any letters BEFORE the pattern, if yes - check for known letters and ADFGX values
+		if(startIndex > 0){
+			
+			for(int j = startIndex - 1; j >= 0; j--){
+				
+				if(word.charAt(j) == word.charAt(startIndex) ||
+						word.charAt(j) == word.charAt(startIndex+1) ||
+						word.charAt(j) == word.charAt(startIndex+2)){
+					
+					System.out.println("The letter " + word.charAt(j) + " should be equal to " + miniAlphabet.get(word.charAt(j)) + " at index " + j + ". It is equal to " + adfgxArray[startIndex - j]);
+					
+					if(!miniAlphabet.get(word.charAt(j)).equals(adfgxArray[startIndex - j])){
+						//NOT good, move on to next word, kick this word outta my way!
+						System.out.println("Returned");
+						return;
+					}
+				}
+				
+				
+				//Check all 3 of our known ADFGX values
+				for(Character key: miniAlphabet.keySet()){
+					//Check if current ADFGX value is equal to one we know
+					if(adfgxArray[startIndex - j] == miniAlphabet.get(key)){
+						
+						System.out.println("ADFGX-value found: " + adfgxArray[startIndex - j] + " at index " + j + ", so it should be the letter " + key + ". It is the letter " + word.charAt(j));
+						
+						if(!key.equals(word.charAt(j))){
+							//NOT good, move on to next word, kick this word outta my way!
+							System.out.println("Returned");
+							return;
+						}
+					}
+				}
+				
+			}//End of of for-loop
+			
+		}//End of if(startIndex > 0)
+		
+		
+		
+		
+		//Check if there are letters BEHIND the pattern, if yes - check for known letters and ADFGX values
+		if(word.length() > 6){
+			
+			for(int i = startIndex+6; i < word.length(); i++){
+				
+				if(word.charAt(i) == word.charAt(startIndex) ||
+						word.charAt(i) == word.charAt(startIndex+1) ||
+						word.charAt(i) == word.charAt(startIndex+2)){
+					
+					System.out.println("The letter " + word.charAt(i) + " should be equal to " + miniAlphabet.get(word.charAt(i)) + " at index " + i + ". It is equal to " + adfgxArray[i]);
+					
+					if(!miniAlphabet.get(word.charAt(i)).equals(adfgxArray[i])){
+						//NOT good, move on to next word, kick this word outta my way!
+						System.out.println("Returned");
+						return;
+					}
+				}
+				
+				
+				//Check all 3 of our known ADFGX values
+				for(Character key: miniAlphabet.keySet()){
+					
+					//Check if current ADFGX value is equal to one we know
+					if(adfgxArray[indexOfPattern + i] == miniAlphabet.get(key)){
+						
+						System.out.println("ADFGX-value found: " + adfgxArray[indexOfPattern + i] + " is equal to " + miniAlphabet.get(key) + " at " + (indexOfPattern + i));
+						
+						if(!key.equals(word.charAt(i))){
+							//NOT good, move on to next word, kick this word outta my way!
+							System.out.println("Returned");
+							return;
+						}
+					}
+				}
+				
+			}//End of for-loop
+			
+		}//End of if(word.length() > 6)
+		*/
+		
+		
+		
+		
+	}
+	
+	
+	
+	//Get Pattern type
+	public static String getPattern(String word){
+		
+		String pattern = "";
+		
+		for(int i = 0; i < word.length() - 5; i ++){
+			
+			String index1 = word.substring(i, i+3);
+			String index2 = word.substring(i+3, i +6);
+			
+			if(index1.equals(index2)){
+				//AbcAbc
+				if(index1.charAt(0) != index1.charAt(1) && 
+				   index1.charAt(0) != index1.charAt(2) &&
+				   index1.charAt(1) != index1.charAt(2)){
+					pattern = "ABCABC";
+				}
+				
+				//AabAab
+				else if(index1.charAt(0) == index1.charAt(1) &&
+						index1.charAt(0) != index1.charAt(2)){
+					pattern = "AABAAB";
+				}
+				
+				//AbaAba
+				else if(index1.charAt(0) == index1.charAt(2) &&
+						index1.charAt(0) != index1.charAt(1)){
+					pattern = "ABAABA";
+				}
+				
+				else{
+					pattern = "-";
+				}
+			}
+			
+		}
+		return pattern;
+		
+	}
+}

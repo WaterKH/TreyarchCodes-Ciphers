@@ -1,0 +1,85 @@
+package source;
+
+import java.io.BufferedWriter;
+import java.io.File;
+
+public class AbcAbcThread extends Thread {
+
+	static String s1;
+	static String s2;
+	static BufferedWriter writer;
+	
+	public AbcAbcThread(String strA, String strB, BufferedWriter buffWrite)
+	{
+		s1 = strA;
+		s2 = strB;
+		writer = buffWrite;
+		//System.out.println("AbcAbcThread created");
+	}
+	
+	public void run()
+	{	
+		boolean stop = false;
+		
+		System.out.println(s1 + " " + s2);
+		String s = s1 + s2;
+		
+		int cutLength = 0;
+		
+		if(s2 != null)
+		{
+			cutLength = s2.length() + 2;
+			
+			if(s2.length() < 3)
+			{
+				stop = true;
+			}
+		}
+		else
+		{
+			cutLength = 5;
+		}
+		  /* ---------------------------------------------------------------------------------------------------------------------------------------
+		  * We set a cutlength, we will stop checking this many letters before the end of the string, becuase otherwise it could also
+		  * just check the second string, but that is unnecessary becuase that will get checked later EG: s1 = hello / s2 = ringing / s = helloringing
+		  * Now the program detects the pattern, but later on, the word ringing will get detected anyway with s1 = ringing / s2 = null / s=ringing
+		  * Otherwise, it would result in ringing getting detected every single time for s1 = (every word) / s2 = ringing
+		  * But with the cutLength, we stop the check just at the end of the first string, so that it will never detect a pattern in the second string
+		  ------------------------------------------------------------------------------------------------------------------------------------------ */
+
+		//Check if length is larger than 6 and if stop is false
+		if(s.length() >= 6 && !stop){
+			System.out.println(s.length());
+			//Main for loop
+			for(int i = 0; i < s.length() - cutLength; i++){
+				
+				String index1 = s.substring(i, i+3);
+				String index2 = s.substring(i+3, i+6);
+				
+				//System.out.println(s+ " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2); //Debugging
+				
+				if(index1.equals(index2)){
+					//try{
+						
+				        System.out.println("Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+				        //System.out.println(s);
+				        //writer.write(s + "\n");
+				        AbcAbc.abcQueue.add(s);
+				        if(AbcAbc.abcQueue.size() >= 10)
+				        {
+				        	System.out.println("File Thread started");
+				        	FileThread fileThread = new FileThread(new File("AbcAbc.txt"));
+				        	fileThread.start();
+				        }
+				        //writer.newLine();
+				        
+					//}catch (IOException e) {
+					//	e.printStackTrace();
+					//}
+				}
+			}//End of for-loop
+		}
+		
+	}
+	
+}

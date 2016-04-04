@@ -1,0 +1,65 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Find {
+	
+	public static File file = new File("dictionary.txt");
+	public static File fileToWrite = new File("dictionary_keywords.txt");
+	
+	public static void main(String[] args) {
+	
+		try {
+			BufferedReader dictReader = new BufferedReader(new FileReader(file));
+			BufferedWriter dictWriter = new BufferedWriter(new FileWriter(fileToWrite));
+			
+			String line = "";
+			
+			while((line = dictReader.readLine()) != null)
+			{
+				if(line.length() == 6)
+				{
+					Map<String, Integer> contained = new HashMap<String, Integer>();
+					boolean areGreaterThan = true;
+					//String firstChar = Character.toString(line.charAt(0));
+					//String secondChar = Character.toString(line.charAt(1));
+					char firstChar = line.charAt(0);
+					char secondChar = line.charAt(1);
+					System.out.println(line + " " + firstChar + " " + secondChar);
+					
+					// !!NOTE!! Loop starts at 2
+					for(int i = 2; i < line.length(); ++i)
+					{
+						if(firstChar <= line.charAt(i) && secondChar <= line.charAt(i))
+						{
+							System.out.println(line);
+							areGreaterThan = false;
+							break;
+						}
+					}
+					
+					if(areGreaterThan)
+					{
+						dictWriter.write(line);
+						dictWriter.newLine();
+					}
+				}
+			}
+			
+			dictReader.close();
+			dictWriter.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("Completed");
+	}
+}

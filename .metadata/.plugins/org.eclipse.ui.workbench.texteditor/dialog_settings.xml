@@ -2,22 +2,24 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getLengthOfColumns" key="selection"/>
+		<item value="dictionaryList" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="true" key="wholeword"/>
 		<list key="findhistory">
-			<item value="getLengthOfColumns"/>
-			<item value="finalRowCount"/>
-			<item value="mappedADFGX"/>
-			<item value="percentage"/>
+			<item value="dictionaryList"/>
+			<item value="System.out"/>
+			<item value="writeToFileQueue"/>
+			<item value="5"/>
 			<item value="System"/>
-			<item value="tempIndexes"/>
-			<item value="ADFGX_Subs"/>
-			<item value="getAlphabetIndexFromListIndex"/>
+			<item value="BufferedWriter"/>
+			<item value="Buffered"/>
+			<item value="buffered"/>
 		</list>
 		<list key="replacehistory">
+			<item value="alphabet"/>
+			<item value="freqAnalysis"/>
 			<item value="//System"/>
 			<item value=".get(i).get(j)"/>
 			<item value="frequencyNumbers"/>
@@ -28,7 +30,7 @@
 		<item value="265" key="DIALOG_WIDTH"/>
 		<item value="1|.SF NS Text|11.0|0|COCOA|1|.SFNSText-Regular" key="DIALOG_FONT_NAME"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
-		<item value="991" key="DIALOG_X_ORIGIN"/>
-		<item value="71" key="DIALOG_Y_ORIGIN"/>
+		<item value="836" key="DIALOG_X_ORIGIN"/>
+		<item value="348" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

@@ -1,0 +1,191 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class AbcAbc {
+	
+	public static void checkAbcAbc(String s1, String s2, BufferedWriter write) 
+	{
+		
+		/*String checkStr = s1 + s2;
+		
+		for(int i = 0; i < checkStr.length(); ++i)
+		{
+			int index = i;
+			int counter = 0;
+			for(int j = index; j < checkStr.length(); ++j)
+			{
+				if(j + 2 < checkStr.length())
+				{
+					++counter;
+					if(!Character.toString(checkStr.charAt(j)).equals(Character.toString(checkStr.charAt(j + 2))))
+					{
+						break;
+					}
+					else if(counter == 3)
+					{
+						System.out.println("Written " + checkStr + " | " + " s1 = " + s1 + ", s2 = " + s2);
+					}
+				}
+			}
+		}*/
+		
+		boolean stop = false;
+			
+		String s = s1 + s2;
+		
+		int cutLength;
+		if(s2 != null){
+			cutLength = s2.length() + 2;
+			if(s2.length() < 3){
+				stop = true;
+			}
+		}else{
+			cutLength = 5;
+		}
+		  /* ---------------------------------------------------------------------------------------------------------------------------------------
+		  * We set a cutlength, we will stop checking this many letters before the end of the string, becuase otherwise it could also
+		  * just check the second string, but that is unnecessary becuase that will get checked later EG: s1 = hello / s2 = ringing / s = helloringing
+		  * Now the program detects the pattern, but later on, the word ringing will get detected anyway with s1 = ringing / s2 = null / s=ringing
+		  * Otherwise, it would result in ringing getting detected every single time for s1 = (every word) / s2 = ringing
+		  * But with the cutLength, we stop the check just at the end of the first string, so that it will never detect a pattern in the second string
+		  ------------------------------------------------------------------------------------------------------------------------------------------ */
+		
+		
+		//Check if length is larger than 6 and if stop is false
+		if(s.length() >= 6 && !stop){
+			
+			//Main for loop
+			for(int i = 0; i < s.length() - cutLength; i++){
+				String index1 = s.substring(i, i+3);
+				String index2 = s.substring(i+3, i+6);
+				
+				//System.out.println(s+ " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2); //Debugging
+				
+				if(index1.equals(index2)){
+					try{
+						
+				        System.out.println("Written " + s + " | index1 = " + index1 + ", index2 = " + index2 + " | s1 = " + s1 + ", s2 = " + s2);
+				        //System.out.println(s);
+				        writer.write(s + "\n");
+				        //writer.newLine();
+				        
+					}catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}//End of for-loop
+		}
+		
+	}//End of checkAbcAbc
+	
+	static BufferedWriter writer;
+	//public static Queue<String> abcQueue = new LinkedList<String>();
+	
+	public static void main(String[] args) {
+		
+		//Create dictionary
+		String[] dictionary = null;
+	    List<String> dictionaryList = new ArrayList<String>();
+
+	    try{ 
+	        FileInputStream fstream_school = new FileInputStream("enable1.txt"); 
+	        DataInputStream data_input = new DataInputStream(fstream_school); 
+	        BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input)); 
+	        writer = new BufferedWriter(new FileWriter("AbcAbc.txt"));
+	        String str_line; 
+
+	        while ((str_line = buffer.readLine()) != null) 
+	        { 
+	            str_line = str_line.trim(); 
+	            if ((str_line.length()!=0))
+	            { 
+	            	dictionaryList.add(str_line);
+	            } 
+	        }
+	       
+	        dictionary = (String[])dictionaryList.toArray(new String[dictionaryList.size()]);
+	        
+	    }catch(IOException e){
+	    	e.printStackTrace();
+	    }
+	    
+	   /* for(int i = 0;i < dictionary.length; i++)
+	    {
+			for(int j = 0; j < dictionary.length; j++)
+			{
+				checkAbcAbc(dictionary[i],dictionary[j], writer);
+			}
+	    }*/
+	    
+	    AbcAbcThread[] allThreads = new AbcAbcThread[Runtime.getRuntime().availableProcessors() - 1];
+		System.out.println(Runtime.getRuntime().availableProcessors() - 1 + " Processors Available");
+	   
+    	System.out.println("File Thread started");
+    	File file = new File("AbcAbc.txt");
+    	FileThread fileThread = new FileThread(file);
+    	fileThread.start();
+    	
+    	int temp = 10;
+    	double temp_dbl = 15 / 7;
+		
+    	int result = temp + (int)temp_dbl;
+    	
+    	System.out.println(temp + " " + temp_dbl + " " + result);
+    	
+	    int counter = 0;
+	    
+	    for(int i = 0;i < dictionary.length; i++)
+	    {
+			for(int j = 0; j < dictionary.length; j++)
+			{
+				//System.out.println(dictionary[i] + " " + dictionary[j]);
+				AbcAbcThread thread = new AbcAbcThread(dictionary[i], dictionary[j]);
+				allThreads[counter] = thread;
+				
+				if(counter == allThreads.length - 1)
+				{
+					counter = 0;
+					for(int k = 0; k < allThreads.length; ++k)
+					{
+						allThreads[k].start();
+					}
+					
+					for(int k = 0; k < allThreads.length; ++k)
+					{
+						try {
+							allThreads[k].join();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				else
+				{
+					++counter;
+				}
+			}
+		}
+	    
+	    try {
+			writer.close();
+			fileThread.join();
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}//End of main
+}

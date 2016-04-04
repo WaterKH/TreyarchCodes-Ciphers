@@ -54,10 +54,10 @@ public class Threads extends Thread {
 		{
 			for(int i = 0; i < alphabet.length; ++i)
 			{
-				if(alphabet[i] >= 5)
-				{
-					alphabet[i] = 4;
-				}
+				//if(alphabet[i] >= 5)
+				//{
+				//	alphabet[i] = 4;
+				//}
 				radicesInner[i] = LetterFrequency.frequencyStrings[alphabet[i]].length();
 			}
 		}

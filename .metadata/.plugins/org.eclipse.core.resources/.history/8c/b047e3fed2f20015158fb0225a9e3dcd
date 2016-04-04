@@ -1,0 +1,10 @@
+package source;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+public class FileWriterThread {
+
+	public BufferedWriter writer = new BufferedWriter(new FileWriter(ADFGX.wordToSearchFor));
+	
+}
