@@ -85,7 +85,6 @@ public class LetterFrequency {
 		} // for(int currPair = 0; currPair < arrFreqA.length; ++currPair)
 	} /** private static void frequencyAnalysis(ArrayList<String> freqAnalysisList) **/
 	
-	
 	/***
 	 * 
 	 * 

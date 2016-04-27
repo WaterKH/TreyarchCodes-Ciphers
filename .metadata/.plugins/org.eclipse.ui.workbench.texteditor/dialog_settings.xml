@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="dictionaryList" key="selection"/>
+		<item value="line" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
-		<item value="true" key="wholeword"/>
+		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="dictionaryList"/>
-			<item value="System.out"/>
-			<item value="writeToFileQueue"/>
-			<item value="5"/>
-			<item value="System"/>
-			<item value="BufferedWriter"/>
-			<item value="Buffered"/>
-			<item value="buffered"/>
+			<item value="part"/>
+			<item value="listForFreqAna"/>
+			<item value="addToListFreqAna"/>
+			<item value="sortBasedOnKeyword"/>
+			<item value="sortbase"/>
+			<item value="sort"/>
+			<item value="stringHolder"/>
+			<item value="letterPairs"/>
 		</list>
 		<list key="replacehistory">
+			<item value="line"/>
 			<item value="alphabet"/>
 			<item value="freqAnalysis"/>
 			<item value="//System"/>
@@ -30,7 +31,7 @@
 		<item value="265" key="DIALOG_WIDTH"/>
 		<item value="1|.SF NS Text|11.0|0|COCOA|1|.SFNSText-Regular" key="DIALOG_FONT_NAME"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
-		<item value="836" key="DIALOG_X_ORIGIN"/>
-		<item value="348" key="DIALOG_Y_ORIGIN"/>
+		<item value="934" key="DIALOG_X_ORIGIN"/>
+		<item value="224" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

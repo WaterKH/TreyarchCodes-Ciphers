@@ -1,0 +1,48 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CryptogramBF_MAIN {
+	
+	public static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public static Map<String, Integer> containedChars = new HashMap<String, Integer>();
+	
+	public static void main(String[] args) throws IOException
+	{
+		System.out.println("Cryptogram Program");
+		
+		String cipherText = readInCipherText();
+		
+		int[] perms
+	}
+	
+	public static String readInCipherText() throws IOException
+	{
+		String returnString = "";
+		File file = new File("CipherText.txt");
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		String line = "";
+		
+		while((line = reader.readLine()) != null)
+		{
+			for(String part : line.split(""))
+			{
+				if(!containedChars.containsKey(part))
+				{
+					containedChars.put(part, 0);
+				}
+				returnString += part;
+			}
+		}
+		
+		reader.close();
+		
+		return returnString;
+	}
+
+}

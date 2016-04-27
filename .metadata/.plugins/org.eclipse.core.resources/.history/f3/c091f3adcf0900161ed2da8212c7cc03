@@ -1,0 +1,21 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.File;
+
+public class CryptogramBF_MAIN {
+	
+	public static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	public static void main(String[] args)
+	{
+		System.out.println("Cryptogram");
+		
+		File file = new File("CipherText.txt");
+		BufferedReader reader = new BufferedReader(file);
+		String cipherText = keyboard
+		
+		int perms[] = new int[]
+	}
+
+}

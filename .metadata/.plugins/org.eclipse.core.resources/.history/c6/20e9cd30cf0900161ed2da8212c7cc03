@@ -1,0 +1,10 @@
+package source;
+
+public class CryptogramBF_MAIN {
+	
+	public static void main(String[] args)
+	{
+		
+	}
+
+}

@@ -17,6 +17,7 @@ public class Alphabet {
 
 	public String[][] alphabet;
 	public static int counter = 0;
+	public String alphabetStr = "abcdefghijklmnopqrstuvwxyz";
 	
 	/************************************************************************
 	 * Basic Constructor
@@ -47,6 +48,51 @@ public class Alphabet {
 	{
 		alphabet = tempAlpha;
 	} /** public Alphabet(String[][] tempAlpha) **/
+	
+	/************************************************************************
+	 * Parameterized Constructor
+	 * 
+	 * 
+	 * 
+	 */
+	public Alphabet(String keyword)
+	{
+		int count = 0;
+		int alphaCount = 0;
+		Map<String, Integer> container = new HashMap<String, Integer>();
+		
+		alphabet = new String[5][5];
+		for(int i = 0; i < alphabet.length; ++i)
+		{
+			for(int j = 0; j < alphabet[i].length; ++j)
+			{
+				if(count < keyword.length())
+				{
+					alphabet[i][j] = Character.toString(keyword.charAt(count));
+					container.put(Character.toString(keyword.charAt(count)), 0);
+					++count;
+				}
+				else 
+				{
+					if(alphaCount < alphabetStr.length())
+					{
+						while(true)
+						{
+							if(container.containsKey(Character.toString(alphabetStr.charAt(alphaCount))))
+							{
+								++alphaCount;
+								continue;
+							}
+							alphabet[i][j] = Character.toString(alphabetStr.charAt(alphaCount));
+							++alphaCount;
+							break;
+						}
+					}
+				}
+			}
+		}
+		//displayAlphabet();
+	}
 	
 	/************************************************************************
 	 * Basic clear function

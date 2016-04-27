@@ -1,0 +1,18 @@
+package source;
+
+import java.util.Scanner;
+
+public class CryptogramBF_MAIN {
+	
+	public static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	public static void main(String[] args)
+	{
+		System.out.println("Cryptogram");
+		
+		Scanner keyboard = new Scanner(System.in);
+		
+		int perms[] = new int[]
+	}
+
+}

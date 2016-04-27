@@ -30,6 +30,7 @@ public class ADFGX {
 	public static Map<Integer, String> words = new HashMap<Integer, String>();
 	public static File currentFile;
 	public static Queue<String> writeToFileQueue = new LinkedList<String>();
+	public static boolean bruteForce = false;
 	
 	/************************************************************************
 	 * 
@@ -50,7 +51,8 @@ public class ADFGX {
 		{
 			Resources.startTimer();
 			
-			BufferedReader reader = Resources.openFile_Reader("CipherKeys");
+			//BufferedReader reader = Resources.openFile_Reader("CipherKeys");
+			BufferedReader reader = Resources.openFile_Reader("dictionary_keywords");
 			System.out.print("What words would you like to look for? ");
 			@SuppressWarnings("resource")
 			Scanner keyboard = new Scanner(System.in);
@@ -70,6 +72,7 @@ public class ADFGX {
 			
 			int filesKept = 0;
 			int counter = 1;
+			BufferedWriter writer = Resources.openFile_Writer("PhraseBasedADFGX");
 			
 			while((line = reader.readLine()) != null)
 			{
@@ -77,7 +80,24 @@ public class ADFGX {
 				
 				String inputKeyword = line;
 					
-				sortBasedOnKeyword(inputKeyword.toUpperCase());
+				if(!bruteForce)
+				{
+					Alphabet alphabet = new Alphabet(inputKeyword);
+					
+					sortBasedOnKeyword(inputKeyword.toUpperCase());
+					
+					String phrase = "";
+					
+					for(int i = 0; i < listForFreqAna.size(); ++i)
+					{
+						int[] tempInts = getAlphabetIndexFromCharacters(listForFreqAna.get(i));
+						
+						phrase += alphabet.alphabet[tempInts[0]][tempInts[1]];
+					}
+					writer.write(phrase);
+					writer.newLine();
+				}
+				
 				/*System.out.println("LIST " + listForFreqAna);
 				LetterFrequency.frequencyAnalysis(listForFreqAna);
 				System.out.println("FREQ TRACK: " + freqTracker);
@@ -97,6 +117,7 @@ public class ADFGX {
 				clear();
 			}
 			
+			writer.close();
 			reader.close();
 			
 			Resources.endTimer();
@@ -413,6 +434,47 @@ public class ADFGX {
 			writeToFileQueue.add(holderForText);
 		}
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
+	
+	
+	public static void constructPhrase(String[][] mixedAlphabet, BufferedWriter writer) throws IOException
+	{
+		String holderForText = "";
+		for(int i = 0; i < listForFreqAna.size(); ++i)
+		{
+			int[] tempHolder = getAlphabetIndexFromListIndex(i);
+			if(!mixedAlphabet[tempHolder[0]][tempHolder[1]].equals("-"))
+			{
+				holderForText += mixedAlphabet[tempHolder[0]][tempHolder[1]];
+			}
+			else
+			{
+				holderForText += "[" + ADFGX_FROM_INDEX(tempHolder) + "]";
+			}				
+
+			
+		} // for(int i = 0; i < listForFreqAna.size(); ++i)
+		//System.out.println(holderForText);
+		boolean containsAny = false;
+		
+		for(int i = 0; i < words.size(); ++i)
+		{
+			if(holderForText.toLowerCase().contains(words.get(i)))
+			{
+				containsAny = true;
+				//writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
+				//writer.newLine();
+				//break;
+			}	
+		}
+		
+		if(containsAny)
+		{
+			//writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
+			//writer.newLine();
+			//System.out.println(holderForText);
+			writeToFileQueue.add(holderForText);
+		}
+	}
 	
 	/************************************************************************
 	 * 

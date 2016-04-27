@@ -15,88 +15,111 @@ import java.util.Map;
 
 public class Find {
 	
-	public static File file = new File("dictionary.txt");
-	public static File fileToWrite = new File("dictionary_keywords.txt");
-	public static File dictFile = new File("dictionary_Fixed.txt");
+	//public static File file = new File("dictionary.txt");
+	//public static File fileToWrite = new File("dictionary_keywords.txt");
+	//public static File dictFile = new File("dictionary_Fixed.txt");
+	public static File file = new File("words.txt");
+	public static File fileToWrite = new File("final6Words.txt");
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 	
-		try {
-			BufferedReader dictReader = new BufferedReader(new FileReader(file));
-			BufferedWriter dictWriter = new BufferedWriter(new FileWriter(fileToWrite));
-			BufferedWriter toNewDictWriter = new BufferedWriter(new FileWriter(dictFile));
+		BufferedReader dictReader = new BufferedReader(new FileReader(file));
+		BufferedWriter dictWriter = new BufferedWriter(new FileWriter(fileToWrite));
+		//BufferedWriter toNewDictWriter = new BufferedWriter(new FileWriter(dictFile));
+		
+		String line = "";
+		
+		while((line = dictReader.readLine()) != null)
+		{
+		//	System.out.println("LINE: " + line);
 			
-			String line = "";
-			
-			while((line = dictReader.readLine()) != null)
+			String wordToWrite = "";
+
+			if(line.length() != 6)
 			{
-				if(line.charAt(line.length() - 1) != '%')
-				{
-					toNewDictWriter.write(line);
-					toNewDictWriter.newLine();
+				Map<Character, Integer> contained = new HashMap<Character, Integer>();
 				
-					if(line.length() == 6)
+				for(int i = 0; i < line.length(); ++i)
+				{
+					if(!contained.containsKey(line.charAt(i)))
 					{
-						Map<Character, Integer> contained = new HashMap<Character, Integer>();
-						boolean areGreaterThan = true;
-						boolean isContained = false;
-						//String firstChar = Character.toString(line.charAt(0));
-						//String secondChar = Character.toString(line.charAt(1));
-						char firstChar = line.charAt(0);
-						char secondChar = line.charAt(1);
-						
-						if(firstChar == secondChar)
-						{
-							continue;
-						}
-						
-						for(int i = 0; i < 2; ++i)
-						{
-							if(!contained.containsKey(line.charAt(i)))
-							{
-								contained.put(line.charAt(i), 0);
-							}
-						}
-						
-						// !!NOTE!! Loop starts at 2
-						for(int i = 2; i < line.length(); ++i)
-						{
-							if(firstChar <= line.charAt(i) || secondChar <= line.charAt(i))
-							{
-								//System.out.println(firstChar + " " + secondChar  + " - " + line.charAt(i));
-								areGreaterThan = false;
-								
-								break;
-							}
-							
-							if(contained.containsKey(line.charAt(i)))
-							{
-								isContained = true;
-								
-								break;
-							}
-							
-							contained.put(line.charAt(i), 0);
-						}
-						
-						if(areGreaterThan && !isContained)
-						{
-							//System.out.println("Wrote - " + line);
-							dictWriter.write(line);
-							dictWriter.newLine();
-						}
+						wordToWrite += line.charAt(i);
+						contained.put(line.charAt(i), 0);
 					}
 				}
 			}
+			else
+			{
+				wordToWrite = line;
+			}
 			
-			
-			dictReader.close();
-			dictWriter.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
+			//System.out.println(wordToWrite);
+			if(wordToWrite.length() == 6)
+			{
+				if(line.charAt(line.length() - 2) == '\'')
+				{
+					System.out.println("DELETE " + line);
+					continue;
+				}
+				
+				Map<Character, Integer> contained = new HashMap<Character, Integer>();
+				boolean areGreaterThan = true;
+				boolean isContained = false;
+				//String firstChar = Character.toString(line.charAt(0));
+				//String secondChar = Character.toString(line.charAt(1));
+				char firstChar = wordToWrite.charAt(0);
+				char secondChar = wordToWrite.charAt(1);
+				
+				if(firstChar == secondChar)
+				{
+					continue;
+				}
+				
+				for(int i = 0; i < 2; ++i)
+				{
+					if(!contained.containsKey(wordToWrite.charAt(i)))
+					{
+						contained.put(wordToWrite.charAt(i), 0);
+					}
+				}
+				
+				// !!NOTE!! Loop starts at 2
+				for(int i = 2; i < wordToWrite.length(); ++i)
+				{
+					//System.out.println(wordToWrite);
+					if(firstChar <= wordToWrite.charAt(i) || secondChar <= wordToWrite.charAt(i))
+					{
+						//System.out.println(firstChar + " " + secondChar  + " - " + line.charAt(i));
+						areGreaterThan = false;
+						
+						break;
+					}
+					
+					if(contained.containsKey(wordToWrite))
+					{
+						isContained = true;
+						
+						break;
+					}
+					
+					contained.put(wordToWrite.charAt(i), 0);
+				}
+				
+				if(areGreaterThan && !isContained)
+				{
+					//System.out.println("Wrote - " + line);
+					dictWriter.write(wordToWrite);
+					dictWriter.newLine();
+				}
+			}
 		}
 		
+		
+		dictReader.close();
+		dictWriter.close();
+		//toNewDictWriter.close();
+		
+	
 		System.out.println("Completed");
 	}
 }

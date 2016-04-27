@@ -1,0 +1,37 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class CryptogramBF_MAIN {
+	
+	public static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	public static void main(String[] args)
+	{
+		System.out.println("Cryptogram");
+		
+		File file = new File("CipherText.txt");
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(file));
+		String line = "";
+		
+		String cipherText = "";
+		
+		while((line = reader.readLine()) != null)
+		{
+			cipherText += line;
+		}
+		
+		System.out.println(cipherText);
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
