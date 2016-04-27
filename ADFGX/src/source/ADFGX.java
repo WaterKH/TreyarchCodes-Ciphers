@@ -2,7 +2,7 @@
  * Author: @author peterclark - All Rights Reserved
  * Program: ADFGX Cipher Decryption Tool
  * 
- * The main program
+ * Performs all functions that are included with the ADFGX Cipher on MotD
  */
 package source;
 
@@ -23,14 +23,13 @@ public class ADFGX {
 	static Alphabet alphaClass = new Alphabet();
 	static Map<Character, ArrayList<String>> columnMap = new HashMap<Character, ArrayList<String>>();
 	static Map<String, Integer> freqTracker = new HashMap<String, Integer>();
-	static ArrayList<String> listForFreqAna = new ArrayList<String>();
+	static ArrayList<String> letterPairs = new ArrayList<String>();
 	public static String line = "";
-	static int finalRowCount = 0;
+	static int finalRowCount = 6;
 	public static String wordToSearchFor = "";
 	public static Map<Integer, String> words = new HashMap<Integer, String>();
 	public static File currentFile;
 	public static Queue<String> writeToFileQueue = new LinkedList<String>();
-	public static boolean bruteForce = false;
 	
 	/************************************************************************
 	 * 
@@ -42,17 +41,14 @@ public class ADFGX {
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		
-		//AbcAbc.checkAbcAbc("ring", "ing");
-		finalRowCount = getLengthOfColumns("abcdef");
 		boolean finished = false;
 		
 		while(!finished)
 		{
 			Resources.startTimer();
+			preinitColumnarTransposition("abcdef");
 			
-			//BufferedReader reader = Resources.openFile_Reader("CipherKeys");
-			BufferedReader reader = Resources.openFile_Reader("dictionary_keywords");
+			BufferedReader reader = Resources.openFile_Reader("final6Words");
 			System.out.print("What words would you like to look for? ");
 			@SuppressWarnings("resource")
 			Scanner keyboard = new Scanner(System.in);
@@ -72,34 +68,22 @@ public class ADFGX {
 			
 			int filesKept = 0;
 			int counter = 1;
-			BufferedWriter writer = Resources.openFile_Writer("PhraseBasedADFGX");
+			
+			BufferedWriter writer = Resources.openFile_Writer("adfgxPhrases");
 			
 			while((line = reader.readLine()) != null)
 			{
 				System.out.println("****" + line.toUpperCase() + "****  -   " + counter);
 				
 				String inputKeyword = line;
-					
-				if(!bruteForce)
-				{
-					Alphabet alphabet = new Alphabet(inputKeyword);
-					
-					sortBasedOnKeyword(inputKeyword.toUpperCase());
-					
-					String phrase = "";
-					
-					for(int i = 0; i < listForFreqAna.size(); ++i)
-					{
-						int[] tempInts = getAlphabetIndexFromCharacters(listForFreqAna.get(i));
-						
-						phrase += alphabet.alphabet[tempInts[0]][tempInts[1]];
-					}
-					writer.write(phrase);
-					writer.newLine();
-				}
 				
-				/*System.out.println("LIST " + listForFreqAna);
-				LetterFrequency.frequencyAnalysis(listForFreqAna);
+				initColumnarTransposition(inputKeyword.toUpperCase());
+				Alphabet alphabet = new Alphabet(line);
+				
+				constructPhrase(alphabet.alphabet, writer, "", "", "");
+			
+				/*System.out.println("LIST " + letterPairs);
+				LetterFrequency.frequencyAnalysis(letterPairs);
 				System.out.println("FREQ TRACK: " + freqTracker);
 				Alphabet.sortMap(freqTracker);
 				
@@ -118,6 +102,7 @@ public class ADFGX {
 			}
 			
 			writer.close();
+			
 			reader.close();
 			
 			Resources.endTimer();
@@ -143,14 +128,14 @@ public class ADFGX {
 	/************************************************************************
 	 * Basic clear function
 	 * 
-	 * Clears holderForText, columnMap, freqTracker, and listForFreqAna
+	 * Clears holderForText, columnMap, freqTracker, and letterPairs
 	 * 
 	 */
 	public static void clear()
 	{
 		columnMap.clear();
 		freqTracker.clear();
-		listForFreqAna.clear();
+		letterPairs.clear();
 	} /** public static void clear() **/
 	
 	/************************************************************************
@@ -169,22 +154,22 @@ public class ADFGX {
 	 * Accessor
 	 * 
 	 * Returns the index of where the letter we want should be. 
-	 * 	!!NOTE!! This should be used with a loop over listForFreqAna size
+	 * 	!!NOTE!! This should be used with a loop over letterPairs size
 	 *  
 	 * 
 	 * @param int index
 	 * @returns tempHolder
 	 */
-	public static int[] getAlphabetIndexFromListIndex(int index)
+	public static int[] getAlphabetIndexFromLetterPair(int index)
 	{
-		int[] tempHolder = new int[2];
+		int[] polybiusSquareIndex = new int[2];
 		
-		for(int k = 0; k < listForFreqAna.get(index).length(); ++k)
+		for(int k = 0; k < letterPairs.get(index).length(); ++k)
 		{
-			tempHolder[k] = ADFGX_Subs(listForFreqAna.get(index).charAt(k));
-		} // for(int k = 0; k < listForFreqAna.get(i).length(); ++k)
+			polybiusSquareIndex[k] = ADFGX_Subs(letterPairs.get(index).charAt(k));
+		} // for(int k = 0; k < letterPairs.get(i).length(); ++k)
 		
-		return tempHolder;
+		return polybiusSquareIndex;
 	} /** public static int[] getAlphabetIndexFromListIndex(int index) **/
 	
 	/************************************************************************
@@ -192,7 +177,7 @@ public class ADFGX {
 	 * Accessor
 	 * 
 	 * Returns the index of where the letter we want should be. 
-	 * 	!!NOTE!! This should be used with a loop over listForFreqAna size
+	 * 	!!NOTE!! This should be used with a loop over letterPairs size
 	 *  
 	 * 
 	 * @param String chars
@@ -200,86 +185,38 @@ public class ADFGX {
 	 */
 	public static int[] getAlphabetIndexFromCharacters(String chars)
 	{
-		int[] tempHolder = new int[2];
+		int[] polybiusSquareIndex = new int[2];
 		
 		for(int k = 0; k < chars.length(); ++k)
 		{
-			tempHolder[k] = ADFGX_Subs(chars.charAt(k));
+			polybiusSquareIndex[k] = ADFGX_Subs(chars.charAt(k));
 		} // for(int k = 0; k < chars.length(); ++k)
 		
-		return tempHolder;
+		return polybiusSquareIndex;
 	} /** public static int[] getAlphabetIndexFromCharacters(String chars) **/
 	
 	/************************************************************************
-	 * 
-	 * We take in an input key which we convert to a char array to sort, then
-	 * 	convert it back to a string. We create a file named "adfgxMapped"
-	 * 	and read from "adfgxCipherText" to the file we created - the
-	 *  text wrap is dependent upon the inputKey's length. We then create a 
-	 *  double array based on our column length and our row size and read in from
-	 *  the "adfgxMapped" to create a matrix that we can then use to create
-	 *  a map of our columns so that we can call our addToList method that will 
-	 *  create the "adfgxSolved" file.
-	 *  
-	 * 
-	 * @param String inputKey
-	 * @throws IOException
-	 */
-	public static void sortBasedOnKeyword(String inputKey) throws IOException
-	{	
-		char[] individualChars = inputKey.toCharArray();
-		Arrays.sort(individualChars);
-		String columnDelim = new String(individualChars);
-	
-		ArrayList<ArrayList<String>> holderForText = new ArrayList<ArrayList<String>>();
-		//System.out.println("FINAL " + finalRowCount);
-		for(int i = 0; i < finalRowCount; i++)  
-		{
-	        holderForText.add(new ArrayList<String>());
-	    } // for(int i = 0; i < individualRow; i++)  
-		
-		int col = 0;
-		
-		BufferedReader readerMapped = Resources.openFile_Reader("adfgxMapped");
-		String lineMapped = "";
-
-		while((lineMapped = readerMapped.readLine()) != null)
-		{
-			//System.out.println(lineMapped);
-			for(String part : lineMapped.split("\\s+"))
-			{	
-				holderForText.get(col).add(part);
-				//System.out.println(part);
-				++col;
-			} // for(String part : line)
-			col = 0;
-		} // for(String line : Files.readAllLines)
-		//Hey
-		//int tempInt = columnDelim.length() - 1;
-		
-		for(int tempCol = 0; tempCol < columnDelim.length(); ++tempCol)
-		{
-			columnMap.put(columnDelim.charAt(tempCol), holderForText.get(tempCol));
-			//if(tempInt > 0)
-			//{
-			//	--tempInt;
-			//}
-		} // for(int tempCol = 0; tempCol < colDelim.length(); ++tempCol)
-		
-		addToListFreqAna(inputKey);
-	} /** public static void sortBasedOnKeyword(String inputKey) throws IOException **/
-	
-	 
-	/************************************************************************
 	  * 
-	  *  
+	  * We create two integer variables - one that tracks rows and one that 
+	  *	  we will return as our row length. We then open our ciphertext and 
+	  *	  create a file "adfgxMapped." We create a string will be our line  
+	  *	  in the ciphertext. We also create a pre-defined array since we
+	  *   know what our ciphertext size is and fill it with dummy values.
+	  *   
+	  * While we still have text, we split each string by whitespace+ and then
+	  *  run an array on that part's length. We then add to our pre-defined array
+	  *  the character at the current index. This is down until we reach the end
+	  *  of our row, then we go to the next row and repeat. Once our numberOfRows
+	  *  is equal to 12, we break out of this loop.
+	  * 
+	  * Print out the results to a file/ console and close the files. 
 	  *  
 	  *  
 	  *  @throws IOException 
 	  */
-	private static int getLengthOfColumns(String columnDelim) throws IOException
+	private static void preinitColumnarTransposition(String columnDelim) throws IOException
 	{
-		int trackOfRows = 0;
+		int numberOfRows = 0;
 		int individualRow = 0;
 		
 		BufferedReader readerCipherText = Resources.openFile_Reader("adfgxCipherText");
@@ -302,13 +239,16 @@ public class ADFGX {
 			{
 				for(int i = 0; i < part.length(); ++i)
 				{
-					mappedADFGX[trackOfRows][individualRow] = Character.toString(part.charAt(i));
+					mappedADFGX[numberOfRows][individualRow] = Character.toString(part.charAt(i));
 					++individualRow;
+					
 					if(individualRow == columnDelim.length())
 					{
-						++trackOfRows;
-						if(trackOfRows == 12)
+						++numberOfRows;
+						
+						if(numberOfRows == 12)
 							break;
+						
 						individualRow = 0;
 					} // if(trackOfRows == colDelim.length())
 					
@@ -331,24 +271,60 @@ public class ADFGX {
 			
 		Resources.closeFile(writer, "adfgxMapped");
 		Resources.closeFile(readerCipherText, "adfgxCipherText");
-		//System.out.println(individualRow);
-		return individualRow;
 	}
 	
 	/************************************************************************
-	 * !! This finalizes the sort called above, the method name is a bit misleading !!
 	 * 
-	 * We take in an inputKey and loop on how big our array is that we get
-	 *  from our columnMap using our key. Then for how many columns we have
-	 *  we write to file each row. Every time we get a pair of letters, we
-	 *  add it to our list and reset our temporary string value.
+	 * We take in an input key which we convert to a char array to sort, then
+	 * 	convert it back to a string. We open a file named "adfgxMapped"
+	 *  The text wrap is dependent upon the inputKey's length. We then create a 
+	 *  double array based on our column length and our row size and read in from
+	 *  the "adfgxMapped" to create a matrix that we can then use to create
+	 *  a map of our columns so that we can create the "adfgxSolved" file.
 	 *  
+	 * We then create "adfgxSolved" and an empty String. We run a double loop
+	 *  on our row size(j) and column size(i) and write to file the correct
+	 *  positioning of the columns.
 	 * 
 	 * @param String inputKey
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	private static void addToListFreqAna(String inputKey) throws IOException
-	{
+	public static void initColumnarTransposition(String inputKey) throws IOException
+	{	
+		String lineMapped = "";
+		int col = 0;
+		BufferedReader readerMapped = Resources.openFile_Reader("adfgxMapped");
+		
+		ArrayList<ArrayList<String>> holderForText = new ArrayList<ArrayList<String>>();
+		char[] individualChars = inputKey.toCharArray();
+		
+		for(int i = 0; i < finalRowCount; i++)  
+		{
+	        holderForText.add(new ArrayList<String>());
+	    } // for(int i = 0; i < finalRowCount; i++)  
+		
+		while((lineMapped = readerMapped.readLine()) != null)
+		{
+			for(String part : lineMapped.split("\\s+"))
+			{	
+				holderForText.get(col).add(part);
+
+				++col;
+			} // for(String part : line)
+			col = 0;
+		} // while((lineMapped = readerMapped.readLine()) != null)
+		
+		Resources.closeFile(readerMapped, "adfgxMapped");
+		
+		Arrays.sort(individualChars);
+		String columnDelim = new String(individualChars);
+		
+		for(int tempCol = 0; tempCol < columnDelim.length(); ++tempCol)
+		{
+			columnMap.put(columnDelim.charAt(tempCol), holderForText.get(tempCol));
+		} // for(int tempCol = 0; tempCol < colDelim.length(); ++tempCol)
+		
+		
 		BufferedWriter writer = Resources.openFile_Writer("adfgxSolved");
 		String str = "";
 	
@@ -358,29 +334,33 @@ public class ADFGX {
 			{
 				if(columnMap.containsKey(inputKey.charAt(i)))
 				{
-					//System.out.print(columnMap.get(inputKey.charAt(i)).get(j) + " ");
 					writer.write(columnMap.get(inputKey.charAt(i)).get(j) + " ");
+					
 					if(!columnMap.get(inputKey.charAt(i)).get(j).equals("-"))
 					{
 						str += columnMap.get(inputKey.charAt(i)).get(j);
 					} // if(!columnMap.get(inputKey.charAt(i))[j].equals("-"))
+					
 					if(str.length() == 2)
 					{
-						listForFreqAna.add(str);
+						letterPairs.add(str);
 						str = "";
 					} // if(str.length() == 2)
-				}
+					
+				} // if(columnMap.containsKey(inputKey.charAt(i)))
+				
 			} // for(int i = 0; i < columnMap.size(); ++i)
-			//System.out.println();
+			
 			writer.newLine();
 		} // for(int j = 0; j < columnMap.get(inputKey.charAt(0)).length; ++j)
 		
 		Resources.closeFile(writer, "adfgxSolved");
-	} /** private static void addToListFreqAna(String inputKey) throws FileNotFoundException **/
+		
+		currentFile.delete();
+	} /** public static void sortColumnarTransposition(String inputKey) throws IOException **/
+	
 	
 	/************************************************************************
-	 * 
-	 * !!NOTE!! This method has you decide if it does row or column first
 	 * 
 	 * For the size of our list of letter pairs, if the letter pair does not
 	 * 	contain any dashes (Our null identifier), we cycle through our letter
@@ -398,9 +378,10 @@ public class ADFGX {
 	public static void constructPhrase(String[][] mixedAlphabet, BufferedWriter writer, String alphabetIndexes, String letterIndexes, String actualLetters) throws IOException
 	{
 		String holderForText = "";
-		for(int i = 0; i < listForFreqAna.size(); ++i)
+
+		for(int i = 0; i < letterPairs.size(); ++i)
 		{
-			int[] tempHolder = getAlphabetIndexFromListIndex(i);
+			int[] tempHolder = getAlphabetIndexFromLetterPair(i);
 			if(!mixedAlphabet[tempHolder[0]][tempHolder[1]].equals("-"))
 			{
 				holderForText += mixedAlphabet[tempHolder[0]][tempHolder[1]];
@@ -411,70 +392,20 @@ public class ADFGX {
 			}				
 
 			
-		} // for(int i = 0; i < listForFreqAna.size(); ++i)
-		//System.out.println(holderForText);
-		boolean containsAny = false;
+		} // for(int i = 0; i < letterPairs.size(); ++i)
 		
-		for(int i = 0; i < words.size(); ++i)
-		{
-			if(holderForText.toLowerCase().contains(words.get(i)))
-			{
-				containsAny = true;
-				//writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
-				//writer.newLine();
+		//for(int i = 0; i < words.size(); ++i)
+		//{
+			//if(holderForText.toLowerCase().contains(words.get(i)))
+			//{
+				writeToFileQueue.add(holderForText);
+				writer.write(holderForText);// + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
+				writer.newLine();
 				//break;
-			}	
-		}
+			//}	
+		//}
 		
-		if(containsAny)
-		{
-			//writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
-			//writer.newLine();
-			//System.out.println(holderForText);
-			writeToFileQueue.add(holderForText);
-		}
 	} /** private static void constructPhrase(String[][] mixedAlphabet, PrintWriter writer, String rowOrColumnFirst) **/
-	
-	
-	public static void constructPhrase(String[][] mixedAlphabet, BufferedWriter writer) throws IOException
-	{
-		String holderForText = "";
-		for(int i = 0; i < listForFreqAna.size(); ++i)
-		{
-			int[] tempHolder = getAlphabetIndexFromListIndex(i);
-			if(!mixedAlphabet[tempHolder[0]][tempHolder[1]].equals("-"))
-			{
-				holderForText += mixedAlphabet[tempHolder[0]][tempHolder[1]];
-			}
-			else
-			{
-				holderForText += "[" + ADFGX_FROM_INDEX(tempHolder) + "]";
-			}				
-
-			
-		} // for(int i = 0; i < listForFreqAna.size(); ++i)
-		//System.out.println(holderForText);
-		boolean containsAny = false;
-		
-		for(int i = 0; i < words.size(); ++i)
-		{
-			if(holderForText.toLowerCase().contains(words.get(i)))
-			{
-				containsAny = true;
-				//writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
-				//writer.newLine();
-				//break;
-			}	
-		}
-		
-		if(containsAny)
-		{
-			//writer.write(holderForText + "  \n-  " + alphabetIndexes + "  -  " + letterIndexes + "  -  " + actualLetters);
-			//writer.newLine();
-			//System.out.println(holderForText);
-			writeToFileQueue.add(holderForText);
-		}
-	}
 	
 	/************************************************************************
 	 * 

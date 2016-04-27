@@ -35,24 +35,17 @@ public class Find {
 			
 			String wordToWrite = "";
 
-			if(line.length() != 6)
-			{
-				Map<Character, Integer> contained = new HashMap<Character, Integer>();
-				
-				for(int i = 0; i < line.length(); ++i)
-				{
-					if(!contained.containsKey(line.charAt(i)))
-					{
-						wordToWrite += line.charAt(i);
-						contained.put(line.charAt(i), 0);
-					}
-				}
-			}
-			else
-			{
-				wordToWrite = line;
-			}
+			Map<Character, Integer> multipleLetters = new HashMap<Character, Integer>();
 			
+			for(int i = 0; i < line.length(); ++i)
+			{
+				if(!multipleLetters.containsKey(line.charAt(i)))
+				{
+					wordToWrite += line.charAt(i);
+					multipleLetters.put(line.charAt(i), 0);
+				}
+			}			
+		
 			//System.out.println(wordToWrite);
 			if(wordToWrite.length() == 6)
 			{
