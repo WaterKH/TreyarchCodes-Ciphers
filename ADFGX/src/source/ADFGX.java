@@ -30,6 +30,8 @@ public class ADFGX {
 	public static Map<Integer, String> words = new HashMap<Integer, String>();
 	public static File currentFile;
 	public static Queue<String> writeToFileQueue = new LinkedList<String>();
+	public static int startIndex = 12;
+	public static String cipherText = "";
 	
 	/************************************************************************
 	 * 
@@ -70,6 +72,8 @@ public class ADFGX {
 			int counter = 1;
 			
 			BufferedWriter writer = Resources.openFile_Writer("adfgxPhrases");
+			BufferedReader abcabc_reader = Resources.openFile_Reader("words");
+			BufferedWriter abcabc_writer = Resources.openFile_Writer("ABCABC_Sequences");
 			
 			while((line = reader.readLine()) != null)
 			{
@@ -78,6 +82,9 @@ public class ADFGX {
 				String inputKeyword = line;
 				
 				initColumnarTransposition(inputKeyword.toUpperCase());
+				
+				SequenceFinder_Solver.startSeqFinder(abcabc_reader, abcabc_writer);
+				
 				Alphabet alphabet = new Alphabet(line);
 				
 				constructPhrase(alphabet.alphabet, writer, "", "", "");
@@ -100,10 +107,10 @@ public class ADFGX {
 				++counter;
 				clear();
 			}
-			
 			writer.close();
-			
 			reader.close();
+			abcabc_writer.close();
+			abcabc_reader.close();
 			
 			Resources.endTimer();
 			System.out.println();
@@ -359,6 +366,49 @@ public class ADFGX {
 		currentFile.delete();
 	} /** public static void sortColumnarTransposition(String inputKey) throws IOException **/
 	
+	/**
+	 * While this is a correct method, we always have the starting index at 12, making this not necessary
+	 * @return
+	 */
+	public static int sequenceIndexFinder()
+	{
+		int indexOfSeq = 0;
+		
+		for(int i = 0; i < letterPairs.size() - 6; ++i)
+		{
+			Map<Integer, String> sequenceHolder = new HashMap<Integer, String>();
+			int counter = 0;
+		
+			for(int j = i; j < i + 6; ++j)
+			{
+				
+				if(j < i + 3)
+				{
+					sequenceHolder.put(j, letterPairs.get(j));
+				}
+				else
+				{
+					if(!letterPairs.get(j).equals(sequenceHolder.get(j - 3)))
+					{
+						break;
+					}
+					else
+					{
+						++counter;
+					}
+				}
+			
+			}	
+			if(counter == 3)
+			{
+				indexOfSeq = i;
+				System.out.println(indexOfSeq);
+				break;
+			}
+		}
+		
+		return indexOfSeq;
+	}
 	
 	/************************************************************************
 	 * 

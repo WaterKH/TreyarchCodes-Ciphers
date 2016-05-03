@@ -1,0 +1,52 @@
+package source;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class SequenceFinder {
+
+	public boolean oneWordSequence(String seqToFind)
+	{
+		boolean isSeq = false;
+		
+		for(int i = 0; i < seqToFind.length() - 6; ++i)
+		{
+			Map<Integer, Character> sequenceHolder = new HashMap<Integer, Character>();
+			int counter = 0;
+			
+			for(int j = i; j < i + 6; ++j)
+			{
+				if(j < i + 3)
+				{
+					if(!sequenceHolder.containsKey(seqToFind.charAt(j)))
+					{
+						sequenceHolder.put(j, seqToFind.charAt(j));
+					}
+					else
+					{
+						break;
+					}
+				}
+				else
+				{
+					if(seqToFind.charAt(j) != sequenceHolder.get(j - 3))
+					{
+						break;
+					}
+					else
+					{
+						++counter;
+					}
+				}
+			}
+			
+			if(counter == 3)
+			{
+				boolean isSeq = true;
+			}
+		}
+		
+		return isSeq;
+	}
+	
+}

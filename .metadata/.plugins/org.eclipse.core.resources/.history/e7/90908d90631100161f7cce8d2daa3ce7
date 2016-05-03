@@ -1,0 +1,81 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class SequenceFinder_Solver {
+
+	public static boolean oneWordSequence_Finder(String seqToFind)
+	{
+		boolean isSeq = false;
+		
+		for(int i = 0; i < seqToFind.length() - 6; ++i)
+		{
+			Map<Integer, Character> sequenceHolder = new HashMap<Integer, Character>();
+			int counter = 0;
+			
+			for(int j = i; j < i + 6; ++j)
+			{
+				if(j < i + 3)
+				{
+					if(!sequenceHolder.containsKey(seqToFind.charAt(j)))
+					{
+						sequenceHolder.put(j, seqToFind.charAt(j));
+					}
+					else
+					{
+						break;
+					}
+				}
+				else
+				{
+					if(seqToFind.charAt(j) != sequenceHolder.get(j - 3))
+					{
+						break;
+					}
+					else
+					{
+						++counter;
+					}
+				}
+			}
+			
+			if(counter == 3)
+			{
+				isSeq = true;
+			}
+		}
+		
+		return isSeq;
+	}
+	
+	public static String sequenceSolver(String seqToUse) throws IOException
+	{
+
+		return "";
+	}
+	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader reader = Resources.openFile_Reader("words");
+		BufferedWriter writer = Resources.openFile_Writer("ABCABC_Sequences");
+		String line = "";
+		
+		while((line = reader.readLine()) != null)
+		{
+			if(oneWordSequence_Finder(line))
+			{
+				writer.write(line);
+				writer.newLine();
+			}
+		}
+		
+		reader.close();
+		writer.close();
+		System.out.println("Finished");
+	}
+}

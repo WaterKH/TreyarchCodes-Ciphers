@@ -1,0 +1,16 @@
+package source;
+
+public class SequenceFinder {
+
+	public String oneWordSequence(String seqToFind)
+	{
+		for(int i = 0; i < seqToFind.length() - 6; ++i)
+		{
+			for(int j = i; j < seqToFind.length(); ++j)
+			{
+				
+			}
+		}
+	}
+	
+}
