@@ -1,3 +1,10 @@
+/**
+ * NOTE!!!! 
+ * 
+ * We are currently under the impression that letter frequency is NOT being used.
+ * Thus this class is not being used.
+ */
+
 /****************************************************************************
  * Author: @author peterclark - All Rights Reserved
  * Program: ADFGX Cipher Decryption Tool
@@ -12,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import ThreadResources.FileWriterThread;
+import ThreadResources.Threads;
+
 public class LetterFrequency {
 
 	public static final String MOST_FREQ_LETTER = "E"; // Used for top letter
@@ -21,7 +31,7 @@ public class LetterFrequency {
 	public static final String VERY_INFREQ_LETTERS = "CMUWF"; // 2s as well?
 	public static final String VERY_VERY_INFREQ_LETTERS = "GYPBVK";
 	public static final String MOST_INFREQ_LETTERS = "JXQZ";
-	static int counter = 0;
+	public static int counter = 0;
 	static Map<String, String> charsBasedOnFrequency = new HashMap<String, String>();
 	static ArrayList<String> freqPairs = new ArrayList<String>();
 	
@@ -268,7 +278,7 @@ public class LetterFrequency {
 		
 		//System.out.println();
 		boolean finished = false;
-		boolean run = false;
+		//boolean run = false;
 		
 		int totalPermutations = 1;
 		
@@ -478,7 +488,7 @@ public class LetterFrequency {
 		    //System.out.println(percentageCounter + " " + (int)(percentage * totalPermutations));
 			if(percentageCounter == (int)(percentage * totalPermutations))
 		    {
-		        int tempPercentage = (int)((percentage * 100) + 0.5);
+		        //int tempPercentage = (int)((percentage * 100) + 0.5);
 		        //System.out.println(tempPercentage + "% " + (int)((percentage * totalPermutations) + 0.5));
 		        percentage += 0.10;
 		    }

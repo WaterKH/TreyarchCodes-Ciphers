@@ -28,7 +28,7 @@ public class Resources {
 			file = new File(fileName + ".txt");
 		else
 			file = new File(fileName + ADFGX.line + ".txt");
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + ".txt"));///Volumes/Jacob Clark 1/_PhrasesCOD/" + fileName + ".txt"));
 		////System.out.println(file.getName() + " /// Opened ///");
 		ADFGX.currentFile = file;
 		//System.out.println();
@@ -57,7 +57,7 @@ public class Resources {
 		else
 			file = new File(fileName + ADFGX.line + ".txt");
 		
-		BufferedReader reader = new BufferedReader(new FileReader(file));//"/Volumes/Jacob Clark/_PhraseCOD/" +fileName+ ".txt"));
+		BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"));//"/Volumes/Jacob Clark 1/_PhrasesCOD/" + fileName + ".txt"));
 		//System.out.println(file.getName() + " /// Opened ///");
 		
 		//System.out.println();

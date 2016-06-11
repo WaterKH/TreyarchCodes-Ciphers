@@ -28,11 +28,14 @@ public class Alphabet {
 	public Alphabet()
 	{
 		alphabet = new String[5][5];
+		int counter = 0;
+		
 		for(int i = 0; i < 5; ++i)
 		{
 			for(int j = 0; j < 5; ++j)
 			{
-				alphabet[i][j] = "-";
+				alphabet[i][j] = Character.toString(alphabetStr.charAt(counter));
+				++counter;
 			} // for(int j = 0; j < 5; ++j)
 			
 		} // for(int i = 0; i < 5; ++i)

@@ -1,0 +1,77 @@
+package source;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ContactLetters {
+	
+	// String = letter contacting our contact letter; Integer = frequency of the letter
+	public Map<String, Integer> before_counter = new HashMap<String, Integer>(); 
+	public Map<String, Integer> after_counter = new HashMap<String, Integer>(); 
+	
+	public String letter = "NULL";
+	public int totalContactLetters = 0;
+	
+	public ContactLetters(String aLetter)
+	{
+		letter = aLetter;
+	}
+
+	public int getTotalContactLetters()
+	{
+		return totalContactLetters;
+	}
+	public void increaseTotalContactLetters()
+	{
+		++totalContactLetters;
+	}
+	
+	public void addToBefore(String key)
+	{
+		if(before_counter.containsKey(key))
+		{
+			before_counter.put(key, before_counter.get(key) + 1);
+		}
+		else
+		{
+			before_counter.put(key, 1);
+		}
+	}
+	public void addToAfter(String key)
+	{
+		if(after_counter.containsKey(key))
+		{
+			after_counter.put(key, after_counter.get(key) + 1);
+		}
+		else
+		{
+			
+			after_counter.put(key, 1);
+		}
+	}
+	
+	public double getBeforePercentage(String key)
+	{
+		if(before_counter.containsKey(key))
+		{
+			return ((double)before_counter.get(key) / this.getTotalContactLetters()) * 100;
+		}
+		else
+		{
+			return 0.0;
+		}
+	}
+	public double getAfterPercentage(String key)
+	{
+		if(after_counter.containsKey(key))
+		{
+			return ((double)after_counter.get(key) / this.getTotalContactLetters()) * 100;
+		}
+		else
+		{
+			return 0.0;
+		}
+	}
+}

@@ -1,0 +1,80 @@
+package source;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ContactLetters {
+	
+	// String = letter contacting our contact letter; Double = percentage of that letter
+	public Map<String, Double> before_percentage = new HashMap<String, Double>(); 
+	public Map<String, Double> after_percentage = new HashMap<String, Double>(); 
+	public String letter = "NULL";
+	public int totalContactLetters = 0;
+	
+	public ContactLetters(String aLetter)
+	{
+		this.setLetter(aLetter);
+	}
+	
+	public void setLetter(String aLetter)
+	{
+		letter = aLetter;
+	}
+	
+	public String getLetter()
+	{
+		return letter;
+	}
+	public int getTotalContactLetters()
+	{
+		return totalContactLetters;
+	}
+	
+	public void resetTotalCounter()
+	{
+		totalContactLetters = 0;
+	}
+	public void increaseTotalContactLetters()
+	{
+		++totalContactLetters;
+	}
+	
+	public void addToBefore(String key)
+	{
+		if(before_percentage.containsKey(key))
+		{
+			before_percentage.put(key, before_percentage.get(key) / totalContactLetters);
+		}
+		else
+		{
+			before_percentage.put(key, (1.0 / totalContactLetters));
+		}
+	}
+	public void addToAfter(String key)
+	{
+		after_percentage.put(key, after_percentage.get(key) / totalContactLetters);
+	}
+	
+	public double getBeforePercentage(String key)
+	{
+		if(before_percentage.containsKey(key))
+		{
+			return before_percentage.get(key);
+		}
+		else
+		{
+			return 0.0;
+		}
+	}
+	public double getAfterPercentage(String key)
+	{
+		if(after_percentage.containsKey(key))
+		{
+			return after_percentage.get(key);
+		}
+		else
+		{
+			return 0.0;
+		}
+	}
+}

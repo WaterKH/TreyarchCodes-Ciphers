@@ -31,6 +31,10 @@ public class ADFGX {
 	public static File currentFile;
 	public static Queue<String> writeToFileQueue = new LinkedList<String>();
 	
+	public static int uniqueLetters = 0;
+	public static Map<String, String> letterPair_Map = new HashMap<String, String>();
+	static String alphabet = "abcdefghijklmnopqrstuvwxyz";
+	
 	/************************************************************************
 	 * 
 	 * The main method - calls sort and frequency analysis as well as create permutations
@@ -48,7 +52,7 @@ public class ADFGX {
 			Resources.startTimer();
 			preinitColumnarTransposition("abcdef");
 			
-			BufferedReader reader = Resources.openFile_Reader("final6Words");
+			BufferedReader reader = Resources.openFile_Reader("CipherKeys2");
 			System.out.print("What words would you like to look for? ");
 			@SuppressWarnings("resource")
 			Scanner keyboard = new Scanner(System.in);
@@ -70,6 +74,8 @@ public class ADFGX {
 			int counter = 1;
 			
 			BufferedWriter writer = Resources.openFile_Writer("adfgxPhrases");
+			Map<Integer, Map<String, String>> holderForChars = new HashMap<Integer, Map<String, String>>();
+			int holderCounter = 0;
 			
 			while((line = reader.readLine()) != null)
 			{
@@ -78,9 +84,74 @@ public class ADFGX {
 				String inputKeyword = line;
 				
 				initColumnarTransposition(inputKeyword.toUpperCase());
-				Alphabet alphabet = new Alphabet(line);
 				
-				constructPhrase(alphabet.alphabet, writer, "", "", "");
+				Map<String, String> charsInCipher = new HashMap<String, String>();
+				int charCounter = 0;
+				
+				for(int i = 0; i < letterPairs.size(); ++i)
+				{
+					System.out.print(letterPairs.get(i) + " ");
+					if(!charsInCipher.containsKey(letterPairs.get(i)))
+					{
+						charsInCipher.put(letterPairs.get(i), Character.toString(alphabet.charAt(charCounter)));
+						++charCounter;
+					}
+				}
+				System.out.println();
+				
+				holderForChars.put(holderCounter, charsInCipher);
+				++holderCounter;
+				
+				uniqueLetters = 0;
+				//ADFGX_BruteForce.permutation("abcd");//efghijklmnopqrstuvwxyz");
+				
+				/**
+				 * For the first n (4) letters in the ciphertext
+				 */
+				
+				//String firstChars = "----";
+				//char[] firstCharArr = new char[firstChars.length()];
+				
+				//ADFGX_BruteForce.createCombinations(ADFGX_BruteForce.alphabet, firstCharArr.length, 0, firstCharArr);
+				
+				/*/**
+				 * For the sequence in the middle of the ciphertext
+				 
+				String seqChars = "abcd";
+				char[] seqCharArr = new char[seqChars.length() - 1];
+				
+				ADFGX_BruteForce.createCombinations(ADFGX_BruteForce.alphabet, seqCharArr.length, 0, seqCharArr);
+				*/
+				//for(int i = 0; i < ADFGX_BruteForce.combinationsList.size(); ++i)
+				//{
+				//	ADFGX_BruteForce.createPermutations(ADFGX_BruteForce.combinationsList.get(i), writer, 0, false);
+				//}
+				
+				/*String secondChars = "----";
+				char[] secondCharArr = new char[secondChars.length()];
+				
+				ADFGX_BruteForce.createCombinations(ADFGX_BruteForce.alphabet, secondCharArr.length, 0, secondCharArr);
+				
+				for(int i = 0; i < ADFGX_BruteForce.combinationsList.size(); ++i)
+				{
+					ADFGX_BruteForce.createPermutations(ADFGX_BruteForce.combinationsList.get(i), writer, firstChars.length(), true);
+				}*/
+				
+				//ADFGX_BruteForce.assignedLetters.clear();
+				//ADFGX_BruteForce.currAlphabet = "";
+				//ADFGX_BruteForce.combinationsList.clear();
+				
+				/*for(int i = 0; i < ADFGX_BruteForce.combinationsList.size(); ++i)
+				{
+					//ADFGX_BruteForce.currCombination = ADFGX_BruteForce.combinationsList.get(i);
+					
+					ADFGX_BruteForce.permutation(ADFGX_BruteForce.combinationsList.get(i));
+				}/*
+				
+				
+				//Alphabet alphabet = new Alphabet(line);
+				
+				//constructPhrase(alphabet.alphabet, writer, "", "", "");
 			
 				/*System.out.println("LIST " + letterPairs);
 				LetterFrequency.frequencyAnalysis(letterPairs);
@@ -101,6 +172,21 @@ public class ADFGX {
 				clear();
 			}
 			
+			for(int i = 0; i < holderForChars.size(); ++i)
+			{
+				for(int j = 0; j < holderForChars.size(); ++j)
+				{
+					for(int k = 0; k < letterPairs.size(); ++k)
+					{
+						String str1 = holderForChars.get(i).get(letterPairs.get(k));
+						String str2 = holderForChars.get(j).get(letterPairs.get(k));
+						
+						System.out.print(str1 + " " + str2 + " ");
+					}
+					System.out.println();
+				}
+			}
+		
 			writer.close();
 			
 			reader.close();
@@ -325,8 +411,10 @@ public class ADFGX {
 		} // for(int tempCol = 0; tempCol < colDelim.length(); ++tempCol)
 		
 		
-		BufferedWriter writer = Resources.openFile_Writer("adfgxSolved");
+		BufferedWriter writer = Resources.openFile_Writer("adfgxSolved" + inputKey);
+		BufferedWriter writer_Letters = Resources.openFile_Writer("letterPairs" + inputKey);
 		String str = "";
+		Map<String, Integer> contained = new HashMap<String, Integer>();
 	
 		for(int j = 0; j < columnMap.get(inputKey.charAt(0)).size(); ++j)
 		{
@@ -344,19 +432,24 @@ public class ADFGX {
 					if(str.length() == 2)
 					{
 						letterPairs.add(str);
+						writer_Letters.write(str + " ");
+						if(!contained.containsKey(str))
+						{
+							contained.put(str, 0);
+							++uniqueLetters;
+						}
 						str = "";
 					} // if(str.length() == 2)
 					
 				} // if(columnMap.containsKey(inputKey.charAt(i)))
 				
 			} // for(int i = 0; i < columnMap.size(); ++i)
-			
 			writer.newLine();
 		} // for(int j = 0; j < columnMap.get(inputKey.charAt(0)).length; ++j)
-		
+		Resources.closeFile(writer_Letters, "letterPairs");
 		Resources.closeFile(writer, "adfgxSolved");
-		
-		currentFile.delete();
+		//System.out.println(letterPairs.size());
+		//currentFile.delete();
 	} /** public static void sortColumnarTransposition(String inputKey) throws IOException **/
 	
 	

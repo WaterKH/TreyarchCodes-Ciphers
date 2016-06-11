@@ -1,0 +1,19 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.Scanner;
+
+public class PatternChecker {
+
+	public static void main(String[] args) 
+	{
+		BufferedReader reader = new BufferedReader(new FileReader("ciphertexts.txt"));
+		String line = "";
+		
+		Scanner keyboard = new Scanner(System.in);
+		String pattern = 
+
+	}
+
+}

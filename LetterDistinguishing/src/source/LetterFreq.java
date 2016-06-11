@@ -1,7 +1,9 @@
 package source;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,15 +11,229 @@ import java.util.Map;
 import java.util.Set;
 
 public class LetterFreq {
-
+	
+	public static final String MOST_FREQ_LETTER = "E"; // Used for top letter 
+	public static final String VERY_FREQ_LETTERS = "TAOI"; // Mix this in if there are multiple top letters - otherwise this will be second
+	public static final String FREQ_LETTERS = "NSHR"; // Used for Mid range 3s
+	public static final String INFREQ_LETTERS = "DL"; // Used for 2s
+	public static final String VERY_INFREQ_LETTERS = "CMUWF"; // 2s as well?
+	public static final String VERY_VERY_INFREQ_LETTERS = "GYPBVK";
+	public static final String MOST_INFREQ_LETTERS = "JXQZ";
+	
 	public static void main(String[] args) throws IOException {
 		
-		String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		String letters = "abcdefghijklmnopqrstuvwxyz";
-		String numbers = "0123456789+/";
+		//String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		//String letters = "abcdefghijklmnopqrstuvwxyz";
+		//String numbers = "0123456789+/";
 		
-		BufferedReader reader = Resources.openFile_Reader("alphabetToCount");
 		
+		Map<String, Integer> letterFreqs = new HashMap<String, Integer>();
+		Map<Integer, String> characters = new HashMap<Integer, String>();
+		BufferedReader reader = Resources.openFile_Reader("paper");
+		BufferedWriter writer = Resources.openFile_Writer("paper_LettFreqs");
+		String line = "";
+		int counter = 0;
+		
+		while((line = reader.readLine()) != null)
+		{
+			for(String part : line.split(","))
+			{
+				part = part.replaceAll("\\s+","");
+				
+				//System.out.println(part);
+				
+				if(!letterFreqs.containsKey(part))
+				{
+					letterFreqs.put(part, 0);
+					characters.put(counter, part);
+					
+					++counter;
+				}
+				
+				letterFreqs.put(part, letterFreqs.get(part) + 1);
+				
+			}
+		}
+		
+		reader.close();
+		
+		for(int i = 0; i < characters.size(); ++i)
+		{
+			for(int j = i; j < characters.size(); ++j)
+			{
+				if(letterFreqs.get(characters.get(j)) > letterFreqs.get(characters.get(i)))
+				{
+					String tempStr = characters.get(i);
+					characters.put(i, characters.get(j));
+					characters.put(j, tempStr);
+				}
+			}
+			writer.write(characters.get(i) + "-" + letterFreqs.get(characters.get(i)));
+			writer.newLine();
+		}
+		
+		//System.out.println("Finished");
+		writer.close();
+		
+		BufferedReader reader_Freq = Resources.openFile_Reader("paper_LettFreqs");
+		String line_Freq = "";
+		//Map<String, String> letters = new HashMap<String, String>();
+		int max = 0;
+		
+		while((line_Freq = reader_Freq.readLine()) != null)
+		{
+			if(line_Freq.split("-")[0].length() > 0)
+			{
+				
+				int number = Integer.parseInt(line_Freq.split("-")[1]);
+				max += number;
+			}
+		}
+		
+		reader_Freq.close();
+		
+		BufferedWriter writer_Final = Resources.openFile_Writer("paper_Final");
+		DecimalFormat df = new DecimalFormat("0.00");
+		for(int i = 0; i < characters.size(); ++i)
+		{
+			if(characters.get(i).length() > 0)
+			{
+				double tempDouble = letterFreqs.get(characters.get(i));
+				double percentage = tempDouble / max;
+				percentage = percentage * 100;
+				
+				String stringWrite = "" + characters.get(i) + "," + letterFreqs.get(characters.get(i)) + "," + df.format(percentage);
+				
+				writer_Final.write(stringWrite);
+				writer_Final.newLine();
+			}
+		}
+		
+		writer_Final.close();
+			/*String string = line_Freq.split("-")[0];
+			int number = Integer.parseInt(line_Freq.split("-")[1]);
+			
+			switch(number)
+			{
+			case 14:
+				letters.put(string, MOST_FREQ_LETTER + "" + VERY_FREQ_LETTERS);
+				break;
+			case 11:
+				letters.put(string, MOST_FREQ_LETTER + "" + VERY_FREQ_LETTERS);
+				break;
+			case 9:
+				letters.put(string, VERY_FREQ_LETTERS + "" + FREQ_LETTERS);
+				break;
+			case 8:
+				letters.put(string, VERY_FREQ_LETTERS + "" + FREQ_LETTERS);
+				break;
+			case 7:
+				letters.put(string, FREQ_LETTERS + "" + INFREQ_LETTERS);
+				break;
+			case 6:
+				letters.put(string, FREQ_LETTERS + "" + INFREQ_LETTERS);
+				break;
+			case 5:
+				letters.put(string, INFREQ_LETTERS + "" + VERY_INFREQ_LETTERS);
+				break;
+			case 4:
+				letters.put(string, VERY_INFREQ_LETTERS + "" + VERY_VERY_INFREQ_LETTERS);
+				break;
+			case 3:
+				letters.put(string, VERY_INFREQ_LETTERS + "" + VERY_VERY_INFREQ_LETTERS);
+				break;
+			case 2:
+				letters.put(string, VERY_VERY_INFREQ_LETTERS + "" + MOST_INFREQ_LETTERS);
+				break;
+			case 1:
+				letters.put(string, MOST_INFREQ_LETTERS);
+				break;
+			}*/
+		//}
+		
+		reader.close();
+		
+		/*for(int i = 0; i < characters.size(); ++i)
+		{
+			System.out.println(letters.get(characters.get(i)));
+		}*/
+		
+		/*boolean finished = false;
+		
+		int[] perms = new int[counter - 1];
+		int[] radices = new int[counter - 1]; // Account for the space counted
+		Map<String, String> finalLetters = new HashMap<String, String>();
+		
+		for(int i = 0; i < perms.length; ++i)
+		{
+			if(letters.get(characters.get(i)) != null)
+				radices[i] = letters.get(characters.get(i)).length();
+		}
+		
+		BufferedWriter writer_Final = Resources.openFile_Writer("paper_Final");
+		
+		while(!finished)
+		{
+			/*for(int i = 0; i < perms.length; ++i)
+			{
+				System.out.print(perms[i] + " ");
+			}
+			System.out.println();
+			
+			for(int i = 0; i < perms.length; ++i)
+			{
+				if(letters.get(characters.get(i)) != null)
+				{
+					finalLetters.put(characters.get(i), Character.toString(letters.get(characters.get(i)).charAt(perms[i])));
+					//System.out.println(letters.get(characters.get(i)).charAt(perms[i]));
+				}
+			}
+			
+			BufferedReader reader_Final = Resources.openFile_Reader("paper");
+			
+			String line_Final = "";
+			
+			while((line_Final = reader_Final.readLine()) != null)
+			{
+				for(String part : line_Final.split(","))
+				{
+					if(finalLetters.get(part) != null)
+						writer_Final.write(finalLetters.get(part));
+					System.out.print(finalLetters.get(part) + " " + part + " ");
+					System.out.println(finalLetters.get("1031"));
+				}
+				System.exit(0);
+				System.out.println();
+				writer_Final.newLine();
+			}
+			
+			reader_Final.close();
+			
+			finalLetters.clear();
+			
+			perms[0] += 1;
+			
+		    if (perms[0] >= radices[0])
+		    {
+		      int radixsub = 0;
+		      while (radices[radixsub] <= perms[radixsub])
+		      {
+		        perms[radixsub] = 0;
+		        radixsub += 1;
+		        if (radixsub >= radices.length)
+		        {
+		        	finished = true;
+		            break;
+		        } // if (radixsub >= perms.size())
+		        perms[radixsub] += 1;
+		      } // while (perms.at(radixsub) == limitOfPermutations)
+		      
+		    } // if (perms.at(0) == limitOfPermutations) 
+		}
+		
+		writer_Final.close();*/
+		
+		/*
 		//@SuppressWarnings("resource")
 		//Scanner keyboard = new Scanner(System.in);
 		//System.out.print("Type in the letters you wish to count: ");
@@ -78,7 +294,7 @@ public class LetterFreq {
 		System.out.println("Number of times each letter/number appears: ");
 		sortMap(listOfItems);
 		
-		sequenceDetector();
+		sequenceDetector();*/
 	}
 	
 	public static void sortMap(Map<String, Integer> tempMap)

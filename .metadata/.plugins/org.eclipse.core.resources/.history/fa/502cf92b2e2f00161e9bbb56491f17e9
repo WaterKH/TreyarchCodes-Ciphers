@@ -1,0 +1,95 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ContactLetter_MAIN {
+
+	public static void main(String[] args) throws IOException 
+	{
+		String alphabet = "abcdefghijklmnopqrstuvwxyz ";
+		Map<String, ContactLetters> listOfContacts = new HashMap<String, ContactLetters>();
+		
+		for(int i = 0; i < alphabet.length(); ++i)
+		{
+			String key = Character.toString(alphabet.charAt(i));
+			
+			listOfContacts.put(key, new ContactLetters(key));
+		}
+		
+		BufferedReader reader = new BufferedReader(new FileReader("Moby_Dick_FORMAT.txt"));
+		String line = "";
+		int counter = 0;
+		
+		System.out.println("Started Reading");
+		
+		while((line = reader.readLine()) != null)
+		{
+			String previousLetter = "";
+			String followingLetter = "";
+			
+			for(String letter : line.split(""))
+			{
+				letter = letter.toLowerCase();
+				ContactLetters contactLetter = listOfContacts.get(letter);
+				
+				if(counter > 0)
+				{
+					previousLetter = Character.toString(line.charAt(counter - 1));
+					contactLetter.addToBefore(previousLetter);
+					contactLetter.increaseBeforeTotalContactLetters();
+				}
+				
+				if(counter < line.length() - 1)
+				{
+					followingLetter = Character.toString(line.charAt(counter + 1));
+					contactLetter.addToAfter(followingLetter);
+					contactLetter.increaseAfterTotalContactLetters();
+				}
+				
+				++counter;
+			}
+		}
+		reader.close();
+
+		System.out.println("Finished Reading");
+	
+		BufferedWriter writer = new BufferedWriter(new FileWriter("percentagesOfContactLetters_MOBYDICK(TOTAL).txt"));
+		
+		for(int i = 0; i < alphabet.length(); ++i)
+		{
+			String letter = Character.toString(alphabet.charAt(i));
+			for(int j = 0; j < alphabet.length(); ++j)
+			{
+				String percLetter = Character.toString(alphabet.charAt(j));
+				
+				DecimalFormat df = new DecimalFormat("#.####");
+				df.setRoundingMode(RoundingMode.CEILING);
+				
+				writer.write(letter + "," + percLetter + "," + df.format(listOfContacts.get(letter).getBeforePercentage(percLetter) / counter) 
+						+ "," + df.format(listOfContacts.get(letter).getAfterPercentage(percLetter) / counter));
+				writer.newLine();
+			}
+			writer.newLine();
+		}
+		
+		writer.close();
+		System.out.println("Finished Program");
+		
+		BufferedReader perc_reader = new BufferedReader(new FileReader("percentages.txt"));
+		line = "";
+		
+		while((line = cipher_reader.readLine()) != null)
+		{
+			
+		}
+	}
+
+}

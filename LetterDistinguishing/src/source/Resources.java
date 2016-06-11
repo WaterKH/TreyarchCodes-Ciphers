@@ -20,28 +20,28 @@ public class Resources {
 	
 	public static BufferedWriter openFile_Writer(String fileName) throws IOException
 	{
-		System.out.println();
+		//System.out.println();
 		
-		System.out.println("/// Opening /// " + fileName + " ...");
+		//System.out.println("/// Opening /// " + fileName + " ...");
 		File file = new File(fileName + ".txt");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-		System.out.println(file.getName() + " /// Opened ///");
+		//System.out.println(file.getName() + " /// Opened ///");
 		
-		System.out.println();
+		//System.out.println();
 		
 		return writer;
 	} /** public static BufferedWriter openFile_Writer(String fileName) throws IOException **/
 	
 	public static BufferedReader openFile_Reader(String fileName) throws IOException
 	{
-		System.out.println();
+		//System.out.println();
 		
-		System.out.println("/// Opening /// " + fileName + " ...");
+		//System.out.println("/// Opening /// " + fileName + " ...");
 		File file = new File(fileName + ".txt");
 		BufferedReader reader = new BufferedReader(new FileReader(file));
-		System.out.println(file.getName() + " /// Opened ///");
+		//System.out.println(file.getName() + " /// Opened ///");
 		
-		System.out.println();
+		//System.out.println();
 		
 		return reader;
 	} /** public static BufferedReader openFile_Reader(String fileName) throws IOException **/

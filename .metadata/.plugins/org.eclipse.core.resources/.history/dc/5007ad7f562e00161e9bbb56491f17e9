@@ -1,0 +1,29 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class PatternChecker {
+
+	public static void main(String[] args) throws IOException 
+	{
+		BufferedReader reader = new BufferedReader(new FileReader("ciphertexts.txt"));
+		String line = "";
+		
+		Scanner keyboard = new Scanner(System.in);
+		String pattern = keyboard.next();
+		
+		while((line = reader.readLine()) != null)
+		{
+			for(int i = 0; i < line.length(); ++i)
+			{
+				
+			}
+		}
+
+	}
+
+}

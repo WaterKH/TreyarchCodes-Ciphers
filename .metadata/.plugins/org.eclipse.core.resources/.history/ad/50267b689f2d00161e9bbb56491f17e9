@@ -1,0 +1,47 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ContactLetter_MAIN {
+
+	public static void main(String[] args) throws IOException 
+	{
+		String alphabet = "abcdefghiklmnopqrstuvwxyz";
+		Map<String, ContactLetters> listOfContacts = new HashMap<String, ContactLetters>();
+		
+		for(int i = 0; i < alphabet.length(); ++i)
+		{
+			String key = Character.toString(alphabet.charAt(i));
+			
+			listOfContacts.put(key, new ContactLetters(key));
+		}
+		
+		BufferedReader reader = new BufferedReader(new FileReader("book1"));
+		String line = "";
+		
+		while((line = reader.readLine()) != null)
+		{
+			String previousLetter = "";
+			String followingLetter = "";
+			
+			for(String part : line.split(""))
+			{
+				if(!part.equals(" "))
+				{
+					if(followingLetter.length() > 0 && previousLetter.length() > 0)
+					{
+						listOfContacts.get(part).addToBefore(followingLetter);
+						listOfContacts.get(part).addToAfter(previousLetter);
+						
+					}
+				}
+			}
+		}
+	}
+
+}

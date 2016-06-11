@@ -1,0 +1,27 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FormatBook {
+	
+	public static void main(String[] args) throws IOException 
+	{
+		BufferedReader reader = new BufferedReader(new FileReader("Moby_Dick.txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("Moby_Dick_FORMAT.txt"));
+		String line = "";
+		
+		while((line = reader.readLine()) != null)
+		{
+			String result = line.replaceAll("[^\\w\\s]","");
+			writer.write(result.toLowerCase());
+			writer.newLine();
+		}
+		
+		writer.close();
+		System.out.println("Finished");
+	}
+}
