@@ -102,12 +102,7 @@ public class ContactLetter_MAIN {
 			percHolder.put(key, strings);
 		}
 		perc_reader.close();
-		
-		BufferedWriter writer_recursive = new BufferedWriter(new FileWriter("finalStrings_ADFGX.txt"));
-		
-		startRecursive(percHolder, writer_recursive);
-		
-		writer_recursive.close();
+		startRecursive(percHolder);
 	}
 	// ABOVE WORKS PERFECTLY
 	// TODO BELOW MAY WORK, BUT NOT GIVING DESIRED RESULTS
@@ -122,7 +117,7 @@ public class ContactLetter_MAIN {
 	 * 
 	 */
 	
-	public static void startRecursive(Map<String, ArrayList<String>> percHolder, BufferedWriter writer_recursive) throws IOException
+	public static void startRecursive(Map<String, ArrayList<String>> percHolder) throws IOException
 	{
 		BufferedReader reader_ci = new BufferedReader(new FileReader("ADFGX_Cryptograms.txt"));
 		ArrayList<String> spaceList = percHolder.get("_");
@@ -137,7 +132,7 @@ public class ContactLetter_MAIN {
 			{	
 				String runningString = spaceList.get(i);
 				Map<Character, Character> cipherHolder = new HashMap<Character, Character>();
-				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, cipherHolder, 0, writer_recursive);
+				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, cipherHolder, 0);
 			}
 		}
 		
@@ -146,45 +141,40 @@ public class ContactLetter_MAIN {
 	}
 
 	public static void recursive_FindPhrase(String checkForNext, String runningString, Map<String, ArrayList<String>> percHolder, String cipherText, 
-			Map<Character, Character> cipherHolder, int depth, BufferedWriter writer_recursive) throws IOException
+			Map<Character, Character> cipherHolder, int depth)
 	{
-		// TODO WORKING! But super slow...
-		
 		//System.out.println("CURR DEPTH: " + depth);
-		if(checkPattern(runningString, cipherText, writer_recursive))
+		checkPattern(runningString);
+		// Get the size of our current arrayList and run a loop on it
+		for(int i = 0; i < percHolder.get(checkForNext).size(); ++i)
 		{
-			System.out.println(runningString);
-			// Get the size of our current arrayList and run a loop on it
-			for(int i = 0; i < percHolder.get(checkForNext).size(); ++i)
+			if(runningString.length() < 34)
 			{
-				if(runningString.length() < 34)
+				if(percHolder.get(checkForNext).get(i).equals("_"))
 				{
-					if(percHolder.get(checkForNext).get(i).equals("_"))
-					{
-						runningString += percHolder.get("_").get(i);
-						cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1)); // TODO This is broken
-						++depth; // TODO This is broken
-						recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, cipherHolder, depth, writer_recursive);
-					}
-					else
-					{
-						runningString += percHolder.get(checkForNext).get(i);
-						cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1)); // TODO This is broken
-						++depth; // TODO This is broken
-						recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, cipherHolder, depth, writer_recursive);
-						
-					}
-					cipherHolder.remove(runningString.substring(runningString.length() - 1, runningString.length()));
-					runningString = runningString.substring(0, runningString.length() - 1);
-					--depth;
-					continue;
+					runningString += percHolder.get("_").get(i);
+					cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1)); // TODO This is broken
+					++depth; // TODO This is broken
+					recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, cipherHolder, depth);
 				}
-				
-				//System.out.println("Check Pattern: " + runningString);
-				//solvePattern(cipherHolder, cipherText);
-				//checkPattern(runningString);
-				break;
+				else
+				{
+					runningString += percHolder.get(checkForNext).get(i);
+					cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1)); // TODO This is broken
+					++depth; // TODO This is broken
+					recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, cipherHolder, depth);
+					
+				}
+				cipherHolder.remove(runningString.substring(runningString.length() - 1, runningString.length()));
+				runningString = runningString.substring(0, runningString.length() - 1);
+				--depth;
+				continue;
 			}
+			
+			//System.out.println("Check Pattern: " + runningString);
+			solvePattern(cipherHolder, cipherText);
+			//checkPattern(runningString);
+			break;
 		}
 		
 	}
@@ -204,16 +194,17 @@ public class ContactLetter_MAIN {
 				running += ".";
 			}
 		}
-		
-		System.out.println(running);
 	}
 	
-	public static boolean checkPattern(String patternString, String cipherText, BufferedWriter writer) throws IOException
+	public static boolean checkPattern(String patternString)
 	{
 		String alphabet = "abcdefghiklmnopqrstuvwxyz";
+		
 		Map<Character, Integer> patternHolder = new HashMap<Character, Integer>();
 		int counter = 0;
 		String runningString = "";
+		
+		boolean patternBool = true;
 		
 		for(int i = 0; i < patternString.length(); ++i)
 		{
@@ -229,22 +220,29 @@ public class ContactLetter_MAIN {
 			}
 		}
 		
-		//System.out.println(runningString);
+		System.out.println(runningString);
 		
-		String checkStr = cipherText.substring(0, runningString.length());
-		
-		if(checkStr.equals(runningString))
-		{
-			if(runningString.length() > 33)
+		try {
+			BufferedReader reader_ci = new BufferedReader(new FileReader("ADFGX_Cryptograms.txt"));
+			
+			String line = "";
+			
+			while((line = reader_ci.readLine()) != null)
 			{
-				System.out.println(runningString);
-				writer.write(runningString);
-				writer.newLine();
+				String checkStr = line.substring(0, runningString.length());
+				if(checkStr.equals(runningString))
+				{
+					System.out.println("Hoeeee boiii");
+					System.out.println(patternString);
+				}
+				
 			}
-			return true;
+			reader_ci.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return false;
 	}
 
 }

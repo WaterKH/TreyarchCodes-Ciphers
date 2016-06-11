@@ -148,12 +148,9 @@ public class ContactLetter_MAIN {
 	public static void recursive_FindPhrase(String checkForNext, String runningString, Map<String, ArrayList<String>> percHolder, String cipherText, 
 			Map<Character, Character> cipherHolder, int depth, BufferedWriter writer_recursive) throws IOException
 	{
-		// TODO WORKING! But super slow...
-		
 		//System.out.println("CURR DEPTH: " + depth);
 		if(checkPattern(runningString, cipherText, writer_recursive))
 		{
-			System.out.println(runningString);
 			// Get the size of our current arrayList and run a loop on it
 			for(int i = 0; i < percHolder.get(checkForNext).size(); ++i)
 			{
@@ -211,6 +208,7 @@ public class ContactLetter_MAIN {
 	public static boolean checkPattern(String patternString, String cipherText, BufferedWriter writer) throws IOException
 	{
 		String alphabet = "abcdefghiklmnopqrstuvwxyz";
+		
 		Map<Character, Integer> patternHolder = new HashMap<Character, Integer>();
 		int counter = 0;
 		String runningString = "";
@@ -232,7 +230,6 @@ public class ContactLetter_MAIN {
 		//System.out.println(runningString);
 		
 		String checkStr = cipherText.substring(0, runningString.length());
-		
 		if(checkStr.equals(runningString))
 		{
 			if(runningString.length() > 33)
