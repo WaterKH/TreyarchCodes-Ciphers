@@ -162,15 +162,15 @@ public class ContactLetter_MAIN {
 					if(percHolder.get(checkForNext).get(i).equals("_"))
 					{
 						runningString += percHolder.get("_").get(i);
-						cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
-						++depth;
+						cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1)); // TODO This is broken
+						++depth; // TODO This is broken
 						recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, cipherHolder, depth, writer_recursive);
 					}
 					else
 					{
 						runningString += percHolder.get(checkForNext).get(i);
-						cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
-						++depth;
+						cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1)); // TODO This is broken
+						++depth; // TODO This is broken
 						recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, cipherHolder, depth, writer_recursive);
 						
 					}
@@ -235,7 +235,6 @@ public class ContactLetter_MAIN {
 		
 		if(checkStr.equals(runningString))
 		{
-			System.out.println(patternString);
 			if(runningString.length() > 33)
 			{
 				System.out.println(runningString);

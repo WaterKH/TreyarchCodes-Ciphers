@@ -235,7 +235,6 @@ public class ContactLetter_MAIN {
 		
 		if(checkStr.equals(runningString))
 		{
-			System.out.println(patternString);
 			if(runningString.length() > 33)
 			{
 				System.out.println(runningString);

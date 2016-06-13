@@ -229,13 +229,12 @@ public class ContactLetter_MAIN {
 			}
 		}
 		
-		//System.out.println(runningString);
+		System.out.println(runningString);
 		
 		String checkStr = cipherText.substring(0, runningString.length());
 		
 		if(checkStr.equals(runningString))
 		{
-			System.out.println(patternString);
 			if(runningString.length() > 33)
 			{
 				System.out.println(runningString);
