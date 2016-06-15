@@ -13,8 +13,6 @@ import java.util.Map;
 
 public class ContactLetter_MAIN {
 
-	public static ContactLetter_CVPatterns patternCheck_CV = new ContactLetter_CVPatterns();
-	
 	public static void main(String[] args) throws IOException 
 	{
 		String alphabet = "abcdefghijklmnopqrstuvwxyz ";
@@ -86,8 +84,8 @@ public class ContactLetter_MAIN {
 		writer.close();
 		System.out.println("Finished Program");
 		
-		BufferedReader perc_reader = new BufferedReader(new FileReader("ListForPermutations.txt"));
-		//BufferedReader perc_reader = new BufferedReader(new FileReader("ListForPermutations_Exact.txt"));
+		//BufferedReader perc_reader = new BufferedReader(new FileReader("ListForPermutations.txt"));
+		BufferedReader perc_reader = new BufferedReader(new FileReader("ListForPermutations_Exact.txt"));
 		line = "";
 		Map<String, ArrayList<String>> percHolder = new HashMap<String, ArrayList<String>>(); 
 		
@@ -115,7 +113,7 @@ public class ContactLetter_MAIN {
 	// ABOVE WORKS PERFECTLY
 	// TODO BELOW MAY WORK, BUT NOT GIVING DESIRED RESULTS
 	
-	/**
+	/** TODO 
 	 * 
 	 * 	We get our spaces list to check each letter in order of how they would appear
 	 * 	We then check this letter's letter in its list, check this letter's next letter, etc.
@@ -124,6 +122,7 @@ public class ContactLetter_MAIN {
 	 * 
 	 * 
 	 */
+	
 	public static void startRecursive(Map<String, ArrayList<String>> percHolder, BufferedWriter writer_recursive) throws IOException
 	{
 		BufferedReader reader_ci = new BufferedReader(new FileReader("ADFGX_Cryptograms.txt"));
@@ -135,16 +134,12 @@ public class ContactLetter_MAIN {
 			String cipherText = line;
 			System.out.println(cipherText);
 			
-			ContactLetter_LetterFrequency.createTableOfFrequencies(cipherText);
-			
 			for(int i = 0; i < spaceList.size(); ++i)
 			{	
 				String runningString = spaceList.get(i);
-				//Map<Character, Character> cipherHolder = new HashMap<Character, Character>();
-				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, /*cipherHolder,*/ 0, writer_recursive);
+				Map<Character, Character> cipherHolder = new HashMap<Character, Character>();
+				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, cipherHolder, 0, writer_recursive);
 			}
-			
-			ContactLetter_LetterFrequency.cipher_letterFrequencies.clear();
 		}
 		
 		reader_ci.close();
@@ -152,7 +147,7 @@ public class ContactLetter_MAIN {
 	}
 
 	public static void recursive_FindPhrase(String checkForNext, String runningString, Map<String, ArrayList<String>> percHolder, String cipherText, 
-			/*Map<Character, Character> cipherHolder,*/ int depth, BufferedWriter writer_recursive) throws IOException
+			Map<Character, Character> cipherHolder, int depth, BufferedWriter writer_recursive) throws IOException
 	{
 		// TODO WORKING! But super slow...
 		
@@ -164,34 +159,24 @@ public class ContactLetter_MAIN {
 			//System.out.println(checkForNext + " " + percHolder.get(checkForNext));
 			for(int i = 0; i < percHolder.get(checkForNext).size(); ++i)
 			{
-				if(runningString.length() < cipherText.length())
+				if(runningString.length() < 34)
 				{
 					if(percHolder.get(checkForNext).get(i).equals("_"))
 					{
-						patternCheck_CV.cipherTextEnd = depth;
-						if(!patternCheck_CV.testPattern(runningString))
-						{
-							// TODO We need to figure out how to mark our beginning and endings..
-							return;
-						}
-						patternCheck_CV.cipherTextStart = depth;
-						
 						runningString += percHolder.get("_").get(i);
-						//cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
-						++depth;
-						
-						//patternCheck_CV.cipherTextStart = depth;
-						recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, /*cipherHolder,*/ depth, writer_recursive);
+						cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1)); // TODO This is broken
+						++depth; // TODO This is broken
+						recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, cipherHolder, depth, writer_recursive);
 					}
 					else
 					{
 						runningString += percHolder.get(checkForNext).get(i);
-						//cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
-						++depth;
-						recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, /*cipherHolder,*/ depth, writer_recursive);
+						cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1)); // TODO This is broken
+						++depth; // TODO This is broken
+						recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, cipherHolder, depth, writer_recursive);
 						
 					}
-					//cipherHolder.remove(runningString.substring(runningString.length() - 1, runningString.length()));
+					cipherHolder.remove(runningString.substring(runningString.length() - 1, runningString.length()));
 					runningString = runningString.substring(0, runningString.length() - 1);
 					--depth;
 					continue;
@@ -252,7 +237,7 @@ public class ContactLetter_MAIN {
 		
 		if(checkStr.equals(runningString))
 		{
-			System.out.println(patternString);
+			//System.out.println(patternString);
 			if(runningString.length() > 33)
 			{
 				System.out.println(runningString);

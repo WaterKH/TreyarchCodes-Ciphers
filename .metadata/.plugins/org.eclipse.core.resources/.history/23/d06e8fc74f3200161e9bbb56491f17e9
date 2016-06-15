@@ -1,0 +1,9 @@
+package source;
+
+public class ContactLetter_CVPatterns {
+
+	public static void testPattern(String letter)
+	{
+		
+	}
+}

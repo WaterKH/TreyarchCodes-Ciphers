@@ -169,9 +169,9 @@ public class ContactLetter_MAIN {
 					if(percHolder.get(checkForNext).get(i).equals("_"))
 					{
 						patternCheck_CV.cipherTextEnd = depth;
-						if(!patternCheck_CV.testPattern(runningString))
+						if(!patternCheck_CV.testPattern(runningString) && patternCheck_CV.cipherTextStart < patternCheck_CV.cipherTextStart)
 						{
-							// TODO We need to figure out how to mark our beginning and endings..
+							
 							return;
 						}
 						patternCheck_CV.cipherTextStart = depth;

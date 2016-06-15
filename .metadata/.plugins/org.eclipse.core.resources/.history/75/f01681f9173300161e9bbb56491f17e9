@@ -169,18 +169,18 @@ public class ContactLetter_MAIN {
 					if(percHolder.get(checkForNext).get(i).equals("_"))
 					{
 						patternCheck_CV.cipherTextEnd = depth;
-						if(!patternCheck_CV.testPattern(runningString))
+						if(!patternCheck_CV.testPattern(cipherText))
 						{
-							// TODO We need to figure out how to mark our beginning and endings..
-							return;
+							
+							continue;
 						}
-						patternCheck_CV.cipherTextStart = depth;
+						//patternCheck_CV.cipherTextStart = depth;
 						
 						runningString += percHolder.get("_").get(i);
 						//cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
 						++depth;
 						
-						//patternCheck_CV.cipherTextStart = depth;
+						patternCheck_CV.cipherTextStart = depth;
 						recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, /*cipherHolder,*/ depth, writer_recursive);
 					}
 					else

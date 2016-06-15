@@ -1,0 +1,15 @@
+package source;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ContactLetter_LetterFrequency {
+	
+	public static Map<String, Double> cipher_letterFrequencies = new HashMap<String, Double>();
+	
+	public static void testFrequency(String letter)
+	{
+		
+	}
+
+}

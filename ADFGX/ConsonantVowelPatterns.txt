@@ -1,0 +1,10 @@
+1-V
+2-V,C
+3-C,C,_
+4-C,V,_C
+5-C,C,V,C,C
+6-C,V,C,_,_,C
+7-C,V,C,C,_,_,C
+
+//Number = length of word
+//C-V-_ = Consonant Vowel and either patterns
