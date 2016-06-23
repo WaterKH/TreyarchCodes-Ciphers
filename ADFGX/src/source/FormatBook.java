@@ -10,22 +10,29 @@ public class FormatBook {
 	
 	public static void main(String[] args) throws IOException 
 	{
-		BufferedReader reader = new BufferedReader(new FileReader("Moby_Dick.txt"));
-		BufferedWriter writer = new BufferedWriter(new FileWriter("Moby_Dick_FORMAT.txt"));
-		String line = "";
-		String result = "";
-		
-		while((line = reader.readLine()) != null)
+		String[] book = {"MobyDick", "TaleOfTwoCities"};
+		for(int i = 0; i < book.length; ++i)
 		{
-			result += line.replaceAll("[^\\w\\s]","");
-			result = result.toLowerCase();
-			//result = result.replaceAll("\\s+", "");
-			result = result.replaceAll("\\d+", "");
+			BufferedReader reader = new BufferedReader(new FileReader(book[i] + ".txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(book[i] + "_FORMAT.txt"));
+			String line = "";
+			String result = "";
+			
+			while((line = reader.readLine()) != null)
+			{
+				//result = line.replaceAll(System.getProperty("line.separator"), " ");
+				result = line.replaceAll("\\s+", " ");
+				result = result.replaceAll("_", "");
+				result = result.replaceAll("[^\\w]", " ");
+				result = result.replaceAll("\\d+", "");
+				result = result.toLowerCase();
+				
+				writer.write(result + " ");
+			}
+			
+			reader.close();
+			writer.close();
 		}
-		writer.write(result);
-		
-		reader.close();
-		writer.close();
 		System.out.println("Finished");
 	}
 }

@@ -1,0 +1,38 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FormatBook {
+	
+	public static void main(String[] args) throws IOException 
+	{
+		String[] book = {"TaleOfTwoCities"};
+		for(int i = 0; i < book.length; ++i)
+		{
+			BufferedReader reader = new BufferedReader(new FileReader(book[i] + ".txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(book[i] + "_FORMAT.txt"));
+			String line = "";
+			String result = "";
+			
+			while((line = reader.readLine()) != null)
+			{
+				result = line.replace("\n", " ");
+				result = result.replaceAll("[^\\w]", " ");
+				result = result.toLowerCase();
+				result = result.replaceAll("\\d+", "");
+				
+				writer.write(result);
+				writer.newLine();
+			}
+			//writer.write(result);
+			
+			reader.close();
+			writer.close();
+		}
+		System.out.println("Finished");
+	}
+}

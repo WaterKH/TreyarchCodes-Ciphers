@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ContactLetter_MAIN {
-
-	public static ContactLetter_CVPatterns patternCheck_CV = new ContactLetter_CVPatterns();
 	
 	public static void main(String[] args) throws IOException 
 	{
@@ -27,44 +25,54 @@ public class ContactLetter_MAIN {
 			listOfContacts.put(key, new ContactLetters(key));
 		}
 		
-		BufferedReader reader = new BufferedReader(new FileReader("Moby_Dick_FORMAT.txt"));
-		String line = "";
-		int depth = 0;
 		
-		System.out.println("Started Reading");
+		String[] book = {"MobyDick_FORMAT.txt", "TaleOfTwoCities_FORMAT.txt"};
 		
-		while((line = reader.readLine()) != null)
+		for(int i = 0; i < book.length; ++i)
 		{
-			String previousLetter = "";
-			String followingLetter = "";
+			BufferedReader reader = new BufferedReader(new FileReader(book[i]));
+			String line = "";
+			int depth = 0;
+
+			System.out.println("Started Reading");
 			
-			for(String letter : line.split(""))
+			while((line = reader.readLine()) != null)
 			{
-				letter = letter.toLowerCase();
-				ContactLetters contactLetter = listOfContacts.get(letter);
+				String previousLetter = "";
+				String followingLetter = "";
 				
-				if(depth > 0)
+				for(String letter : line.split(""))
 				{
-					previousLetter = Character.toString(line.charAt(depth - 1));
-					contactLetter.addToBefore(previousLetter);
-					contactLetter.increaseBeforeTotalContactLetters();
+					letter = letter.toLowerCase();
+					ContactLetters contactLetter = listOfContacts.get(letter);
+					
+					if(depth > 0)
+					{
+						previousLetter = Character.toString(line.charAt(depth - 1));
+						contactLetter.addToBefore(previousLetter);
+						contactLetter.increaseBeforeTotalContactLetters();
+					}
+					
+					if(depth < line.length() - 1)
+					{
+						followingLetter = Character.toString(line.charAt(depth + 1));
+						contactLetter.addToAfter(followingLetter);
+						contactLetter.increaseAfterTotalContactLetters();
+					}
+					
+					++listOfContacts.get(letter).totalLetters;
+					++depth;
 				}
-				
-				if(depth < line.length() - 1)
-				{
-					followingLetter = Character.toString(line.charAt(depth + 1));
-					contactLetter.addToAfter(followingLetter);
-					contactLetter.increaseAfterTotalContactLetters();
-				}
-				
-				++depth;
 			}
+			
+			System.out.println("Finished Reading");
+			
+			reader.close();
 		}
-		reader.close();
 
 		System.out.println("Finished Reading");
 	
-		BufferedWriter writer = new BufferedWriter(new FileWriter("percentagesOfContactLetters_MOBYDICK(TOTAL).txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("percentagesOfContactLetters_TOTAL.txt"));
 		
 		for(int i = 0; i < alphabet.length(); ++i)
 		{
@@ -73,11 +81,11 @@ public class ContactLetter_MAIN {
 			{
 				String percLetter = Character.toString(alphabet.charAt(j));
 				
-				DecimalFormat df = new DecimalFormat("#.####");
+				DecimalFormat df = new DecimalFormat("#.###");
 				df.setRoundingMode(RoundingMode.CEILING);
 				
-				writer.write(letter + "," + percLetter + "," + df.format(listOfContacts.get(letter).getBeforePercentage(percLetter) / depth) 
-						+ "," + df.format(listOfContacts.get(letter).getAfterPercentage(percLetter) / depth));
+				writer.write(letter + "," + percLetter + "," + df.format(listOfContacts.get(letter).getBeforePercentage(percLetter) / listOfContacts.get(letter).totalLetters) 
+						+ "," + df.format(listOfContacts.get(letter).getAfterPercentage(percLetter) / listOfContacts.get(letter).totalLetters));
 				writer.newLine();
 			}
 			writer.newLine();
@@ -88,17 +96,16 @@ public class ContactLetter_MAIN {
 		
 		BufferedReader perc_reader = new BufferedReader(new FileReader("ListForPermutations.txt"));
 		//BufferedReader perc_reader = new BufferedReader(new FileReader("ListForPermutations_Exact.txt"));
-		line = "";
+		String line = "";
 		Map<String, ArrayList<String>> percHolder = new HashMap<String, ArrayList<String>>(); 
 		
 		while((line = perc_reader.readLine()) != null)
 		{
 			String key = line.split("-")[0];
 			ArrayList<String> strings = new ArrayList<String>();
-			System.out.println(line);
+			//System.out.println(line);
 			for(String part: line.split("-")[1].split(","))
 			{
-				
 				strings.add(part);
 			}
 			
@@ -112,8 +119,6 @@ public class ContactLetter_MAIN {
 		
 		writer_recursive.close();
 	}
-	// ABOVE WORKS PERFECTLY
-	// TODO BELOW MAY WORK, BUT NOT GIVING DESIRED RESULTS
 	
 	/**
 	 * 
@@ -129,12 +134,13 @@ public class ContactLetter_MAIN {
 		BufferedReader reader_ci = new BufferedReader(new FileReader("ADFGX_Cryptograms.txt"));
 		ArrayList<String> spaceList = percHolder.get("_");
 		String line = "";
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
 		
 		while((line = reader_ci.readLine()) != null)
 		{
 			String cipherText = line;
 			System.out.println(cipherText);
-			
+
 			ContactLetter_LetterFrequency.createTableOfFrequencies(cipherText);
 			
 			for(int i = 0; i < spaceList.size(); ++i)
@@ -155,12 +161,12 @@ public class ContactLetter_MAIN {
 			/*Map<Character, Character> cipherHolder,*/ int depth, BufferedWriter writer_recursive) throws IOException
 	{
 		// TODO WORKING! But super slow...
-		
+		ContactLetter_CVPatterns patternCheck_CV = new ContactLetter_CVPatterns();
 		//System.out.println("CURR DEPTH: " + depth);
 		if(checkPattern(runningString, cipherText, writer_recursive))
 		{
 			//System.out.println(runningString);
-			// Get the size of our current arrayList and run a loop on it
+			//Get the size of our current arrayList and run a loop on it
 			//System.out.println(checkForNext + " " + percHolder.get(checkForNext));
 			for(int i = 0; i < percHolder.get(checkForNext).size(); ++i)
 			{
@@ -168,20 +174,23 @@ public class ContactLetter_MAIN {
 				{
 					if(percHolder.get(checkForNext).get(i).equals("_"))
 					{
-						patternCheck_CV.cipherTextEnd = depth;
+						/*patternCheck_CV.cipherTextEnd = depth;
+						patternCheck_CV.cipherTextPrevStart = patternCheck_CV.cipherTextStart;
+						
 						if(!patternCheck_CV.testPattern(runningString))
 						{
 							// TODO We need to figure out how to mark our beginning and endings..
 							return;
-						}
-						patternCheck_CV.cipherTextStart = depth;
+						}*/
 						
-						runningString += percHolder.get("_").get(i);
+						//runningString += percHolder.get("_").get(i);
+						runningString += percHolder.get("_").get(0);
 						//cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
 						++depth;
-						
 						//patternCheck_CV.cipherTextStart = depth;
-						recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, /*cipherHolder,*/ depth, writer_recursive);
+						
+						// TODO Changed to zero, make sure to change back to i if results are not correct
+						recursive_FindPhrase(percHolder.get("_").get(0), runningString, percHolder, cipherText, /*cipherHolder,*/ depth, writer_recursive);
 					}
 					else
 					{
@@ -189,7 +198,6 @@ public class ContactLetter_MAIN {
 						//cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
 						++depth;
 						recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, /*cipherHolder,*/ depth, writer_recursive);
-						
 					}
 					//cipherHolder.remove(runningString.substring(runningString.length() - 1, runningString.length()));
 					runningString = runningString.substring(0, runningString.length() - 1);
@@ -203,7 +211,6 @@ public class ContactLetter_MAIN {
 				break;
 			}
 		}
-		
 	}
 	
 	public static void solvePattern(Map<Character, Character> solver, String cipherText)
@@ -227,7 +234,8 @@ public class ContactLetter_MAIN {
 	
 	public static boolean checkPattern(String patternString, String cipherText, BufferedWriter writer) throws IOException
 	{
-		String alphabet = "abcdefghiklmnopqrstuvwxyz";
+		//System.out.println(patternString);
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
 		Map<Character, Integer> patternHolder = new HashMap<Character, Integer>();
 		int counter = 0;
 		String runningString = "";
@@ -252,11 +260,11 @@ public class ContactLetter_MAIN {
 		
 		if(checkStr.equals(runningString))
 		{
-			System.out.println(patternString);
+			//System.out.println(patternString);
 			if(runningString.length() > 33)
 			{
-				System.out.println(runningString);
-				writer.write(runningString);
+				System.out.println(patternString);
+				writer.write(patternString);
 				writer.newLine();
 			}
 			return true;

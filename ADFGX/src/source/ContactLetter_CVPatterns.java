@@ -3,6 +3,7 @@ package source;
 public class ContactLetter_CVPatterns {
 
 	//public int cipherTextLength = 0;
+	public int cipherTextPrevStart = 0;
 	public int cipherTextStart = 0;
 	public int cipherTextEnd = 0;
 	
@@ -11,7 +12,7 @@ public class ContactLetter_CVPatterns {
 	
 	public boolean testPattern(String runningString)
 	{
-		System.out.println("RUN: " + runningString + " " + cipherTextStart + " " + cipherTextEnd);
+		//System.out.println("RUN: " + runningString + " " + cipherTextStart + " " + cipherTextEnd);
 		String word = runningString.substring(cipherTextStart, cipherTextEnd);
 		
 		switch(word.length())
@@ -39,6 +40,7 @@ public class ContactLetter_CVPatterns {
 			{
 				return true;
 			}
+			// TODO Add more checks (ie - C C _ C)
 			break;
 		case 5: // C C V C C
 			if(consonantCheck(word, 0) && consonantCheck(word, 1) && vowelCheck(word, 2) && consonantCheck(word, 3) && consonantCheck(word, 4))
