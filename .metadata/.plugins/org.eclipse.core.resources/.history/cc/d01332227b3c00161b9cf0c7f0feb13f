@@ -1,0 +1,30 @@
+package source;
+
+public class MACC {
+	
+	// Doubles to get more precision
+	double total_ContactLetters;
+	double letter_ContactLetters;
+	String letter;
+	double finalPercentage;
+	
+	public MACC()
+	{
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+		letter = "";
+	}
+	
+	public MACC(String aLetter)
+	{
+		letter = aLetter;
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+	}
+
+	public void calculateMACC(String cipherText)
+	{
+		
+	}
+	
+}

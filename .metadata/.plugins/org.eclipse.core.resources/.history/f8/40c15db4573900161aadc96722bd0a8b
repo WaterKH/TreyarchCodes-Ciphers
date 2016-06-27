@@ -1,0 +1,31 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class WordPatterns {
+
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader reader = new BufferedReader(new FileReader("words_850.txt"));
+		String line = "";
+		
+		int limit = 7;
+		
+		Map<String, Integer> patternHolder = new HashMap<String, Integer>();
+		
+		while((line = reader.readLine()) != null)
+		{
+			System.out.println(line);
+			if(line.length() <= limit)
+			{
+				
+			}
+		}
+		
+	}
+
+}

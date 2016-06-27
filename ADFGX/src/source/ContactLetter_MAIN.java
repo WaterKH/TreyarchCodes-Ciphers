@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class ContactLetter_MAIN {
 	
+	static String vowels = "aeiouy";
+	
 	public static void main(String[] args) throws IOException 
 	{
 		String alphabet = "abcdefghijklmnopqrstuvwxyz ";
@@ -135,104 +137,110 @@ public class ContactLetter_MAIN {
 		ArrayList<String> spaceList = percHolder.get("_");
 		String line = "";
 		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		BufferedWriter writer = new BufferedWriter(new FileWriter("ADFGX_MACC.txt"));
 		
 		while((line = reader_ci.readLine()) != null)
 		{
 			String cipherText = line;
 			System.out.println(cipherText);
+			
+			writer.write(cipherText);
+			writer.newLine();
+			
+			MACC macc = new MACC();
+			macc.calculateMACC(cipherText, writer);
+			macc.sortLowestToHighest();
 
 			ContactLetter_LetterFrequency.createTableOfFrequencies(cipherText);
 			
 			for(int i = 0; i < spaceList.size(); ++i)
 			{	
 				String runningString = spaceList.get(i);
-				//Map<Character, Character> cipherHolder = new HashMap<Character, Character>();
-				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, /*cipherHolder,*/ 0, writer_recursive);
+				ContactLetter_CVPatterns patternCheck_CV = new ContactLetter_CVPatterns();
+				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, 0);
 			}
 			
 			ContactLetter_LetterFrequency.cipher_letterFrequencies.clear();
 		}
-		
+		writer.close();
 		reader_ci.close();
 		
 	}
 
 	public static void recursive_FindPhrase(String checkForNext, String runningString, Map<String, ArrayList<String>> percHolder, String cipherText, 
-			/*Map<Character, Character> cipherHolder,*/ int depth, BufferedWriter writer_recursive) throws IOException
+			BufferedWriter writer_recursive, ContactLetter_CVPatterns patternCheck_CV, MACC macc, int depth) throws IOException
 	{
-		// TODO WORKING! But super slow...
-		ContactLetter_CVPatterns patternCheck_CV = new ContactLetter_CVPatterns();
-		//System.out.println("CURR DEPTH: " + depth);
-		if(checkPattern(runningString, cipherText, writer_recursive))
+
+		if(checkPattern(runningString, cipherText, writer_recursive, patternCheck_CV.cipherPattern))
 		{
-			//System.out.println(runningString);
-			//Get the size of our current arrayList and run a loop on it
-			//System.out.println(checkForNext + " " + percHolder.get(checkForNext));
 			for(int i = 0; i < percHolder.get(checkForNext).size(); ++i)
 			{
 				if(runningString.length() < cipherText.length())
 				{
 					if(percHolder.get(checkForNext).get(i).equals("_"))
 					{
-						/*patternCheck_CV.cipherTextEnd = depth;
-						patternCheck_CV.cipherTextPrevStart = patternCheck_CV.cipherTextStart;
+						//TODO
+						patternCheck_CV.cipherPattern += runningString + "_";
 						
-						if(!patternCheck_CV.testPattern(runningString))
+						if(!patternCheck_CV.testPattern())
 						{
-							// TODO We need to figure out how to mark our beginning and endings..
+							String tempString = "";
+							
+							for(int j = 0; j < patternCheck_CV.cipherPattern.split("_").length - 1; ++j)
+							{
+								tempString += patternCheck_CV.cipherPattern.split("_")[j] + "_";
+							}
+							
+							patternCheck_CV.cipherPattern = tempString;
+							
 							return;
-						}*/
+						}
+						//TODO
 						
-						//runningString += percHolder.get("_").get(i);
-						runningString += percHolder.get("_").get(0);
-						//cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
+						runningString += percHolder.get("_").get(i);
 						++depth;
-						//patternCheck_CV.cipherTextStart = depth;
-						
 						// TODO Changed to zero, make sure to change back to i if results are not correct
-						recursive_FindPhrase(percHolder.get("_").get(0), runningString, percHolder, cipherText, /*cipherHolder,*/ depth, writer_recursive);
+						recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, /*depth,*/ writer_recursive, patternCheck_CV, macc, depth);
+						--depth;
+						String tempString = "";
+						
+						for(int j = 0; j < patternCheck_CV.cipherPattern.split("_").length - 1; ++j)
+						{
+							tempString += patternCheck_CV.cipherPattern.split("_")[j] + "_";
+						}
+						
+						patternCheck_CV.cipherPattern = tempString;
 					}
 					else
 					{
+						//TODO 
+						for(int j = 0; j < macc.sortedLetters.length; ++j)
+						{
+							if(Character.toString(cipherText.charAt(depth)).equals(macc.sortedLetters[j]))
+							{
+								if(!vowels.contains(percHolder.get(checkForNext).get(i)))
+								{
+									continue;
+								}
+							}
+						}
+						//TODO
 						runningString += percHolder.get(checkForNext).get(i);
-						//cipherHolder.put(cipherText.charAt(depth), runningString.charAt(runningString.length() - 1));
 						++depth;
-						recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, /*cipherHolder,*/ depth, writer_recursive);
+						recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, /*depth,*/ writer_recursive, patternCheck_CV, macc, depth);
+						--depth;
 					}
-					//cipherHolder.remove(runningString.substring(runningString.length() - 1, runningString.length()));
 					runningString = runningString.substring(0, runningString.length() - 1);
-					--depth;
+
 					continue;
 				}
-				
-				//System.out.println("Check Pattern: " + runningString);
-				//solvePattern(cipherHolder, cipherText);
-				//checkPattern(runningString);
+			
 				break;
 			}
 		}
 	}
 	
-	public static void solvePattern(Map<Character, Character> solver, String cipherText)
-	{
-		String running = "";
-		
-		for(int i = 0; i < cipherText.length(); ++i)
-		{
-			if(solver.containsKey(cipherText.charAt(i)))
-			{
-				running += solver.get(cipherText.charAt(i));
-			}
-			else
-			{
-				running += ".";
-			}
-		}
-		
-		System.out.println(running);
-	}
-	
-	public static boolean checkPattern(String patternString, String cipherText, BufferedWriter writer) throws IOException
+	public static boolean checkPattern(String patternString, String cipherText, BufferedWriter writer, String withSpaces) throws IOException
 	{
 		//System.out.println(patternString);
 		String alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -261,12 +269,13 @@ public class ContactLetter_MAIN {
 		if(checkStr.equals(runningString))
 		{
 			//System.out.println(patternString);
-			if(runningString.length() > 33)
+			if(runningString.length() == cipherText.length())
 			{
-				System.out.println(patternString);
+				//System.out.println(patternString);
 				writer.write(patternString);
 				writer.newLine();
 			}
+			
 			return true;
 		}
 		

@@ -3,6 +3,8 @@ package source;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,8 +39,8 @@ public class ADFGX_NiceLookingOne {
 		
 		/*	END DECISION: Decide if encrypting or decrypting	*/
 		
-		System.out.println("Provide a keyword:	");
-		String keyword = keyboard.next();
+		//System.out.println("Provide a keyword:	");
+		//String keyword = keyboard.next();
 		
 		if(isEncrypting)
 		{
@@ -56,21 +58,54 @@ public class ADFGX_NiceLookingOne {
 			System.out.println(plainText);
 			System.out.println(cipherText);
 			
-			sortIntoColumns(cipherText, keyword);
+			//sortIntoColumns(cipherText, keyword);
 		}
 		else
 		{
-			String plaintext = "";
-			//TODO Perform decryption
-			preinitColumnarTransposition(keyword);
-			initColumnarTransposition(keyword);
-			for(int i = 0; i < letterPairs.size(); ++i)
-			{
-				int[] indexes = getAlphabetIndexFromLetterPair(i);
-				plaintext += alphabet.alphabet[indexes[0]][indexes[1]];
-			}
+			BufferedReader reader = new BufferedReader(new FileReader("CipherKeys2.txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter("CipherCryptos.txt"));
+			String keyword = "";
+			String patternSymbols = "abcdefghijklmnopqrstuvwxyz";
 			
-			System.out.println(plaintext);
+			while((keyword = reader.readLine()) != null)
+			{
+				String plaintext = "";
+				//TODO Perform decryption
+				preinitColumnarTransposition(keyword);
+				initColumnarTransposition(keyword);
+				for(int i = 0; i < letterPairs.size(); ++i)
+				{
+					int[] indexes = getAlphabetIndexFromLetterPair(i);
+					plaintext += alphabet.alphabet[indexes[0]][indexes[1]];
+				}
+				
+				System.out.println(keyword + " " + plaintext);
+				Map<String, String> patternHolder = new HashMap<String, String>();
+				String tempString = "";
+				int counter = 0;
+				
+				for(int i = 0; i < plaintext.length(); ++i)
+				{
+					String key = Character.toString(plaintext.charAt(i));
+					if(patternHolder.containsKey(key))
+					{
+						tempString += patternHolder.get(key);
+					}
+					else
+					{
+						patternHolder.put(key, Character.toString(patternSymbols.charAt(counter)));
+						tempString += patternHolder.get(key);
+						++counter;
+					}
+				}
+				
+				writer.write(keyword + " " + tempString);
+				writer.newLine();
+				
+				letterPairs.clear();
+			}
+			writer.close();
+			reader.close();
 		}
 	}
 

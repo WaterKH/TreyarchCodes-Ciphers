@@ -1,0 +1,59 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class WordPatterns {
+
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader reader = new BufferedReader(new FileReader("words_850.txt"));
+		String line = "";
+		
+		int limit = 7;
+		
+		Map<String, Integer> patternHolder = new HashMap<String, Integer>();
+		
+		while((line = reader.readLine()) != null)
+		{
+			if(line.length() <= limit)
+			{
+				String pattern = "";
+				String lineFormatted = line.toLowerCase();
+				
+				for(int i = 0; i < line.length(); ++i)
+				{
+					
+					if(ContactLetter_CVPatterns.consonantCheck(lineFormatted, i))
+					{
+						pattern += "C";
+						System.out.println("PRINT C: " + pattern);
+					}
+					else if(ContactLetter_CVPatterns.vowelCheck(lineFormatted, i))
+					{
+						pattern += "V";
+						System.out.println("PRINT V: " + pattern);
+					}
+					//System.out.println("PRINT: " + pattern);
+				}
+				
+				System.out.println(pattern);
+				if(patternHolder.containsKey(pattern))
+				{
+					patternHolder.put(pattern, patternHolder.get(pattern) + 1);
+				}
+				else
+				{
+					patternHolder.put(pattern, 1);
+				}
+			}
+		}
+		
+		System.out.println(patternHolder);
+		
+	}
+
+}

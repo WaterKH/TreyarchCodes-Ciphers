@@ -1,5 +1,6 @@
 package source;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,11 @@ public class ContactLetters {
 	public int before_totalContactLetters = 0;
 	public int after_totalContactLetters = 0;
 	
+	public int uniqueCount = 0;
+	
 	public int totalLetters = 0;
+	
+	public ArrayList<String> contactLetters = new ArrayList<String>();
 	
 	public ContactLetters(String aLetter)
 	{
@@ -27,6 +32,11 @@ public class ContactLetters {
 	public void increaseAfterTotalContactLetters()
 	{
 		++after_totalContactLetters;
+	}
+	
+	public void increaseUniqueCount()
+	{
+		++uniqueCount;
 	}
 	
 	public void addToBefore(String key)
@@ -93,4 +103,6 @@ public class ContactLetters {
 			return 0.0;
 		}
 	}
+	
+	//INTRODUCE Unique contact letter count
 }

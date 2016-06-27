@@ -1,0 +1,82 @@
+package source;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MACC {
+	
+	// Doubles to get more precision
+	double total_ContactLetters;
+	double letter_ContactLetters;
+	String letter;
+	double finalPercentage;
+	
+	public MACC()
+	{
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+		letter = "";
+	}
+	
+	public MACC(String aLetter)
+	{
+		letter = aLetter;
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+	}
+	
+	public void calculateMACC(String cipherText)
+	{
+		String alphabet = "abcdefghijklmnopqrstuvwxyz ";
+		Map<String, ContactLetters> listOfContacts = new HashMap<String, ContactLetters>();
+		
+		for(int i = 0; i < alphabet.length(); ++i)
+		{
+			String key = Character.toString(alphabet.charAt(i));
+			
+			listOfContacts.put(key, new ContactLetters(key));
+		}
+
+		System.out.println("Started Reading");
+		
+		for(int i = 0; i < cipherText.length(); ++i)
+		{
+			String previousLetter = "";
+			String followingLetter = "";
+			
+			
+				letter = Character.toString(cipherText.charAt(i)).toLowerCase();
+				ContactLetters contactLetter = listOfContacts.get(letter);
+				
+				if(i > 0)
+				{
+					previousLetter = Character.toString(cipherText.charAt(i - 1));
+					if(!contactLetter.before_counter.containsKey(previousLetter))
+					{
+						contactLetter.increaseUniqueCount();
+					}
+					contactLetter.addToBefore(previousLetter);
+				}
+				
+				if(i < cipherText.length() - 1)
+				{
+					followingLetter = Character.toString(cipherText.charAt(i + 1));
+					if(!contactLetter.after_counter.containsKey(followingLetter))
+					{
+						contactLetter.increaseUniqueCount();
+					}
+					contactLetter.addToAfter(followingLetter);
+				}
+				
+				++listOfContacts.get(letter).totalLetters;
+			}
+		}
+		
+		for(int i = 0; i < alphabet.length(); ++i)
+		{
+			String letter = Character.toString(alphabet.charAt(i));
+			System.out.println(letter + " " + listOfContacts.get(letter).uniqueCount);
+		}
+	}
+	
+}

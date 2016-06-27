@@ -1,0 +1,61 @@
+package source;
+
+public class MACC {
+	
+	// Doubles to get more precision
+	double total_ContactLetters;
+	double letter_ContactLetters;
+	String letter;
+	double finalPercentage;
+	
+	public MACC()
+	{
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+		letter = "";
+	}
+	
+	public MACC(String aLetter)
+	{
+		letter = aLetter;
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+	}
+
+	public void calculateMACC(String cipherText)
+	{
+		int depth = 0;
+
+		System.out.println("Started Reading");
+		
+		for(int i = 0; i < cipherText.length(); ++i)
+		{
+			String previousLetter = "";
+			String followingLetter = "";
+			
+			for(String letter : cipherText.split(""))
+			{
+				letter = letter.toLowerCase();
+				ContactLetters contactLetter = listOfContacts.get(letter);
+				
+				if(depth > 0)
+				{
+					previousLetter = Character.toString(cipherText.charAt(depth - 1));
+					contactLetter.addToBefore(previousLetter);
+					contactLetter.increaseBeforeTotalContactLetters();
+				}
+				
+				if(depth < cipherText.length() - 1)
+				{
+					followingLetter = Character.toString(cipherText.charAt(depth + 1));
+					contactLetter.addToAfter(followingLetter);
+					contactLetter.increaseAfterTotalContactLetters();
+				}
+				
+				++listOfContacts.get(letter).totalLetters;
+				++depth;
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,81 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class WordPatterns {
+
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader reader = new BufferedReader(new FileReader("words_850.txt"));
+		String line = "";
+		
+		int limit = 7;
+		int counter = 0;
+		
+		Map<String, Integer> patternHolder = new HashMap<String, Integer>();
+		Map<Integer, Integer> patternFreqHolder = new HashMap<Integer, Integer>();
+		
+		ArrayList<String> patterns = new ArrayList<String>();
+		
+		while((line = reader.readLine()) != null)
+		{
+			if(line.length() <= limit)
+			{
+				String pattern = "";
+				String lineFormatted = line.toLowerCase();
+				
+				for(int i = 0; i < line.length(); ++i)
+				{
+					
+					if(ContactLetter_CVPatterns.consonantCheck(lineFormatted, i))
+					{
+						pattern += "C";
+					}
+					else if(ContactLetter_CVPatterns.vowelCheck(lineFormatted, i))
+					{
+						pattern += "V";
+					}
+				}
+				
+				if(patternHolder.containsKey(pattern))
+				{
+					patternHolder.put(pattern, patternHolder.get(pattern) + 1);
+				}
+				else
+				{
+					patterns.add(pattern);
+					patternHolder.put(pattern, 1);
+				}
+				
+				if(patternFreqHolder.containsKey(line.length()))
+				{
+					patternFreqHolder.put(line.length(), patternFreqHolder.get(line.length()) + 1);
+				}
+				else
+				{
+					patternFreqHolder.put(line.length(), 1);
+				}
+				
+				++counter;
+			}
+		}
+		
+		System.out.println(patternHolder);
+		
+		DecimalFormat df = new DecimalFormat("#.###");
+		df.setRoundingMode(RoundingMode.CEILING);
+		
+		for(int i = 0; i < patterns.size(); ++i)
+		{
+			System.out.println(patterns.get(i) + " " + df.format((double)(patternHolder.get(patterns.get(i)) * 100) / patternFreqHolder.get(patterns.get(i).length())));
+		}
+	}
+
+}

@@ -1,0 +1,27 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class WordPatterns {
+
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader reader = new BufferedReader(new FileReader("words_850.txt"));
+		String line = "";
+		
+		int limit = 7;
+		
+		while((line = reader.readLine()) != null)
+		{
+			System.out.println(line);
+			if(line.length() <= limit)
+			{
+				
+			}
+		}
+		
+	}
+
+}

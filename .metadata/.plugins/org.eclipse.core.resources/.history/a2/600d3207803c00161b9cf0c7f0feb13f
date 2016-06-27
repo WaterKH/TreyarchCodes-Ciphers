@@ -1,0 +1,65 @@
+package source;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MACC {
+	
+	// Doubles to get more precision
+	double total_ContactLetters;
+	double letter_ContactLetters;
+	String letter;
+	double finalPercentage;
+	
+	public MACC()
+	{
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+		letter = "";
+	}
+	
+	public MACC(String aLetter)
+	{
+		letter = aLetter;
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+	}
+	
+	public void calculateMACC(String cipherText)
+	{
+		Map<String, Map<String, Integer>> contactLetters = new HashMap<String, Map<String, Integer>>();
+		Map<String, Integer> counter = new HashMap<String, Integer>();
+		
+		for(int i = 0; i < cipherText.length(); ++i)
+		{
+			String letter = Character.toString(cipherText.charAt(i));
+			String previous = "";
+			String next = "";
+			
+			if(i > 0)
+			{
+				previous = Character.toString(cipherText.charAt(i - 1));
+			}
+			
+			if(i < cipherText.length() - 1)
+			{
+				next = Character.toString(cipherText.charAt(i + 1));
+			}
+			
+			if(contactLetters.get(letter).containsKey(previous) || contactLetters.get(letter).containsKey(next))
+			{
+				if(!counter.containsKey(letter))
+				{
+					counter.put(letter, 1);
+				}
+				else
+				{
+					counter.put(letter, counter.get(letter) + 1);
+				}
+			}
+			
+		}
+		
+	}
+	
+}

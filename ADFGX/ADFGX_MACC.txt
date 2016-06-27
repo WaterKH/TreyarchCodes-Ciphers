@@ -1,0 +1,1376 @@
+abcdefdghcicfdjfdjchjkfdlmndomchpp
+Contact Letter Count: 1
+Total: 2
+a 2.0
+
+Contact Letter Count: 2
+Total: 8
+b 4.0
+
+Contact Letter Count: 7
+Total: 29
+c 4.142857142857143
+
+Contact Letter Count: 8
+Total: 27
+d 3.375
+
+Contact Letter Count: 2
+Total: 13
+e 6.5
+
+Contact Letter Count: 5
+Total: 24
+f 4.8
+
+Contact Letter Count: 2
+Total: 12
+g 6.0
+
+Contact Letter Count: 4
+Total: 16
+h 4.0
+
+Contact Letter Count: 1
+Total: 7
+i 7.0
+
+Contact Letter Count: 5
+Total: 26
+j 5.2
+
+Contact Letter Count: 2
+Total: 10
+k 5.0
+
+Contact Letter Count: 2
+Total: 12
+l 6.0
+
+Contact Letter Count: 4
+Total: 13
+m 3.25
+
+Contact Letter Count: 2
+Total: 12
+n 6.0
+
+Contact Letter Count: 2
+Total: 12
+o 6.0
+
+Contact Letter Count: 2
+Total: 6
+p 3.0
+
+abcdefdghcicffjffjchjkddlmmdlnchee
+Contact Letter Count: 1
+Total: 2
+a 2.0
+
+Contact Letter Count: 2
+Total: 8
+b 4.0
+
+Contact Letter Count: 7
+Total: 26
+c 3.7142857142857144
+
+Contact Letter Count: 8
+Total: 34
+d 4.25
+
+Contact Letter Count: 4
+Total: 21
+e 5.25
+
+Contact Letter Count: 5
+Total: 28
+f 5.6
+
+Contact Letter Count: 2
+Total: 12
+g 6.0
+
+Contact Letter Count: 4
+Total: 17
+h 4.25
+
+Contact Letter Count: 1
+Total: 7
+i 7.0
+
+Contact Letter Count: 4
+Total: 18
+j 4.5
+
+Contact Letter Count: 2
+Total: 12
+k 6.0
+
+Contact Letter Count: 3
+Total: 13
+l 4.333333333333333
+
+Contact Letter Count: 3
+Total: 14
+m 4.666666666666667
+
+Contact Letter Count: 2
+Total: 10
+n 5.0
+
+abcdefdghbbiejdejdbjgkdelmndnobpgp
+Contact Letter Count: 1
+Total: 9
+a 9.0
+
+Contact Letter Count: 9
+Total: 32
+b 3.5555555555555554
+
+Contact Letter Count: 2
+Total: 17
+c 8.5
+
+Contact Letter Count: 8
+Total: 32
+d 4.0
+
+Contact Letter Count: 5
+Total: 18
+e 3.6
+
+Contact Letter Count: 2
+Total: 13
+f 6.5
+
+Contact Letter Count: 5
+Total: 18
+g 3.6
+
+Contact Letter Count: 2
+Total: 14
+h 7.0
+
+Contact Letter Count: 2
+Total: 14
+i 7.0
+
+Contact Letter Count: 4
+Total: 27
+j 6.75
+
+Contact Letter Count: 2
+Total: 13
+k 6.5
+
+Contact Letter Count: 2
+Total: 7
+l 3.5
+
+Contact Letter Count: 2
+Total: 5
+m 2.5
+
+Contact Letter Count: 3
+Total: 12
+n 4.0
+
+Contact Letter Count: 2
+Total: 12
+o 6.0
+
+Contact Letter Count: 2
+Total: 14
+p 7.0
+
+abcdefdghbbiejeejebjgkddlmmdnlbfgf
+Contact Letter Count: 1
+Total: 9
+a 9.0
+
+Contact Letter Count: 9
+Total: 33
+b 3.6666666666666665
+
+Contact Letter Count: 2
+Total: 18
+c 9.0
+
+Contact Letter Count: 9
+Total: 37
+d 4.111111111111111
+
+Contact Letter Count: 6
+Total: 33
+e 5.5
+
+Contact Letter Count: 4
+Total: 29
+f 7.25
+
+Contact Letter Count: 5
+Total: 20
+g 4.0
+
+Contact Letter Count: 2
+Total: 14
+h 7.0
+
+Contact Letter Count: 2
+Total: 15
+i 7.5
+
+Contact Letter Count: 3
+Total: 20
+j 6.666666666666667
+
+Contact Letter Count: 2
+Total: 14
+k 7.0
+
+Contact Letter Count: 4
+Total: 23
+l 5.75
+
+Contact Letter Count: 3
+Total: 16
+m 5.333333333333333
+
+Contact Letter Count: 2
+Total: 13
+n 6.5
+
+abcdefdaafbbcfgcfgfcghcdibjdkbfclm
+Contact Letter Count: 4
+Total: 24
+a 6.0
+
+Contact Letter Count: 7
+Total: 29
+b 4.142857142857143
+
+Contact Letter Count: 6
+Total: 27
+c 4.5
+
+Contact Letter Count: 7
+Total: 24
+d 3.4285714285714284
+
+Contact Letter Count: 2
+Total: 13
+e 6.5
+
+Contact Letter Count: 6
+Total: 29
+f 4.833333333333333
+
+Contact Letter Count: 3
+Total: 14
+g 4.666666666666667
+
+Contact Letter Count: 2
+Total: 9
+h 4.5
+
+Contact Letter Count: 2
+Total: 14
+i 7.0
+
+Contact Letter Count: 2
+Total: 14
+j 7.0
+
+Contact Letter Count: 2
+Total: 14
+k 7.0
+
+Contact Letter Count: 2
+Total: 7
+l 3.5
+
+Contact Letter Count: 1
+Total: 2
+m 2.0
+
+abcdefdaaeccbgebgeegbhdbijcdckelbm
+Contact Letter Count: 4
+Total: 28
+a 7.0
+
+Contact Letter Count: 9
+Total: 34
+b 3.7777777777777777
+
+Contact Letter Count: 6
+Total: 34
+c 5.666666666666667
+
+Contact Letter Count: 6
+Total: 32
+d 5.333333333333333
+
+Contact Letter Count: 9
+Total: 42
+e 4.666666666666667
+
+Contact Letter Count: 2
+Total: 15
+f 7.5
+
+Contact Letter Count: 2
+Total: 18
+g 9.0
+
+Contact Letter Count: 2
+Total: 15
+h 7.5
+
+Contact Letter Count: 2
+Total: 11
+i 5.5
+
+Contact Letter Count: 2
+Total: 8
+j 4.0
+
+Contact Letter Count: 2
+Total: 15
+k 7.5
+
+Contact Letter Count: 2
+Total: 18
+l 9.0
+
+Contact Letter Count: 1
+Total: 9
+m 9.0
+
+abcdefdagehcbgebgeegdiddjccdhjefdk
+Contact Letter Count: 3
+Total: 18
+a 6.0
+
+Contact Letter Count: 4
+Total: 19
+b 4.75
+
+Contact Letter Count: 5
+Total: 27
+c 5.4
+
+Contact Letter Count: 10
+Total: 41
+d 4.1
+
+Contact Letter Count: 7
+Total: 35
+e 5.0
+
+Contact Letter Count: 2
+Total: 17
+f 8.5
+
+Contact Letter Count: 4
+Total: 24
+g 6.0
+
+Contact Letter Count: 4
+Total: 26
+h 6.5
+
+Contact Letter Count: 1
+Total: 10
+i 10.0
+
+Contact Letter Count: 4
+Total: 26
+j 6.5
+
+Contact Letter Count: 1
+Total: 10
+k 10.0
+
+abcdefdgafbhcfgcfgfdgiddjbbdjhfdek
+Contact Letter Count: 3
+Total: 19
+a 6.333333333333333
+
+Contact Letter Count: 7
+Total: 37
+b 5.285714285714286
+
+Contact Letter Count: 5
+Total: 31
+c 6.2
+
+Contact Letter Count: 8
+Total: 40
+d 5.0
+
+Contact Letter Count: 3
+Total: 16
+e 5.333333333333333
+
+Contact Letter Count: 7
+Total: 35
+f 5.0
+
+Contact Letter Count: 5
+Total: 25
+g 5.0
+
+Contact Letter Count: 4
+Total: 22
+h 5.5
+
+Contact Letter Count: 2
+Total: 13
+i 6.5
+
+Contact Letter Count: 3
+Total: 19
+j 6.333333333333333
+
+Contact Letter Count: 1
+Total: 3
+k 3.0
+
+abcdeddfgchcidjidjcgjkiilmmdnocgep
+Contact Letter Count: 1
+Total: 2
+a 2.0
+
+Contact Letter Count: 2
+Total: 8
+b 4.0
+
+Contact Letter Count: 7
+Total: 28
+c 4.0
+
+Contact Letter Count: 8
+Total: 36
+d 4.5
+
+Contact Letter Count: 3
+Total: 13
+e 4.333333333333333
+
+Contact Letter Count: 2
+Total: 12
+f 6.0
+
+Contact Letter Count: 4
+Total: 17
+g 4.25
+
+Contact Letter Count: 1
+Total: 7
+h 7.0
+
+Contact Letter Count: 6
+Total: 30
+i 5.0
+
+Contact Letter Count: 5
+Total: 27
+j 5.4
+
+Contact Letter Count: 2
+Total: 11
+k 5.5
+
+Contact Letter Count: 2
+Total: 9
+l 4.5
+
+Contact Letter Count: 3
+Total: 13
+m 4.333333333333333
+
+Contact Letter Count: 2
+Total: 10
+n 5.0
+
+Contact Letter Count: 2
+Total: 9
+o 4.5
+
+Contact Letter Count: 1
+Total: 3
+p 3.0
+
+abcdeddfgchciijiijcgjkdilmndlmcgoe
+Contact Letter Count: 1
+Total: 2
+a 2.0
+
+Contact Letter Count: 2
+Total: 8
+b 4.0
+
+Contact Letter Count: 7
+Total: 27
+c 3.857142857142857
+
+Contact Letter Count: 8
+Total: 31
+d 3.875
+
+Contact Letter Count: 2
+Total: 10
+e 5.0
+
+Contact Letter Count: 2
+Total: 12
+f 6.0
+
+Contact Letter Count: 4
+Total: 15
+g 3.75
+
+Contact Letter Count: 1
+Total: 7
+h 7.0
+
+Contact Letter Count: 5
+Total: 27
+i 5.4
+
+Contact Letter Count: 4
+Total: 18
+j 4.5
+
+Contact Letter Count: 2
+Total: 12
+k 6.0
+
+Contact Letter Count: 3
+Total: 16
+l 5.333333333333333
+
+Contact Letter Count: 3
+Total: 12
+m 4.0
+
+Contact Letter Count: 2
+Total: 11
+n 5.5
+
+Contact Letter Count: 2
+Total: 6
+o 3.0
+
+abcddedaafccbbgbbgfbhifjkfldlmfbno
+Contact Letter Count: 4
+Total: 25
+a 6.25
+
+Contact Letter Count: 7
+Total: 30
+b 4.285714285714286
+
+Contact Letter Count: 4
+Total: 25
+c 6.25
+
+Contact Letter Count: 5
+Total: 17
+d 3.4
+
+Contact Letter Count: 1
+Total: 5
+e 5.0
+
+Contact Letter Count: 9
+Total: 28
+f 3.111111111111111
+
+Contact Letter Count: 2
+Total: 16
+g 8.0
+
+Contact Letter Count: 2
+Total: 9
+h 4.5
+
+Contact Letter Count: 2
+Total: 11
+i 5.5
+
+Contact Letter Count: 2
+Total: 11
+j 5.5
+
+Contact Letter Count: 2
+Total: 11
+k 5.5
+
+Contact Letter Count: 3
+Total: 16
+l 5.333333333333333
+
+Contact Letter Count: 2
+Total: 12
+m 6.0
+
+Contact Letter Count: 2
+Total: 8
+n 4.0
+
+Contact Letter Count: 1
+Total: 2
+o 2.0
+
+abcddedafghcbbibbigbajgklgmdmngboe
+Contact Letter Count: 4
+Total: 15
+a 3.75
+
+Contact Letter Count: 6
+Total: 26
+b 4.333333333333333
+
+Contact Letter Count: 3
+Total: 13
+c 4.333333333333333
+
+Contact Letter Count: 5
+Total: 17
+d 3.4
+
+Contact Letter Count: 2
+Total: 7
+e 3.5
+
+Contact Letter Count: 2
+Total: 13
+f 6.5
+
+Contact Letter Count: 9
+Total: 23
+g 2.5555555555555554
+
+Contact Letter Count: 2
+Total: 12
+h 6.0
+
+Contact Letter Count: 2
+Total: 15
+i 7.5
+
+Contact Letter Count: 2
+Total: 13
+j 6.5
+
+Contact Letter Count: 2
+Total: 11
+k 5.5
+
+Contact Letter Count: 2
+Total: 11
+l 5.5
+
+Contact Letter Count: 3
+Total: 16
+m 5.333333333333333
+
+Contact Letter Count: 2
+Total: 12
+n 6.0
+
+Contact Letter Count: 2
+Total: 8
+o 4.0
+
+abcdeddaafbbcgccgcfhcijfklfdmlfnco
+Contact Letter Count: 4
+Total: 23
+a 5.75
+
+Contact Letter Count: 4
+Total: 26
+b 6.5
+
+Contact Letter Count: 9
+Total: 36
+c 4.0
+
+Contact Letter Count: 6
+Total: 31
+d 5.166666666666667
+
+Contact Letter Count: 1
+Total: 6
+e 6.0
+
+Contact Letter Count: 9
+Total: 34
+f 3.7777777777777777
+
+Contact Letter Count: 1
+Total: 9
+g 9.0
+
+Contact Letter Count: 2
+Total: 18
+h 9.0
+
+Contact Letter Count: 2
+Total: 11
+i 5.5
+
+Contact Letter Count: 2
+Total: 11
+j 5.5
+
+Contact Letter Count: 2
+Total: 12
+k 6.0
+
+Contact Letter Count: 3
+Total: 13
+l 4.333333333333333
+
+Contact Letter Count: 2
+Total: 9
+m 4.5
+
+Contact Letter Count: 2
+Total: 18
+n 9.0
+
+Contact Letter Count: 1
+Total: 9
+o 9.0
+
+abcdeddfagbhciccicgacjkglmgdnmgoce
+Contact Letter Count: 4
+Total: 24
+a 6.0
+
+Contact Letter Count: 4
+Total: 24
+b 6.0
+
+Contact Letter Count: 10
+Total: 41
+c 4.1
+
+Contact Letter Count: 6
+Total: 30
+d 5.0
+
+Contact Letter Count: 2
+Total: 16
+e 8.0
+
+Contact Letter Count: 2
+Total: 10
+f 5.0
+
+Contact Letter Count: 8
+Total: 33
+g 4.125
+
+Contact Letter Count: 2
+Total: 14
+h 7.0
+
+Contact Letter Count: 1
+Total: 10
+i 10.0
+
+Contact Letter Count: 2
+Total: 12
+j 6.0
+
+Contact Letter Count: 2
+Total: 10
+k 5.0
+
+Contact Letter Count: 2
+Total: 11
+l 5.5
+
+Contact Letter Count: 3
+Total: 12
+m 4.0
+
+Contact Letter Count: 2
+Total: 9
+n 4.5
+
+Contact Letter Count: 2
+Total: 18
+o 9.0
+
+abcddedfgbbhijdijdbjfkiilmmdnobefp
+Contact Letter Count: 1
+Total: 9
+a 9.0
+
+Contact Letter Count: 9
+Total: 34
+b 3.7777777777777777
+
+Contact Letter Count: 2
+Total: 18
+c 9.0
+
+Contact Letter Count: 9
+Total: 44
+d 4.888888888888889
+
+Contact Letter Count: 3
+Total: 24
+e 8.0
+
+Contact Letter Count: 6
+Total: 21
+f 3.5
+
+Contact Letter Count: 2
+Total: 15
+g 7.5
+
+Contact Letter Count: 2
+Total: 15
+h 7.5
+
+Contact Letter Count: 6
+Total: 25
+i 4.166666666666667
+
+Contact Letter Count: 4
+Total: 30
+j 7.5
+
+Contact Letter Count: 2
+Total: 12
+k 6.0
+
+Contact Letter Count: 2
+Total: 9
+l 4.5
+
+Contact Letter Count: 3
+Total: 14
+m 4.666666666666667
+
+Contact Letter Count: 2
+Total: 11
+n 5.5
+
+Contact Letter Count: 2
+Total: 11
+o 5.5
+
+Contact Letter Count: 1
+Total: 6
+p 6.0
+
+abcddedfgbbhijiijibjfkidlmndnlbofe
+Contact Letter Count: 1
+Total: 9
+a 9.0
+
+Contact Letter Count: 9
+Total: 31
+b 3.4444444444444446
+
+Contact Letter Count: 2
+Total: 16
+c 8.0
+
+Contact Letter Count: 7
+Total: 30
+d 4.285714285714286
+
+Contact Letter Count: 2
+Total: 13
+e 6.5
+
+Contact Letter Count: 6
+Total: 18
+f 3.0
+
+Contact Letter Count: 2
+Total: 15
+g 7.5
+
+Contact Letter Count: 2
+Total: 15
+h 7.5
+
+Contact Letter Count: 6
+Total: 29
+i 4.833333333333333
+
+Contact Letter Count: 3
+Total: 21
+j 7.0
+
+Contact Letter Count: 2
+Total: 12
+k 6.0
+
+Contact Letter Count: 4
+Total: 21
+l 5.25
+
+Contact Letter Count: 2
+Total: 7
+m 3.5
+
+Contact Letter Count: 3
+Total: 13
+n 4.333333333333333
+
+Contact Letter Count: 2
+Total: 15
+o 7.5
+
+abccdecafebgheaheaehaihhjbbckgehdl
+Contact Letter Count: 6
+Total: 30
+a 5.0
+
+Contact Letter Count: 6
+Total: 31
+b 5.166666666666667
+
+Contact Letter Count: 6
+Total: 31
+c 5.166666666666667
+
+Contact Letter Count: 4
+Total: 21
+d 5.25
+
+Contact Letter Count: 7
+Total: 35
+e 5.0
+
+Contact Letter Count: 2
+Total: 13
+f 6.5
+
+Contact Letter Count: 4
+Total: 22
+g 5.5
+
+Contact Letter Count: 7
+Total: 32
+h 4.571428571428571
+
+Contact Letter Count: 2
+Total: 13
+i 6.5
+
+Contact Letter Count: 2
+Total: 13
+j 6.5
+
+Contact Letter Count: 2
+Total: 10
+k 5.0
+
+Contact Letter Count: 1
+Total: 4
+l 4.0
+
+abccdecafgbheiceicgfcjkglmgcnmgocp
+Contact Letter Count: 3
+Total: 19
+a 6.333333333333333
+
+Contact Letter Count: 4
+Total: 24
+b 6.0
+
+Contact Letter Count: 12
+Total: 44
+c 3.6666666666666665
+
+Contact Letter Count: 2
+Total: 16
+d 8.0
+
+Contact Letter Count: 4
+Total: 18
+e 4.5
+
+Contact Letter Count: 3
+Total: 22
+f 7.333333333333333
+
+Contact Letter Count: 7
+Total: 28
+g 4.0
+
+Contact Letter Count: 2
+Total: 8
+h 4.0
+
+Contact Letter Count: 2
+Total: 16
+i 8.0
+
+Contact Letter Count: 2
+Total: 14
+j 7.0
+
+Contact Letter Count: 2
+Total: 9
+k 4.5
+
+Contact Letter Count: 2
+Total: 10
+l 5.0
+
+Contact Letter Count: 3
+Total: 11
+m 3.6666666666666665
+
+Contact Letter Count: 2
+Total: 15
+n 7.5
+
+Contact Letter Count: 2
+Total: 19
+o 9.5
+
+Contact Letter Count: 1
+Total: 12
+p 12.0
+
+abccdecffebbgeageaecahcgibjcibeckl
+Contact Letter Count: 5
+Total: 31
+a 6.2
+
+Contact Letter Count: 7
+Total: 39
+b 5.571428571428571
+
+Contact Letter Count: 11
+Total: 48
+c 4.363636363636363
+
+Contact Letter Count: 2
+Total: 17
+d 8.5
+
+Contact Letter Count: 6
+Total: 33
+e 5.5
+
+Contact Letter Count: 3
+Total: 20
+f 6.666666666666667
+
+Contact Letter Count: 5
+Total: 32
+g 6.4
+
+Contact Letter Count: 2
+Total: 16
+h 8.0
+
+Contact Letter Count: 3
+Total: 23
+i 7.666666666666667
+
+Contact Letter Count: 2
+Total: 18
+j 9.0
+
+Contact Letter Count: 2
+Total: 12
+k 6.0
+
+Contact Letter Count: 1
+Total: 2
+l 2.0
+
+abccdecffgbbehcehcgacijgklgcmlgncd
+Contact Letter Count: 3
+Total: 24
+a 8.0
+
+Contact Letter Count: 5
+Total: 31
+b 6.2
+
+Contact Letter Count: 11
+Total: 44
+c 4.0
+
+Contact Letter Count: 2
+Total: 15
+d 7.5
+
+Contact Letter Count: 4
+Total: 20
+e 5.0
+
+Contact Letter Count: 3
+Total: 22
+f 7.333333333333333
+
+Contact Letter Count: 8
+Total: 31
+g 3.875
+
+Contact Letter Count: 2
+Total: 15
+h 7.5
+
+Contact Letter Count: 2
+Total: 13
+i 6.5
+
+Contact Letter Count: 2
+Total: 10
+j 5.0
+
+Contact Letter Count: 2
+Total: 11
+k 5.5
+
+Contact Letter Count: 3
+Total: 12
+l 4.0
+
+Contact Letter Count: 2
+Total: 14
+m 7.0
+
+Contact Letter Count: 2
+Total: 19
+n 9.5
+
+abcbdebfadgchadhaddahihhjccbgkdehl
+Contact Letter Count: 4
+Total: 23
+a 5.75
+
+Contact Letter Count: 6
+Total: 25
+b 4.166666666666667
+
+Contact Letter Count: 5
+Total: 25
+c 5.0
+
+Contact Letter Count: 7
+Total: 34
+d 4.857142857142857
+
+Contact Letter Count: 3
+Total: 21
+e 7.0
+
+Contact Letter Count: 2
+Total: 10
+f 5.0
+
+Contact Letter Count: 4
+Total: 20
+g 5.0
+
+Contact Letter Count: 8
+Total: 31
+h 3.875
+
+Contact Letter Count: 1
+Total: 8
+i 8.0
+
+Contact Letter Count: 2
+Total: 13
+j 6.5
+
+Contact Letter Count: 2
+Total: 11
+k 5.5
+
+Contact Letter Count: 1
+Total: 8
+l 8.0
+
+abcbdebfaghcdbidbigbfjgklgmbmngbop
+Contact Letter Count: 3
+Total: 21
+a 7.0
+
+Contact Letter Count: 9
+Total: 32
+b 3.5555555555555554
+
+Contact Letter Count: 3
+Total: 15
+c 5.0
+
+Contact Letter Count: 4
+Total: 17
+d 4.25
+
+Contact Letter Count: 2
+Total: 13
+e 6.5
+
+Contact Letter Count: 3
+Total: 14
+f 4.666666666666667
+
+Contact Letter Count: 9
+Total: 28
+g 3.111111111111111
+
+Contact Letter Count: 2
+Total: 12
+h 6.0
+
+Contact Letter Count: 3
+Total: 22
+i 7.333333333333333
+
+Contact Letter Count: 2
+Total: 12
+j 6.0
+
+Contact Letter Count: 2
+Total: 11
+k 5.5
+
+Contact Letter Count: 2
+Total: 11
+l 5.5
+
+Contact Letter Count: 3
+Total: 20
+m 6.666666666666667
+
+Contact Letter Count: 2
+Total: 12
+n 6.0
+
+Contact Letter Count: 2
+Total: 10
+o 5.0
+
+Contact Letter Count: 1
+Total: 2
+p 2.0
+
+abcbdebffgccdbhdbhgbaigjkglblmgbne
+Contact Letter Count: 2
+Total: 11
+a 5.5
+
+Contact Letter Count: 9
+Total: 33
+b 3.6666666666666665
+
+Contact Letter Count: 4
+Total: 26
+c 6.5
+
+Contact Letter Count: 4
+Total: 19
+d 4.75
+
+Contact Letter Count: 3
+Total: 15
+e 5.0
+
+Contact Letter Count: 3
+Total: 21
+f 7.0
+
+Contact Letter Count: 9
+Total: 30
+g 3.3333333333333335
+
+Contact Letter Count: 3
+Total: 22
+h 7.333333333333333
+
+Contact Letter Count: 2
+Total: 11
+i 5.5
+
+Contact Letter Count: 2
+Total: 11
+j 5.5
+
+Contact Letter Count: 2
+Total: 11
+k 5.5
+
+Contact Letter Count: 3
+Total: 20
+l 6.666666666666667
+
+Contact Letter Count: 2
+Total: 12
+m 6.0
+
+Contact Letter Count: 2
+Total: 12
+n 6.0
+
+abcbdebffdccgadgaddabhgbijcbcidkbl
+Contact Letter Count: 3
+Total: 24
+a 8.0
+
+Contact Letter Count: 10
+Total: 37
+b 3.7
+
+Contact Letter Count: 6
+Total: 36
+c 6.0
+
+Contact Letter Count: 9
+Total: 44
+d 4.888888888888889
+
+Contact Letter Count: 2
+Total: 19
+e 9.5
+
+Contact Letter Count: 3
+Total: 22
+f 7.333333333333333
+
+Contact Letter Count: 5
+Total: 30
+g 6.0
+
+Contact Letter Count: 2
+Total: 15
+h 7.5
+
+Contact Letter Count: 4
+Total: 27
+i 6.75
+
+Contact Letter Count: 2
+Total: 10
+j 5.0
+
+Contact Letter Count: 2
+Total: 19
+k 9.5
+
+Contact Letter Count: 1
+Total: 10
+l 10.0
+
