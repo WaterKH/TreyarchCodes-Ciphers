@@ -1,0 +1,79 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class ContactLetter_CVPatterns {
+
+	//public int cipherTextLength = 0;
+	public int cipherTextPrevStart = 0;
+	public int cipherTextStart = 0;
+	public int cipherTextEnd = 0;
+	
+	public String cipherPattern = "";
+	
+	public static String vowel = "aeiouy";
+	public static String consonant = "bcdfghjklmnpqrstvwxz";
+	public static ArrayList<String[]> patterns = new ArrayList<String[]>();
+	
+	public void initPatternArrays() throws IOException
+	{
+		BufferedReader reader = new BufferedReader(new FileReader("patterns.txt"));
+		String line = "";
+		
+		while((line = reader.readLine()) != null)
+		{
+			String[] array = line.split("-")[1].split(",");
+			patterns.add(array);
+		}
+		
+		reader.close();
+	}
+	
+	public boolean testPattern() throws IOException
+	{
+		String word = cipherPattern.split("_")[cipherPattern.split("_").length - 1];
+		String pattern = this.getPattern(word);
+		
+		if(pattern.length() != word.length())
+		{
+			System.out.println("ERROR: Length differs");
+		}
+		
+		System.out.println(word + " " + pattern);
+		for(int i = 0; i < patterns.get(pattern.length() - 1).length; ++i)
+		{
+			//System.out.println(pattern + " " + patterns.get(pattern.length())[i]);
+			if(pattern.equals(patterns.get(pattern.length())[i]))
+			{
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public String getPattern(String word)
+	{
+		String pattern = "";
+		
+		for(int i = 0; i < word.length(); ++i)
+		{
+			String letter = Character.toString(word.charAt(i));
+			
+			if(vowel.contains(letter))
+			{
+				pattern += "V";
+			}
+			else if(consonant.contains(letter))
+			{
+				pattern += "C";
+			}
+		}
+		
+		return pattern;
+	}
+}

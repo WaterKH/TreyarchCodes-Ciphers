@@ -28,7 +28,7 @@ public class MACC {
 		letter_ContactLetters = 0;
 	}
 	
-	public void calculateMACC(String cipherText, BufferedWriter writer) throws IOException
+	public void calculateMACC(String cipherText)
 	{
 		String alphabet = "abcdefghijklmnopqrstuvwxyz ";
 		Map<String, ContactLetters> listOfContacts = new HashMap<String, ContactLetters>();
@@ -91,17 +91,12 @@ public class MACC {
 			if(!finalPercentage.containsKey(letter))
 			{
 				finalPercentage.put(letter, runningTotal / divideBy);
-				
-				writer.write("Contact Letter Count: " + (int)divideBy + "\nTotal: " + (int)runningTotal + "\n" +cipherText.charAt(i) + " " + 
-							finalPercentage.get(Character.toString(cipherText.charAt(i))));
-				writer.newLine();
-				writer.newLine();
 			}
 		}
 		
 	}
 	
-	public void sortLowestToHighest()
+	public void sortLowestToHighest(BufferedWriter writer) throws IOException
 	{
 		String alphabet = "abcdefghijklmnop";
 		sortedLetters = new String[finalPercentage.size()];
@@ -127,11 +122,14 @@ public class MACC {
 			}
 			
 		}
-		/*
+		
 		for(int i = 0; i < sortedLetters.length; ++i)
 		{
-			System.out.println(sortedLetters[i] + " " + finalPercentage.get(sortedLetters[i]));
-		}*/
+			//System.out.println(sortedLetters[i] + " " + finalPercentage.get(sortedLetters[i]));
+			writer.write(sortedLetters[i] + " " + finalPercentage.get(sortedLetters[i]));
+			writer.newLine();
+		}
+		writer.newLine();
 	}
 	
 }

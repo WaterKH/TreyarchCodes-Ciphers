@@ -1,0 +1,1 @@
+The ADFGX cipher is, I believe, almost solved. We have two of three checks implemented, which include Contact Letters, Consonant Vowel Patterns, and Letter Frequency. The Letter Frequency check is still in development. Debugging is the last step, which may cause the process to start over.

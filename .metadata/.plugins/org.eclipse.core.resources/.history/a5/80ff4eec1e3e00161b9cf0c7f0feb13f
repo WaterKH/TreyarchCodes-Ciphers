@@ -1,0 +1,69 @@
+package source;
+
+public class ContactLetter_CVPatterns {
+
+	//public int cipherTextLength = 0;
+	public int cipherTextPrevStart = 0;
+	public int cipherTextStart = 0;
+	public int cipherTextEnd = 0;
+	
+	public String cipherPattern = "";
+	
+	public static String vowel = "aeiouy";
+	public static String consonant = "bcdfghjklmnpqrstvwxz";
+	
+	public boolean testPattern()//String runningString)
+	{
+		String word = cipherPattern.split("_")[cipherPattern.split("_").length - 1];
+		
+		switch(word.length())
+		{
+		case 1:
+			
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;
+		case 5:
+			
+			break;
+		case 6: 
+			
+			break;
+		case 7:
+			
+			break;
+		default:
+			//System.out.println("ERROR");
+			return false;
+		}
+		
+		return false;
+	}
+	
+	public static boolean vowelCheck(String letter, int begin)
+	{
+		if(vowel.contains(letter.substring(begin, begin + 1)))
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static boolean consonantCheck(String letter, int begin)
+	{
+		if(consonant.contains(letter.substring(begin, begin + 1)))
+		{
+			return true;
+		}
+		
+		return false;
+	}
+}

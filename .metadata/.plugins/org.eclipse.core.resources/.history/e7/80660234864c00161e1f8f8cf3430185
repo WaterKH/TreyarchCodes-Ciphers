@@ -1,0 +1,188 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ColumnarCreator {
+
+	public static void main(String[] args) throws IOException {
+		
+		boolean satisfied = false;
+		Scanner keyboard = new Scanner(System.in);
+		System.out.print("Please select a file (NOTE: Include file extension!): ");
+		String fileName = keyboard.next();
+		
+		while(!satisfied)
+		{
+			System.out.print("Please select a length to create your matrix with (NOTE: Make sure it is an integer!): ");
+			int colLength = keyboard.nextInt();
+			
+			BufferedReader reader = new BufferedReader(new FileReader(fileName));
+			String line = "";
+			String text = "";
+			
+			while((line = reader.readLine()) != null)
+			{
+				text += line + " ";
+			}
+			
+			reader.close();
+			
+			int rowLength = text.length() / colLength; // Just to make sure we get our entire array
+			int remainder = text.length() % colLength;
+			
+			ArrayList<char[]> matrix = new ArrayList<char[]>();
+			
+			for(int i = 0; i < rowLength; ++i)
+			{
+				matrix.add(new char[colLength]);
+			}
+			
+			matrix.add(new char[remainder]);
+			
+			int index = 0;
+			
+			for(int i = 0; i < colLength; ++i)
+			{
+				for(int j = 0; j < rowLength; ++j)
+				{
+					if(index < text.length())
+					{
+						if(text.charAt(index) == '_')
+						{
+							System.out.println(text.charAt(index));
+						}
+						matrix.get(j)[i] = text.charAt(index);
+						++index;
+					}
+				}
+				
+				if(i < remainder)
+				{
+					matrix.get(matrix.size() - 1)[i] = text.charAt(index);
+					++index;
+				}
+				
+			}
+			
+			printToScreen(matrix);
+			
+			System.out.print("Are you happy with this matrix? (Y, N): ");
+			String yesOrNo = keyboard.next();
+			
+			if(yesOrNo.toLowerCase().equals("y"))
+			{
+				satisfied = true;
+				
+				System.out.print("Do you want to print to file or print to screen and manipulate from the Terminal? ([F]ile, [T]erminal): ");
+				String decision = keyboard.next();
+				
+				if(decision.toLowerCase().equals("f"))
+				{
+					System.out.print("What file would you like to write to? (NOTE: Include file extensions!): ");
+					String fileToWrite = keyboard.next();
+					
+					System.out.println("Writing to file...");
+					printToFile(matrix, fileToWrite);
+				}
+				else
+				{
+					while(true)
+					{
+						System.out.print("Choose two columns you want to swap by their index (0 -> " + (matrix.get(0).length - 1) + ") (NOTE: Write out in pairs -> 4,5): ");
+						String numbers = keyboard.next();
+						String[] pairs = numbers.split(",");
+						
+						int col1 = Integer.parseInt(pairs[0]);
+						int col2 = Integer.parseInt(pairs[1]);
+						
+						rearrangeColumns(matrix, col1, col2);
+					}
+				}
+			}
+		}	
+		System.out.println("Finished Writing. Closing Program.");
+	}
+	
+	public static void printToFile(ArrayList<char[]> matrix, String fileName) throws IOException
+	{
+		BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+		
+		for(int i = 0; i < matrix.size(); ++i)
+		{
+			for(int j = 0; j < matrix.get(i).length; ++j)
+			{
+				if(matrix.get(i)[j] > 0)
+				{
+					if(matrix.get(i)[j] == ' ')
+					{
+						writer.write('_' + "-");
+					}
+					else
+					{
+						writer.write(matrix.get(i)[j] + "-");
+					}
+				}
+				else
+				{
+					writer.write(" -");
+				}
+			}
+			writer.newLine();
+		}
+		writer.close();
+	}
+	
+	public static void rearrangeColumns(ArrayList<char[]> matrix, int toMove, int toReplace)
+	{
+		for(int i = 0; i < matrix.size(); ++i)
+		{
+			char temp = matrix.get(i)[toMove];
+			matrix.get(i)[toMove] = matrix.get(i)[toReplace];
+			matrix.get(i)[toReplace] = temp;
+		}
+		
+		printToScreen(matrix);
+	}
+	
+	public static void printToScreen(ArrayList<char[]> matrix)
+	{
+		System.out.print("  ");
+		for(int i = 0; i < matrix.get(0).length; ++i)
+		{
+			System.out.print(i % 10 + " ");
+		}
+		System.out.println();
+		
+		for(int i = 0; i < matrix.size(); ++i)
+		{
+			System.out.print(i % 10 + " ");
+			for(int j = 0; j < matrix.get(i).length; ++j)
+			{
+				if(matrix.get(i)[j] > 0)
+				{
+					if(matrix.get(i)[j] == ' ')
+					{
+						System.out.print('_' + "-");
+					}
+					else
+					{
+						System.out.print(matrix.get(i)[j] + "-");
+					}
+				}
+				else
+				{
+					System.out.print(" -");
+				}
+			}
+			System.out.println();
+		}
+
+	}
+	
+}

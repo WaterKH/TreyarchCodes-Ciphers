@@ -1,0 +1,77 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+public class ContactLetter_CVPatterns {
+
+	//public int cipherTextLength = 0;
+	public int cipherTextPrevStart = 0;
+	public int cipherTextStart = 0;
+	public int cipherTextEnd = 0;
+	
+	public String cipherPattern = "";
+	
+	public static String vowel = "aeiouy";
+	public static String consonant = "bcdfghjklmnpqrstvwxz";
+	
+	public boolean testPattern() throws FileNotFoundException
+	{
+		String word = cipherPattern.split("_")[cipherPattern.split("_").length - 1];
+		BufferedReader reader = new BufferedReader(new FileReader("patterns.txt"));
+		
+		String pattern = this.getPattern(word);
+		
+		switch(word.length())
+		{
+		case 1:
+			
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;
+		case 5:
+			
+			break;
+		case 6: 
+			
+			break;
+		case 7:
+			
+			break;
+		default:
+			//System.out.println("ERROR");
+			return false;
+		}
+		
+		return false;
+	}
+	
+	public String getPattern(String word)
+	{
+		String pattern = "";
+		
+		for(int i = 0; i < word.length(); ++i)
+		{
+			String letter = Character.toString(word.charAt(i));
+			
+			if(vowel.contains(letter))
+			{
+				pattern += "V";
+			}
+			else if(consonant.contains(letter))
+			{
+				pattern += "C";
+			}
+		}
+		
+		return pattern;
+	}
+}

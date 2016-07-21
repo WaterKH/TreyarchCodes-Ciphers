@@ -1,0 +1,30 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class CaesarCipher {
+	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader reader = new BufferedReader(new FileReader("CipherText_Caesar.txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("Deciphered.txt"));
+		String line = "";
+		
+		int modNumber = 64;
+		
+		while((line = reader.readLine()) != null)
+		{
+			for(String character : line.split(""))
+			{
+				
+			}
+		}
+		
+	}
+
+}

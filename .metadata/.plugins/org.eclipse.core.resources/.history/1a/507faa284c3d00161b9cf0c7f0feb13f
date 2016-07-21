@@ -1,0 +1,134 @@
+package source;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MACC {
+	
+	// Doubles to get more precision
+	double total_ContactLetters;
+	double letter_ContactLetters;
+	String letter;
+	Map<String, Double> finalPercentage =  new HashMap<String, Double>();
+	String[] sortedLetters;
+	
+	public MACC()
+	{
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+		letter = "";
+	}
+	
+	public MACC(String aLetter)
+	{
+		letter = aLetter;
+		total_ContactLetters = 0;
+		letter_ContactLetters = 0;
+	}
+	
+	public void calculateMACC(String cipherText)
+	{
+		String alphabet = "abcdefghijklmnopqrstuvwxyz ";
+		Map<String, ContactLetters> listOfContacts = new HashMap<String, ContactLetters>();
+		
+		for(int i = 0; i < alphabet.length(); ++i)
+		{
+			String key = Character.toString(alphabet.charAt(i));
+			
+			listOfContacts.put(key, new ContactLetters(key));
+		}
+		
+		for(int i = 0; i < cipherText.length(); ++i)
+		{
+			String previousLetter = "";
+			String followingLetter = "";
+			
+			String letter = Character.toString(cipherText.charAt(i));
+			ContactLetters contactLetter = listOfContacts.get(letter);
+			
+			if(i > 0)
+			{
+				previousLetter = Character.toString(cipherText.charAt(i - 1));
+				if(!contactLetter.after_counter.containsKey(previousLetter) && !contactLetter.before_counter.containsKey(previousLetter))
+				{
+					++contactLetter.uniqueCount;
+					contactLetter.contactLetters.add(previousLetter);
+				}
+				contactLetter.addToBefore(previousLetter);
+			}
+			
+			if(i < cipherText.length() - 1)
+			{
+				followingLetter = Character.toString(cipherText.charAt(i + 1));
+				if(!contactLetter.after_counter.containsKey(followingLetter) && !contactLetter.before_counter.containsKey(followingLetter))
+				{
+					++contactLetter.uniqueCount;
+					contactLetter.contactLetters.add(followingLetter);
+				}
+				contactLetter.addToAfter(followingLetter);
+			}
+				
+		}
+		
+		double divideBy = 0;
+		double runningTotal = 0;
+		
+		for(int i = 0; i < cipherText.length(); ++i)
+		{
+			String letter = Character.toString(cipherText.charAt(i));
+			ContactLetters contactLetter = listOfContacts.get(letter);
+			
+			divideBy = contactLetter.uniqueCount;
+			runningTotal = 0;
+			
+			for(int j = 0; j < contactLetter.contactLetters.size(); ++j)
+			{
+				runningTotal += listOfContacts.get(contactLetter.contactLetters.get(j)).uniqueCount;
+			}
+			
+			if(!finalPercentage.containsKey(letter))
+			{
+				finalPercentage.put(letter, runningTotal / divideBy);
+			}
+		}
+		
+	}
+	
+	public void sortLowestToHighest(BufferedWriter writer) throws IOException
+	{
+		String alphabet = "abcdefghijklmnop";
+		sortedLetters = new String[finalPercentage.size()];
+		
+		for(int i = 0; i < sortedLetters.length; ++i)
+		{
+			sortedLetters[i] = Character.toString(alphabet.charAt(i));
+		}
+		
+		for(int i = 0; i < sortedLetters.length; ++i)
+		{	
+			for(int j = i + 1; j < sortedLetters.length; ++j)
+			{
+				//System.out.println(sortedLetters[i] + " " + finalPercentage.get(sortedLetters[i]) + " " + sortedLetters[j] + " " + finalPercentage.get(sortedLetters[j]));
+				if(finalPercentage.get(sortedLetters[i]) >= finalPercentage.get(sortedLetters[j]))
+				{
+					//System.out.println("SWITCH");
+					String temp = sortedLetters[i];
+					sortedLetters[i] = sortedLetters[j];
+					sortedLetters[j] = temp;
+				}
+				
+			}
+			
+		}
+		
+		for(int i = 0; i < sortedLetters.length; ++i)
+		{
+			//System.out.println(sortedLetters[i] + " " + finalPercentage.get(sortedLetters[i]));
+			writer.write(sortedLetters[i] + " " + finalPercentage.get(sortedLetters[i]));
+			writer.newLine();
+		}
+	}
+	
+}

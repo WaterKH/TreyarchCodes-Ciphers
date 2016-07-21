@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="fileName" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="fileName"/>
 			<item value="before_counter"/>
 			<item value="depth"/>
 			<item value="alphabet"/>
@@ -15,7 +16,6 @@
 			<item value="cipherHolder"/>
 			<item value="percHolder"/>
 			<item value="checkPattern"/>
-			<item value="cipherText"/>
 		</list>
 		<list key="replacehistory">
 			<item value="word"/>

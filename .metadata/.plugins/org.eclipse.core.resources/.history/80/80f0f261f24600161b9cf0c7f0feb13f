@@ -1,0 +1,312 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ContactLetter_MAIN {
+	
+	static String vowels = "aeiouy";
+	
+	public static void main(String[] args) throws IOException 
+	{
+		String alphabet = "abcdefghijklmnopqrstuvwxyz ";
+		Map<String, ContactLetters> listOfContacts = new HashMap<String, ContactLetters>();
+		
+		for(int i = 0; i < alphabet.length(); ++i)
+		{
+			String key = Character.toString(alphabet.charAt(i));
+			
+			listOfContacts.put(key, new ContactLetters(key));
+		}
+		
+		
+		String[] book = {"MobyDick_FORMAT.txt", "TaleOfTwoCities_FORMAT.txt"};
+		
+		for(int i = 0; i < book.length; ++i)
+		{
+			BufferedReader reader = new BufferedReader(new FileReader(book[i]));
+			String line = "";
+			int depth = 0;
+
+			System.out.println("Started Reading");
+			
+			while((line = reader.readLine()) != null)
+			{
+				String previousLetter = "";
+				String followingLetter = "";
+				
+				for(String letter : line.split(""))
+				{
+					letter = letter.toLowerCase();
+					ContactLetters contactLetter = listOfContacts.get(letter);
+					
+					if(depth > 0)
+					{
+						previousLetter = Character.toString(line.charAt(depth - 1));
+						contactLetter.addToBefore(previousLetter);
+						contactLetter.increaseBeforeTotalContactLetters();
+					}
+					
+					if(depth < line.length() - 1)
+					{
+						followingLetter = Character.toString(line.charAt(depth + 1));
+						contactLetter.addToAfter(followingLetter);
+						contactLetter.increaseAfterTotalContactLetters();
+					}
+					
+					++listOfContacts.get(letter).totalLetters;
+					++depth;
+				}
+			}
+			
+			System.out.println("Finished Reading");
+			
+			reader.close();
+		}
+
+		System.out.println("Finished Reading");
+	
+		BufferedWriter writer = new BufferedWriter(new FileWriter("percentagesOfContactLetters_TOTAL.txt"));
+		
+		for(int i = 0; i < alphabet.length(); ++i)
+		{
+			String letter = Character.toString(alphabet.charAt(i));
+			for(int j = 0; j < alphabet.length(); ++j)
+			{
+				String percLetter = Character.toString(alphabet.charAt(j));
+				
+				DecimalFormat df = new DecimalFormat("#.###");
+				df.setRoundingMode(RoundingMode.CEILING);
+				
+				writer.write(letter + "," + percLetter + "," + df.format(listOfContacts.get(letter).getBeforePercentage(percLetter) / listOfContacts.get(letter).totalLetters) 
+						+ "," + df.format(listOfContacts.get(letter).getAfterPercentage(percLetter) / listOfContacts.get(letter).totalLetters));
+				writer.newLine();
+			}
+			writer.newLine();
+		}
+		
+		writer.close();
+		System.out.println("Finished Program");
+		
+		BufferedReader perc_reader = new BufferedReader(new FileReader("ListForPermutations.txt"));
+		//BufferedReader perc_reader = new BufferedReader(new FileReader("ListForPermutations_Exact.txt"));
+		String line = "";
+		Map<String, ArrayList<String>> percHolder = new HashMap<String, ArrayList<String>>(); 
+		
+		while((line = perc_reader.readLine()) != null)
+		{
+			String key = line.split("-")[0];
+			ArrayList<String> strings = new ArrayList<String>();
+			//System.out.println(line);
+			for(String part: line.split("-")[1].split(","))
+			{
+				strings.add(part);
+			}
+			
+			percHolder.put(key, strings);
+		}
+		perc_reader.close();
+		
+		BufferedWriter writer_recursive = new BufferedWriter(new FileWriter("finalStrings_ADFGX.txt"));
+		
+		startRecursive(percHolder, writer_recursive);
+		
+		writer_recursive.close();
+	}
+	
+	/**
+	 * 
+	 * 	We get our spaces list to check each letter in order of how they would appear
+	 * 	We then check this letter's letter in its list, check this letter's next letter, etc.
+	 * 	We check to see if a letter is there, if it is, then we skip over this slot and
+	 * 	  check that slot to see what its next letter should be and continue
+	 * 
+	 * 
+	 */
+	public static void startRecursive(Map<String, ArrayList<String>> percHolder, BufferedWriter writer_recursive) throws IOException
+	{
+		BufferedReader reader_ci = new BufferedReader(new FileReader("ADFGX_Cryptograms.txt"));
+		ArrayList<String> spaceList = percHolder.get("_");
+		String line = "";
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		BufferedWriter writer = new BufferedWriter(new FileWriter("ADFGX_MACC.txt"));
+		
+		while((line = reader_ci.readLine()) != null)
+		{
+			String cipherText = line;
+			System.out.println(cipherText);
+			
+			writer.write(cipherText);
+			writer.newLine();
+			
+			MACC macc = new MACC();
+			macc.calculateMACC(cipherText);
+			macc.sortLowestToHighest(writer);
+
+			ContactLetter_LetterFrequency.createTableOfFrequencies(cipherText);
+			
+			for(int i = 0; i < spaceList.size(); ++i)
+			{	
+				String runningString = spaceList.get(i);
+				String result = spaceList.get(i);
+				ContactLetter_CVPatterns patternCheck_CV = new ContactLetter_CVPatterns();
+				patternCheck_CV.initPatternArrays();
+				
+				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, 0, result);
+			}
+			
+			ContactLetter_LetterFrequency.cipher_letterFrequencies.clear();
+		}
+		writer.close();
+		reader_ci.close();
+		
+	}
+	//TODO Check just word - not entire string; CheckPattern just after word is selected; Keep track of where we are at in the 
+	public static void recursive_FindPhrase(String checkForNext, String runningString, Map<String, ArrayList<String>> percHolder, String cipherText, 
+			BufferedWriter writer_recursive, ContactLetter_CVPatterns patternCheck_CV, MACC macc, int depth, String result) throws IOException
+	{
+
+		System.out.println("CHECKING PATTERN AT DEPTH: " + depth);
+		if(checkPattern(result, cipherText, writer_recursive))
+		{
+			for(int i = 0; i < percHolder.get(checkForNext).size(); ++i)
+			{
+		
+				if(percHolder.get(checkForNext).get(i).equals("_"))
+				{
+					
+					// TODO 
+					runningString += percHolder.get(checkForNext).get(i);
+					String addString = runningString.split("_")[runningString.split("_").length - 1];
+					//patternCheck_CV.cipherPattern = addString + "_";
+					//System.out.println(runningString + " " + patternCheck_CV.cipherPattern);
+	
+					System.out.println("TESTING PATTERN: " + addString);//patternCheck_CV.cipherPattern);
+					if(!patternCheck_CV.testPattern(addString))
+					{
+						//patternCheck_CV.cipherPattern = patternCheck_CV.cipherPattern.substring(0, 
+							//			patternCheck_CV.cipherPattern.length() - (runningString.length() + 1));
+						
+						/*String tempString = "";
+						
+						for(int j = 0; j < patternCheck_CV.cipherPattern.split("_").length - 1; ++j)
+						{
+							tempString += patternCheck_CV.cipherPattern.split("_")[j] + "_";
+						}
+						
+						patternCheck_CV.cipherPattern = tempString;*/
+						System.out.println("PATTERN FAILED, RETURNING: " + runningString);
+						return;
+					}
+					//System.out.println(runningString + " SUCCESS Out");
+					// TODO
+					System.out.println("PATTERN SUCCESSFUL");
+					System.out.println("RECEIVED WORD: " + addString + " FROM SEQUENCE: " + runningString);
+					
+					runningString += percHolder.get("_").get(i);
+					result += percHolder.get("_").get(i);
+					System.out.println("RESULT SO FAR: " + result);
+					++depth;
+					// TODO Changed to zero, make sure to change back to i if results are not correct
+					recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, depth, result);
+					--depth;
+					
+					runningString = runningString.substring(0, runningString.length() - 1);
+					
+					/*String tempString = "";
+					
+					for(int j = 0; j < patternCheck_CV.cipherPattern.split("_").length - 1; ++j)
+					{
+						tempString += patternCheck_CV.cipherPattern.split("_")[j] + "_";
+					}
+					
+					patternCheck_CV.cipherPattern = tempString;*/
+					
+					//System.out.println("CIPHER: " + patternCheck_CV.cipherPattern);
+				}
+				else
+				{
+					// TODO 
+					/*for(int j = 0; j < 4; ++j)
+					{
+						if(Character.toString(cipherText.charAt(depth)).equals(macc.sortedLetters[j]))
+						{
+							if(!vowels.contains(percHolder.get(checkForNext).get(i)))
+							{
+								continue;
+							}
+						}
+					}*/
+					// TODO
+					runningString += percHolder.get(checkForNext).get(i);
+					result += percHolder.get(checkForNext).get(i);
+					System.out.println("RESULT SO FAR: " + result);
+					//System.out.println(result + " " + runningString);
+					++depth;
+					recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, depth, result);
+					--depth;
+				}
+				runningString = runningString.substring(0, runningString.length() - 1);
+				result = result.substring(0, result.length() - 1);
+
+				//continue;
+			}
+		
+			//break;
+		}
+	}
+	
+	public static boolean checkPattern(String patternString, String cipherText, BufferedWriter writer) throws IOException
+	{
+		//System.out.println(patternString);
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		Map<Character, Integer> patternHolder = new HashMap<Character, Integer>();
+		int counter = 0;
+		String runningString = "";
+		
+		for(int i = 0; i < patternString.length(); ++i)
+		{
+			if(patternHolder.containsKey(patternString.charAt(i)))
+			{
+				runningString += alphabet.charAt(patternHolder.get(patternString.charAt(i)));
+			}
+			else
+			{
+				runningString += alphabet.charAt(counter);
+				patternHolder.put(patternString.charAt(i), counter);
+				++counter;
+			}
+		}
+		
+		//System.out.println(runningString);
+		if(runningString.length() < cipherText.length())
+		{
+			String checkStr = cipherText.substring(0, runningString.length());
+			
+			if(checkStr.equals(runningString))
+			{
+				//System.out.println(patternString);
+				if(runningString.length() == cipherText.length())
+				{
+					//System.out.println(patternString);
+					writer.write(patternString);
+					writer.newLine();
+					System.exit(0);
+				}
+				System.out.println("CHECK SUCCESSFUL: " + patternString);
+				return true;
+			}
+		}
+		System.out.println("CHECK FAILURE: " + patternString);
+		return false;
+	}
+
+}

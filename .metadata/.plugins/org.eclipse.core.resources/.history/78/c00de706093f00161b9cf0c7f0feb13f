@@ -1,0 +1,54 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class PatternCreate {
+
+	public static void main(String[] args) throws IOException {
+		
+		/*System.out.print("Input pattern: ");
+		Scanner keyboard = new Scanner(System.in);
+		String pattern = keyboard.next();*/
+		
+		BufferedReader reader = new BufferedReader(new FileReader("MobyDick_FORMAT.txt"));
+		String line = "";
+		int wordCount = 0;
+		
+		Map<String, Double> patternHolder = new HashMap<String, Double>();
+		ArrayList<String> patterns = new ArrayList<String>();
+		
+		while((line = reader.readLine()) != null)
+		{
+			for(String word : line.split(" "))
+			{
+				String pattern = ContactLetter_CVPatterns.getPattern(word);
+				
+				if(patternHolder.containsKey(pattern))
+				{
+					patternHolder.put(pattern, patternHolder.get(pattern) + 1.0);
+				}
+				else
+				{
+					patterns.add(pattern);
+					patternHolder.put(pattern, 1.0);
+				}
+				
+				++wordCount;
+			}
+		}
+		
+		for(int i = 0; i < patterns.size(); ++i)
+		{
+			System.out.println(patternHolder.get(patterns.get(i)) / wordCount);
+		}
+		
+		System.out.println("Finished");
+
+	}
+
+}

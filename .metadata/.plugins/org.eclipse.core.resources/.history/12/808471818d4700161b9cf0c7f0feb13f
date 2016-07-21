@@ -1,0 +1,41 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
+
+public class CaesarCipher {
+	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader reader = new BufferedReader(new FileReader("CipherText_Caesar.txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("Deciphered.txt"));
+		String line = "";
+	
+		String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.";
+		int modNumber = alphabet.length();
+		
+		Random rand = new Random();
+		int randNumb = rand.nextInt(modNumber);
+		System.out.println(randNumb);
+		writer.write(randNumb + " ");
+		writer.newLine();
+		while((line = reader.readLine()) != null)
+		{
+			for(String character : line.split(""))
+			{
+				int currNumb = alphabet.indexOf(character.toCharArray()[0]);
+				int newNumb = (currNumb + randNumb) % modNumber;
+				writer.write(alphabet.charAt(newNumb));
+			}
+		}
+		
+		reader.close();
+		writer.close();
+		
+	}
+
+}

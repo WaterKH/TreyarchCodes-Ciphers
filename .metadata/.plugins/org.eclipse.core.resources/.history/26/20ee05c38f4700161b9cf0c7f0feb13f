@@ -1,0 +1,64 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
+
+public class CaesarCipher {
+	
+	public static void main(String[] args) throws IOException
+	{
+		BufferedReader reader_De = new BufferedReader(new FileReader("CipherText_Caesar.txt"));
+		BufferedWriter writer_De = new BufferedWriter(new FileWriter("Enciphered.txt"));
+		String line_De = "";
+	
+		String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.";
+		int modNumber = alphabet.length();
+		
+		Random rand = new Random();
+		int rotateBy = rand.nextInt(modNumber);
+		int power = rand.nextInt(20);
+		
+		writer_De.write(rotateBy + " " + power);
+		writer_De.newLine();
+		
+		while((line = reader.readLine()) != null)
+		{
+			for(String character : line.split(""))
+			{
+				int currNumb = alphabet.indexOf(character.toCharArray()[0]);
+				int newNumb = (currNumb + rotateBy) % modNumber;
+				int finalNumb = performOperation(newNumb, power) % modNumber;
+				
+				writer_De.write(alphabet.charAt(finalNumb));
+			}
+		}
+		
+		reader.close();
+		writer_De.close();
+		
+		BufferedWriter writer_En = new BufferedWriter(new FileWriter("Deciphered.txt"));
+		
+		
+		while((line = reader.readLine()) != null)
+		{
+			for
+		}
+		
+	}
+	
+	public static int performOperation(int onNumber, int power)
+	{
+		int toReturn = 0;
+		
+		for(int i = 0; i < power; ++i)
+		{
+			toReturn += onNumber;
+		}
+		
+		return toReturn;
+	}
+}

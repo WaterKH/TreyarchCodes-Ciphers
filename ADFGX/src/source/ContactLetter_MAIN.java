@@ -148,16 +148,19 @@ public class ContactLetter_MAIN {
 			writer.newLine();
 			
 			MACC macc = new MACC();
-			macc.calculateMACC(cipherText, writer);
-			macc.sortLowestToHighest();
+			macc.calculateMACC(cipherText);
+			macc.sortLowestToHighest(writer);
 
 			ContactLetter_LetterFrequency.createTableOfFrequencies(cipherText);
 			
 			for(int i = 0; i < spaceList.size(); ++i)
 			{	
 				String runningString = spaceList.get(i);
+				String result = spaceList.get(i);
 				ContactLetter_CVPatterns patternCheck_CV = new ContactLetter_CVPatterns();
-				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, 0);
+				patternCheck_CV.initPatternArrays();
+				
+				recursive_FindPhrase(spaceList.get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, 0, result);
 			}
 			
 			ContactLetter_LetterFrequency.cipher_letterFrequencies.clear();
@@ -166,43 +169,33 @@ public class ContactLetter_MAIN {
 		reader_ci.close();
 		
 	}
-
+	//TODO Check just word - not entire string; CheckPattern just after word is selected; Keep track of where we are at in the 
 	public static void recursive_FindPhrase(String checkForNext, String runningString, Map<String, ArrayList<String>> percHolder, String cipherText, 
-			BufferedWriter writer_recursive, ContactLetter_CVPatterns patternCheck_CV, MACC macc, int depth) throws IOException
+			BufferedWriter writer_recursive, ContactLetter_CVPatterns patternCheck_CV, MACC macc, int depth, String result) throws IOException
 	{
 
-		if(checkPattern(runningString, cipherText, writer_recursive, patternCheck_CV.cipherPattern))
+		//System.out.println("CHECKING PATTERN AT DEPTH: " + depth);
+		if(checkPattern(result, cipherText, writer_recursive))
 		{
 			for(int i = 0; i < percHolder.get(checkForNext).size(); ++i)
 			{
-				if(runningString.length() < cipherText.length())
+		
+				if(percHolder.get(checkForNext).get(i).equals("_"))
 				{
-					if(percHolder.get(checkForNext).get(i).equals("_"))
+					
+					// TODO 
+					runningString += percHolder.get(checkForNext).get(i);
+					String addString = runningString.split("_")[runningString.split("_").length - 1];
+					//patternCheck_CV.cipherPattern = addString + "_";
+					//System.out.println(runningString + " " + patternCheck_CV.cipherPattern);
+	
+					//System.out.println("TESTING PATTERN: " + addString);//patternCheck_CV.cipherPattern);
+					/*if(!patternCheck_CV.testPattern(addString))
 					{
-						//TODO
-						patternCheck_CV.cipherPattern += runningString + "_";
+						//patternCheck_CV.cipherPattern = patternCheck_CV.cipherPattern.substring(0, 
+							//			patternCheck_CV.cipherPattern.length() - (runningString.length() + 1));
 						
-						if(!patternCheck_CV.testPattern())
-						{
-							String tempString = "";
-							
-							for(int j = 0; j < patternCheck_CV.cipherPattern.split("_").length - 1; ++j)
-							{
-								tempString += patternCheck_CV.cipherPattern.split("_")[j] + "_";
-							}
-							
-							patternCheck_CV.cipherPattern = tempString;
-							
-							return;
-						}
-						//TODO
-						
-						runningString += percHolder.get("_").get(i);
-						++depth;
-						// TODO Changed to zero, make sure to change back to i if results are not correct
-						recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, /*depth,*/ writer_recursive, patternCheck_CV, macc, depth);
-						--depth;
-						String tempString = "";
+						/*String tempString = "";
 						
 						for(int j = 0; j < patternCheck_CV.cipherPattern.split("_").length - 1; ++j)
 						{
@@ -210,37 +203,78 @@ public class ContactLetter_MAIN {
 						}
 						
 						patternCheck_CV.cipherPattern = tempString;
-					}
-					else
+						//System.out.println("PATTERN FAILED, RETURNING: " + runningString);
+						return;
+					}*/
+					//System.out.println(runningString + " SUCCESS Out");
+					// TODO
+					//System.out.println("PATTERN SUCCESSFUL");
+					//System.out.println("RECEIVED WORD: " + addString + " FROM SEQUENCE: " + runningString);
+					
+					runningString += percHolder.get("_").get(i);
+					result += percHolder.get("_").get(i);
+					//System.out.println("RESULT SO FAR: " + result);
+					/*++depth;
+					// TODO Changed to zero, make sure to change back to i if results are not correct
+					recursive_FindPhrase(percHolder.get("_").get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, depth, result);
+					--depth;*/
+					
+					//runningString = runningString.substring(0, runningString.length() - 1);
+					
+					/*String tempString = "";
+					
+					for(int j = 0; j < patternCheck_CV.cipherPattern.split("_").length - 1; ++j)
 					{
-						//TODO 
-						for(int j = 0; j < macc.sortedLetters.length; ++j)
+						tempString += patternCheck_CV.cipherPattern.split("_")[j] + "_";
+					}
+					
+					patternCheck_CV.cipherPattern = tempString;*/
+					
+					//System.out.println("CIPHER: " + patternCheck_CV.cipherPattern);
+				}
+				else
+				{
+					// TODO 
+					/*for(int j = 0; j < 4; ++j)
+					{
+						if(Character.toString(cipherText.charAt(depth)).equals(macc.sortedLetters[j]))
 						{
-							if(Character.toString(cipherText.charAt(depth)).equals(macc.sortedLetters[j]))
+							if(!vowels.contains(percHolder.get(checkForNext).get(i)))
 							{
-								if(!vowels.contains(percHolder.get(checkForNext).get(i)))
-								{
-									continue;
-								}
+								continue;
 							}
 						}
-						//TODO
-						runningString += percHolder.get(checkForNext).get(i);
-						++depth;
-						recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, /*depth,*/ writer_recursive, patternCheck_CV, macc, depth);
-						--depth;
-					}
-					runningString = runningString.substring(0, runningString.length() - 1);
-
-					continue;
+					}*/
+					// TODO
+					runningString += percHolder.get(checkForNext).get(i);
+					result += percHolder.get(checkForNext).get(i);
+					//System.out.println("RESULT SO FAR: " + result);
+					//System.out.println(result + " " + runningString);
+					/*++depth;
+					recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, depth, result);
+					--depth;*/
 				}
-			
-				break;
+				++depth;
+				recursive_FindPhrase(percHolder.get(checkForNext).get(i), runningString, percHolder, cipherText, writer_recursive, patternCheck_CV, macc, depth, result);
+				--depth;
+				
+				runningString = runningString.substring(0, runningString.length() - 1);
+				result = result.substring(0, result.length() - 1);
+				
+				if(runningString.charAt(runningString.length() - 1) == '_')
+				{
+					runningString = runningString.substring(0, runningString.length() - 1);
+				}
+
+				//continue;
 			}
+		
+			//break;
 		}
+		//System.out.println("REACHED END OF METHOD: " + result);
 	}
 	
-	public static boolean checkPattern(String patternString, String cipherText, BufferedWriter writer, String withSpaces) throws IOException
+	public static boolean checkPattern(String patternString, String cipherText, BufferedWriter writer) throws IOException
 	{
 		//System.out.println(patternString);
 		String alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -263,22 +297,25 @@ public class ContactLetter_MAIN {
 		}
 		
 		//System.out.println(runningString);
-		
-		String checkStr = cipherText.substring(0, runningString.length());
-		
-		if(checkStr.equals(runningString))
+		if(runningString.length() < cipherText.length())
 		{
-			//System.out.println(patternString);
-			if(runningString.length() == cipherText.length())
+			String checkStr = cipherText.substring(0, runningString.length());
+			
+			if(checkStr.equals(runningString))
 			{
 				//System.out.println(patternString);
-				writer.write(patternString);
-				writer.newLine();
+				if(runningString.length() == cipherText.length())
+				{
+					//System.out.println(patternString);
+					writer.write(patternString);
+					writer.newLine();
+					//System.exit(0);
+				}
+				//System.out.println("CHECK SUCCESSFUL: " + patternString);
+				return true;
 			}
-			
-			return true;
 		}
-		
+		//System.out.println("CHECK FAILURE: " + patternString);
 		return false;
 	}
 

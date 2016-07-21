@@ -1,0 +1,62 @@
+package source;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class PatternCreate {
+
+	public static void main(String[] args) throws IOException {
+		
+		/*System.out.print("Input pattern: ");
+		Scanner keyboard = new Scanner(System.in);
+		String pattern = keyboard.next();*/
+		
+		BufferedReader reader = new BufferedReader(new FileReader("TaleOfTwoCities_FORMAT.txt"));
+		String line = "";
+		int wordCount = 0;
+		
+		Map<String, Double> patternHolder = new HashMap<String, Double>();
+		ArrayList<String> patterns = new ArrayList<String>();
+		
+		DecimalFormat df = new DecimalFormat("#.####");
+		df.setRoundingMode(RoundingMode.CEILING);
+		
+		while((line = reader.readLine()) != null)
+		{
+			for(String word : line.split(" "))
+			{
+				if(!word.equals("") && word.length() < 9)
+				{
+					String pattern = ContactLetter_CVPatterns.getPattern(word);
+					
+					if(patternHolder.containsKey(pattern))
+					{
+						patternHolder.put(pattern, patternHolder.get(pattern) + 1.0);
+					}
+					else
+					{
+						patterns.add(pattern);
+						patternHolder.put(pattern, 1.0);
+					}
+					
+					++wordCount;
+				}
+			}
+		}
+		
+		for(int i = 0; i < patterns.size(); ++i)
+		{
+			System.out.println(patterns.get(i) + " " + df.format(patternHolder.get(patterns.get(i)) / wordCount * 100));
+		}
+		
+		System.out.println("Finished");
+
+	}
+
+}

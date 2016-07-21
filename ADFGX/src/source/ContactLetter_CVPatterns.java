@@ -1,5 +1,10 @@
 package source;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class ContactLetter_CVPatterns {
 
 	//public int cipherTextLength = 0;
@@ -7,165 +12,76 @@ public class ContactLetter_CVPatterns {
 	public int cipherTextStart = 0;
 	public int cipherTextEnd = 0;
 	
-	public String cipherPattern = "";
+	//public String cipherPattern = "";
 	
 	public static String vowel = "aeiouy";
 	public static String consonant = "bcdfghjklmnpqrstvwxz";
+	public static ArrayList<String[]> patterns = new ArrayList<String[]>();
 	
-	public boolean testPattern()//String runningString)
+	public void initPatternArrays() throws IOException
 	{
-		String word = cipherPattern.split("_")[cipherPattern.split("_").length - 1];
+		patterns.clear();
+		BufferedReader reader = new BufferedReader(new FileReader("patterns_book.txt"));
+		String line = "";
 		
-		switch(word.length())
+		while((line = reader.readLine()) != null)
 		{
-		case 1: // V
-			if(vowelCheck(word, 0))
-			{
-				return true;
-			}
-			break;
-		case 2: // V C || C V || C C
-			if(vowelCheck(word, 0) && consonantCheck(word, 1))
-			{
-				return true;
-			}
-			else if(consonantCheck(word, 0) && vowelCheck(word, 1))
-			{
-				return true;
-			}
-			else if(consonantCheck(word, 0) && vowelCheck(word, 1))
-			{
-				return true;
-			}
-			break;
-		case 3: // C V C || C V V || V C C || V C V TODO
-			if(consonantCheck(word, 0) && vowelCheck(word, 1))
-			{
-				return true;
-			}
-			else if(consonantCheck(word, 0) && consonantCheck(word, 1))
-			{
-				return true;
-			}
-			else if(vowelCheck(word, 0) && consonantCheck(word, 1))
-			{
-				return true;
-			}
-			else if(vowelCheck(word, 0) && vowelCheck(word, 1) && consonantCheck(word, 2))
-			{
-				return true;
-			}
-			break;
-		case 4: // C V C V || C V V C || C V C C || C C V C TODO
-			if(consonantCheck(word, 0))
-			{
-				if(vowelCheck(word, 1))
-				{
-					if(consonantCheck(word, 2) && vowelCheck(word, 3))
-					{
-						return true;
-					}
-					else if(vowelCheck(word, 2) && consonantCheck(word, 3))
-					{
-						return true;
-					}
-					else if(consonantCheck(word, 2) && consonantCheck(word, 3))
-					{
-						return true;
-					}
-				}
-				else if(consonantCheck(word, 1) && vowelCheck(word, 2) && consonantCheck(word, 3))
-				{
-					return true;
-				}
-			}
-			break;
-		case 5: // C C V C _ ..... TODO
-			if(consonantCheck(word, 0))
-			{
-				if((consonantCheck(word, 1) && vowelCheck(word, 2)) || (vowelCheck(word, 1) && consonantCheck(word, 2)))
-				{
-					if(consonantCheck(word, 3))
-					{
-						return true;
-					}
-					else if(vowelCheck(word, 3) && consonantCheck(word, 4))
-					{
-						return true;
-					}
-				}
-				else if(vowelCheck(word, 1) && vowelCheck(word, 2) && consonantCheck(word, 3) && consonantCheck(word, 4))
-				{
-					return true;
-				}
-			}
-			break;
-		case 6: // C V C _ _ C TODO 
-			if(consonantCheck(word, 0) && vowelCheck(word, 1) && consonantCheck(word, 2))
-			{
-				if(consonantCheck(word, 3))
-				{
-					if((consonantCheck(word, 4) && vowelCheck(word, 5)) || (vowelCheck(word, 4) && consonantCheck(word, 5)))
-					{
-						return true;
-					}
-				}
-				else if(vowelCheck(word, 3))
-				{
-					if(consonantCheck(word, 4))
-					{
-						return true;
-					}
-					else if(vowelCheck(word, 4) && consonantCheck(word, 5))
-					{
-						return true;
-					}
-				}
-			}
-			else if(consonantCheck(word, 1) && consonantCheck(word, 4) && consonantCheck(word, 5))
-			{
-				if(vowelCheck(word, 0) && consonantCheck(word, 2) && vowelCheck(word, 3))
-				{
-					return true;
-				}
-				else if(consonantCheck(word, 0) && vowelCheck(word, 2) && consonantCheck(word, 3))
-				{
-					return true;
-				}
-			}
-			break;
-		case 7: // C V C C _ _ C TODO
-			if(consonantCheck(word, 0) && vowelCheck(word, 1) && consonantCheck(word, 2) && consonantCheck(word, 3) && 
-					consonantCheck(word, word.length() - 1))
-			{
-				return true;
-			}
-			break;
-		default:
-			//System.out.println("ERROR");
-			return false;
+			String[] array = line.split("-")[1].split(",");
+			patterns.add(array);
 		}
 		
+		reader.close();
+	}
+	
+	public boolean testPattern(String word) throws IOException
+	{
+		//String[] cipherArr = cipherPattern.split("_");
+		//String word = cipherPattern;//cipherArr[cipherArr.length - 1];
+		
+		String pattern = getPattern(word);
+		
+		//System.out.println("IN TEST PATTERN: " + word + " " + pattern);
+		
+		if(pattern.length() != word.length())
+		{
+			System.out.println("ERROR: Length differs");
+		}
+		
+		if(pattern.length() > 0 && pattern.length() < 17)
+		{
+			for(int i = 0; i < patterns.get(pattern.length() - 1).length; ++i)
+			{
+				//System.out.println(pattern + " " + patterns.get(pattern.length() - 1)[i]);
+				if(pattern.equals(patterns.get(pattern.length() - 1)[i]))
+				{	
+					//System.out.println("PATTERN EXISTS IN LIST");
+					return true;
+				}
+			}
+		}
+		//System.out.println("PATTERN DOES NOT EXIST IN LIST");
 		return false;
 	}
 	
-	public static boolean vowelCheck(String letter, int begin)
+	public static String getPattern(String word)
 	{
-		if(vowel.contains(letter.substring(begin, begin + 1)))
+		String pattern = "";
+		
+		for(int i = 0; i < word.length(); ++i)
 		{
-			return true;
+			String letter = Character.toString(word.charAt(i));
+			
+			if(vowel.contains(letter))
+			{
+				pattern += "V";
+			}
+			else if(consonant.contains(letter))
+			{
+				pattern += "C";
+			}
 		}
 		
-		return false;
-	}
-	
-	public static boolean consonantCheck(String letter, int begin)
-	{
-		if(consonant.contains(letter.substring(begin, begin + 1)))
-		{
-			return true;
-		}
-		
-		return false;
+		//System.out.println(pattern);
+		return pattern;
 	}
 }

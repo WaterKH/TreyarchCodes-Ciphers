@@ -33,7 +33,7 @@ public class WordPatterns {
 				String pattern = "";
 				String lineFormatted = line.toLowerCase();
 				
-				for(int i = 0; i < line.length(); ++i)
+				/*for(int i = 0; i < line.length(); ++i)
 				{
 					
 					if(ContactLetter_CVPatterns.consonantCheck(lineFormatted, i))
@@ -44,7 +44,7 @@ public class WordPatterns {
 					{
 						pattern += "V";
 					}
-				}
+				}*/
 				
 				if(patternHolder.containsKey(pattern))
 				{
